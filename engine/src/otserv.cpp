@@ -116,10 +116,9 @@ void mainLoader(int argc, char* argv[], ServiceManager* services)
 #ifdef _WIN32
 	SetConsoleTitle(STATUS_SERVER_NAME);
 #endif
-	std::cout << "The " << STATUS_SERVER_NAME << " - Version: (" << STATUS_SERVER_VERSION << ")" << std::endl;
-	std::cout << "Compiled with: " << BOOST_COMPILER << std::endl;
-	std::cout << "Compiled on " << __DATE__ << ' ' << __TIME__ << " for platform ";
-
+	std::cout << "                       The " << STATUS_SERVER_NAME << " - Version: (" << STATUS_SERVER_VERSION <<  ")" << std::endl;
+	std::cout << "                       Compiled with: " << BOOST_COMPILER << std::endl;
+	std::cout << "                       Compiled on " << __DATE__ << ' ' << __TIME__ << " for platform ";
 #if defined(__amd64__) || defined(_M_X64)
 	std::cout << "x64" << std::endl;
 #elif defined(__i386__) || defined(_M_IX86) || defined(_X86_)
@@ -130,10 +129,17 @@ void mainLoader(int argc, char* argv[], ServiceManager* services)
 	std::cout << "unknown" << std::endl;
 #endif
 	std::cout << std::endl;
+	std::cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
+	std::cout << "::Server originally developed by Mark Samman, later refined by Mateus Roberto. ::" << std::endl;
+	std::cout << "::                 Further developed by Otg (TFS 1.5 1098/11x)                 ::" << std::endl;
+	std::cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
+	std::cout << "::                               Engine Credits:                               ::" << std::endl;
+	std::cout << "::          TFS Team, Erick Nunes, Leo Pereira, Marson Schneider,              ::" << std::endl;
+	std::cout << "::        LukST, worthdavi, OTX Team, OTG Team, Mateus Roberto.                ::" << std::endl;
+	std::cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
+	std::cout << "::       Originally developed by Johncore, Mark Samman, and Mateus Roberto     ::" << std::endl;
+	std::cout << ":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::" << std::endl;
 
-	std::cout << "Special Credits for: " << STATUS_SERVER_CREDITS << "." << std::endl;
-	std::cout << "Link of repository: https://github.com/Johncorex" << std::endl;
-	std::cout << std::endl;
 
 	// TODO: dirty for now; Use stdarg;
 	if (argc > 1) {

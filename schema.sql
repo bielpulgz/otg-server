@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Tempo de geração: 17/04/2025 às 12:51
+-- Tempo de geração: 29/04/2025 às 09:35
 -- Versão do servidor: 10.6.21-MariaDB-0ubuntu0.22.04.2
 -- Versão do PHP: 8.1.2-1ubuntu2.21
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `otgclean`
+-- Banco de dados: `otgcustom`
 --
 
 -- --------------------------------------------------------
@@ -1860,7 +1860,7 @@ INSERT INTO `players` (`id`, `name`, `group_id`, `account_id`, `level`, `vocatio
 (3, 'Druid Sample', 1, 1, 8, 2, 185, 185, 4200, NULL, 44, 98, 15, 76, 128, 0, 0, 90, 90, 0, 100, 1, 0, 0, 0, '', 470, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, NULL, NULL, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 0, 0, 1000, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0),
 (4, 'Paladin Sample', 1, 1, 8, 3, 185, 185, 4200, NULL, 44, 98, 15, 76, 128, 0, 0, 90, 90, 0, 100, 1, 0, 0, 0, '', 470, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, NULL, NULL, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 0, 0, 1000, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0),
 (5, 'Knight Sample', 1, 1, 8, 4, 185, 185, 4200, NULL, 44, 98, 15, 76, 128, 0, 0, 90, 90, 0, 100, 1, 0, 0, 0, '', 470, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, NULL, NULL, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 0, 0, 1000, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, NULL, NULL, NULL, NULL, 0, 0, 0, 0, 0, 0, 0),
-(6, 'God', 6, 1, 1, 0, 185, 185, 0, NULL, 106, 76, 78, 58, 973, 3, 0, 90, 90, 0, 100, 1, 91, 133, 7, '', 470, 0, 1744904181, 16777343, 1, 0, 0, 1744904232, 0, 0, 1, 1, 1, 1, 1, 0, 0, 46436, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, 0, 0, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 1, 0, 1100, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0, 0, 0, 0, 0, 0, 0);
+(6, 'God', 6, 1, 1, 0, 185, 185, 0, NULL, 106, 76, 78, 58, 973, 3, 0, 90, 90, 0, 100, 1, 91, 133, 7, '', 470, 0, 1745929989, 16777343, 1, 0, 0, 1745930023, 0, 0, 1, 1, 1, 1, 1, 0, 0, 46470, 0, 0, 0, 0, 43200, -1, 2520, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 0, '', '', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 1, 0, 0, 0, NULL, NULL, '-', '', -1, 0, 0, 0, 0, 0, 0, 1, 0, 1100, 0, NULL, NULL, NULL, NULL, NULL, NULL, 0, 0, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0x0000000000000000, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -1871,6 +1871,24 @@ INSERT INTO `players` (`id`, `name`, `group_id`, `account_id`, `level`, `vocatio
 CREATE TABLE `players_online` (
   `player_id` int(11) NOT NULL
 ) ENGINE=MEMORY DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `player_autoloot`
+--
+
+CREATE TABLE `player_autoloot` (
+  `player_id` int(11) NOT NULL,
+  `autoloot_list` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `player_autoloot`
+--
+
+INSERT INTO `player_autoloot` (`player_id`, `autoloot_list`) VALUES
+(6, '');
 
 -- --------------------------------------------------------
 
@@ -1988,14 +2006,14 @@ CREATE TABLE `player_items` (
 
 INSERT INTO `player_items` (`player_id`, `pid`, `sid`, `itemtype`, `count`, `attributes`) VALUES
 (6, 1, 101, 2461, 1, ''),
-(6, 3, 102, 1987, 1, 0x2601),
+(6, 3, 102, 1987, 1, ''),
 (6, 4, 103, 2467, 1, ''),
 (6, 6, 104, 2398, 1, ''),
 (6, 7, 105, 2495, 1, ''),
 (6, 11, 106, 26052, 1, ''),
 (6, 102, 107, 2160, 100, 0x0f64),
 (6, 102, 108, 2160, 100, 0x0f64),
-(6, 102, 109, 2494, 1, 0x28012401000000000000000300353030021040190100000000),
+(6, 102, 109, 2494, 1, ''),
 (6, 102, 110, 2649, 1, ''),
 (6, 102, 111, 2554, 1, ''),
 (6, 102, 112, 2120, 1, '');
@@ -2396,8 +2414,8 @@ INSERT INTO `server_config` (`config`, `value`) VALUES
 ('boost_monster_name', ''),
 ('boost_monster_url', ''),
 ('db_version', '37'),
-('motd_hash', '815194dfb446b52a3e94f39defd8f2cef3fb2863'),
-('motd_num', '2'),
+('motd_hash', 'ef5fff91c7ed9aa678fddeb575080707af3140a0'),
+('motd_num', '3'),
 ('players_record', '1');
 
 -- --------------------------------------------------------
@@ -3053,6 +3071,31 @@ INSERT INTO `tile_store` (`house_id`, `data`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `towns`
+--
+
+CREATE TABLE `towns` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `posx` int(11) NOT NULL DEFAULT 0,
+  `posy` int(11) NOT NULL DEFAULT 0,
+  `posz` int(11) NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `towns`
+--
+
+INSERT INTO `towns` (`id`, `name`, `posx`, `posy`, `posz`) VALUES
+(1, 'Trekolt', 95, 117, 7),
+(2, 'Rhyves', 159, 387, 6),
+(3, 'Varak', 242, 429, 12),
+(4, 'Jorvik', 496, 172, 7),
+(5, 'Saund', 240, 566, 7);
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `z_forum`
 --
 
@@ -3513,6 +3556,12 @@ ALTER TABLE `players_online`
   ADD PRIMARY KEY (`player_id`);
 
 --
+-- Índices de tabela `player_autoloot`
+--
+ALTER TABLE `player_autoloot`
+  ADD PRIMARY KEY (`player_id`);
+
+--
 -- Índices de tabela `player_binary_items`
 --
 ALTER TABLE `player_binary_items`
@@ -3665,6 +3714,12 @@ ALTER TABLE `tickets_reply`
 --
 ALTER TABLE `tile_store`
   ADD KEY `house_id` (`house_id`);
+
+--
+-- Índices de tabela `towns`
+--
+ALTER TABLE `towns`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Índices de tabela `z_forum`
@@ -4021,6 +4076,12 @@ ALTER TABLE `market_offers`
 --
 ALTER TABLE `players`
   ADD CONSTRAINT `players_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
+
+--
+-- Restrições para tabelas `player_autoloot`
+--
+ALTER TABLE `player_autoloot`
+  ADD CONSTRAINT `player_autoloot_ibfk_1` FOREIGN KEY (`player_id`) REFERENCES `players` (`id`) ON DELETE CASCADE;
 
 --
 -- Restrições para tabelas `player_binary_items`
