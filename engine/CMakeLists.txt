@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 2.8.12)
 
 set(CMAKE_DISABLE_SOURCE_CHANGES ON)
 set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
@@ -8,6 +8,9 @@ project(tfs)
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
 include(cotire)
+
+# Configuração simples para colorir
+set(CMAKE_COLOR_MAKEFILE ON)
 
 add_compile_options(-Wall -Werror -pipe -fvisibility=hidden)
 
@@ -57,6 +60,13 @@ add_executable(tfs ${tfs_SRC})
 include_directories(${MYSQL_INCLUDE_DIR} ${LUA_INCLUDE_DIR} ${Boost_INCLUDE_DIRS} ${PUGIXML_INCLUDE_DIR} ${Crypto++_INCLUDE_DIR})
 target_link_libraries(tfs ${MYSQL_CLIENT_LIBS} ${LUA_LIBRARIES} ${Boost_LIBRARIES} ${Boost_FILESYSTEM_LIBRARY} ${PUGIXML_LIBRARIES} ${Crypto++_LIBRARIES} ${CMAKE_THREAD_LIBS_INIT})
 
+# Configuração para Unity Build
+option(ENABLE_UNITY_BUILD "Enable unity build" ON)
+if(ENABLE_UNITY_BUILD)
+    set_target_properties(tfs PROPERTIES COTIRE_ADD_UNITY_BUILD TRUE)
+else()
+    set_target_properties(tfs PROPERTIES COTIRE_ADD_UNITY_BUILD FALSE)
+endif()
+
 set_target_properties(tfs PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/otpch.h")
-set_target_properties(tfs PROPERTIES COTIRE_ADD_UNITY_BUILD FALSE)
 cotire(tfs)
