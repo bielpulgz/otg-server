@@ -1069,6 +1069,10 @@ class LuaScriptInterface
 
 		static int luaPlayerIsOffline(lua_State* L);
 
+		static int luaPlayerAddAura(lua_State* L);
+        static int luaPlayerAddWings(lua_State* L);
+        static int luaPlayerAddShader(lua_State* L);
+
 		// Monster
 		static int luaMonsterCreate(lua_State* L);
 
