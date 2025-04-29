@@ -1,6 +1,8 @@
 /**
+ * @file spells.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_SPELLS_H_D78A7CCB7080406E8CAA6B1D31D3DA71
-#define FS_SPELLS_H_D78A7CCB7080406E8CAA6B1D31D3DA71
+#ifndef OT_SRC_SPELLS_H_
+#define OT_SRC_SPELLS_H_
 
 #include "luascript.h"
 #include "player.h"
@@ -53,7 +55,7 @@ class Spells final : public BaseEvents
 
 		InstantSpell* getInstantSpellById(uint32_t spellId);
 
-		TalkActionResult_t playerSaySpell(Player* player, std::string& words, bool called = true);
+		TalkActionResult_t playerSaySpell(Player* player, std::string& words);
 
 		static Position getCasterPosition(Creature* creature, Direction dir);
 		std::string getScriptBaseName() const override;
@@ -65,7 +67,7 @@ class Spells final : public BaseEvents
 		};
 
 		const std::map<uint16_t, RuneSpell>& getRuneSpells() const{
-				return runes;
+			return runes;
 		};
 
 		void clearMaps(bool fromLua);
@@ -213,13 +215,13 @@ class Spell : public BaseSpell
 			vocSpellMap[n] = b;
 		}
 
-		const SpellGroup_t getGroup() const {
+		SpellGroup_t getGroup() {
 			return group;
 		}
 		void setGroup(SpellGroup_t g) {
 			group = g;
 		}
-		const SpellGroup_t getSecondaryGroup() const {
+		SpellGroup_t getSecondaryGroup() {
 			return secondaryGroup;
 		}
 		void setSecondaryGroup(SpellGroup_t g) {
@@ -409,7 +411,6 @@ class RuneSpell final : public Action, public Spell
 		bool configureEvent(const pugi::xml_node& node) override;
 
 		bool canUseRune(const Player* player, bool ignoreLevel=false);
-
 		ReturnValue canExecuteAction(const Player* player, const Position& toPos) override;
 		bool hasOwnErrorHandler() override {
 			return true;

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Zomba" nameDescription="Zomba" race="blood" experience="300" speed="180" >
+<monster name="Zomba" nameDescription="Zomba" race="blood" experience="300" speed="180">
 	<health now="300" max="300" />
 	<look type="41" corpse="5986" />
 	<targetchange interval="5000" chance="8" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />

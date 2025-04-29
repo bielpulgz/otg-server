@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Souleater" nameDescription="a souleater" race="undead" experience="1300" speed="105" raceid="675">
+<monster name="Souleater" nameDescription="a souleater" race="undead" experience="1300" speed="105">
 	<health now="1100" max="1100"/>
 	<look type="355" corpse="12631"/>
 	<targetchange interval="4000" chance="10"/>
@@ -21,7 +21,7 @@
 	</flags>
 	<attacks>
 		<attack name="melee" interval="2000" min="0" max="-210"/>
-		<attack name="ice" interval="2000" chance="25" range="7" target="1" min="-50" max="-100">
+		<attack name="ice" interval="2000" chance="100" range="7" target="1" min="-50" max="-100">
 			<attribute key="shootEffect" value="smallice"/>
 		</attack>
 		<attack name="souleater drown" interval="2000" chance="10"/>

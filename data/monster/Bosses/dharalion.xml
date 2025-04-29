@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Dharalion" nameDescription="Dharalion" race="blood" experience="570" speed="240" >
+<monster name="Dharalion" nameDescription="Dharalion" race="blood" experience="570" speed="240">
 	<health now="380" max="380"/>
 	<look type="203" corpse="6011"/>
 	<targetchange interval="5000" chance="8"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>

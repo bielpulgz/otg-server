@@ -1,6 +1,8 @@
  /**
+ * @file definitions.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,17 +19,16 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_DEFINITIONS_H_877452FEC245450C9F96B8FD268D8963
-#define FS_DEFINITIONS_H_877452FEC245450C9F96B8FD268D8963
+#ifndef OT_SRC_DEFINITIONS_H_
+#define OT_SRC_DEFINITIONS_H_
 
-static constexpr auto STATUS_SERVER_NAME = "Otg Server";
-static constexpr auto STATUS_SERVER_VERSION = "1.4";
-static constexpr auto STATUS_SERVER_CREDITS = "TFS Team, Erick Nunes, Leo Pereira, Marson Schneider, LukST, worthdavi, OTX Team, OTG Team";
-static constexpr auto STATUS_SERVER_CONTRIBUTORS = "Johncore, Mark Samman and Mateuskl (Mateus Roberto)";
+static constexpr auto STATUS_SERVER_NAME = "OTG-BR";
+static constexpr auto STATUS_SERVER_VERSION = "1.5";
+static constexpr auto STATUS_SERVER_CREDITS = "Johncore, Erick Nunes, Leonardo Pereira, Marson Schneider, Mark Samman, OTXServer (Mattyx Gomez), OTG Contributors and The Forgotten Server Developers";
 
 static constexpr auto CLIENT_VERSION_MIN = 1100;
-static constexpr auto CLIENT_VERSION_MAX = 1235;
-static constexpr auto CLIENT_VERSION_STR = "12.35";
+static constexpr auto CLIENT_VERSION_MAX = 1240;
+static constexpr auto CLIENT_VERSION_STR = "12.40";
 
 static constexpr auto AUTHENTICATOR_DIGITS = 6U;
 static constexpr auto AUTHENTICATOR_PERIOD = 30U;

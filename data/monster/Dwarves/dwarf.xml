@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Dwarf" nameDescription="a dwarf" race="blood" experience="45" speed="85" manacost="320" raceid="69">
+<monster name="Dwarf" nameDescription="a dwarf" race="blood" experience="45" speed="85" manacost="320">
 	<health now="90" max="90"/>
 	<look type="69" corpse="6007"/>
 	<targetchange interval="4000" chance="0"/>
@@ -38,7 +38,7 @@
 		<item name="hatchet" chance="25000"/>
 		<item name="studded armor" chance="8000"/>
 		<item name="copper shield" chance="10000"/>
-		<item id="2553" chance="10000"/> <!-- pick -->
+		<item id="2553" chance="10000"/><!-- pick -->
 		<item name="letter" chance="8000"/>
 		<item name="leather legs" chance="10000"/>
 		<item name="white mushroom" chance="50000"/>

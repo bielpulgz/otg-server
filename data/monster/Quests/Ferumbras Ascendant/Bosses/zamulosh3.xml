@@ -4,8 +4,7 @@
         <look type="862" head="16" body="12" legs="73" feet="55" addons="0" corpse="25151" />
 	<targetchange interval="5000" chance="8" />
 	<flags>
-
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -43,7 +42,7 @@
 		<voice sentence="I AM ZAMULOSH!"/>
 	</voices>
 	<loot>
-		<item id="25172" chance="1000000"/><!-- silver token -->
+		<item id="25172" chance="100000"/><!-- silver token -->
 		<item id="2148" countmax="200" chance="98000"/><!-- gold coin -->
 		<item id="7632" countmax="5" chance="14000"/><!-- giant shimmering pearl -->
 		<item id="7633" countmax="5" chance="14000"/><!-- giant shimmering pearl -->

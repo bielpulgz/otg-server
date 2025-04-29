@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Xogixath" nameDescription="xogixath" race="fire" experience="21000" speed="190" script="boss.lua">
+<monster name="Xogixath" nameDescription="xogixath" race="fire" experience="21000" speed="190" script="rewardboss.lua">
 	<health now="28000" max="28000"/>
 	<look type="842" head="3" body="16" legs="75" feet="19" addons="2" corpse="13973"/>
 	<targetchange interval="4000" chance="10"/>
@@ -51,7 +51,7 @@
 		<item name="Winged Boots" chance="120"/>
 		<item name="Small Sapphire" countmax="3" chance="48000"/>
 		<item name="Stone Skin Amulet" chance="54000"/>
-		<item name="Golden Mask" chance="6500"/>
+		<item id="36204" chance="6500"/>
 		<item name="Fire Axe" chance="34000"/>
 		<item id="36392" chance="520"/><!-- Enchanted blister Ring -->
 	</loot>

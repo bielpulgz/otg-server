@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Twisted Pooka" nameDescription="a twisted pooka" race="blood" experience="600" speed="115" manacost="450" raceid="1436">
+<monster name="Twisted Pooka" nameDescription="a twisted pooka" race="blood" experience="600" speed="115" manacost="450">
 	<health now="700" max="700"/>
 	<look type="978" corpse="29114"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
-		<flag respawntype="nightandcave"/>
+		<flag respawntype="night"/>
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>

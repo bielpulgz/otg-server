@@ -4,7 +4,7 @@
 
 	local condition = Condition(CONDITION_ATTRIBUTES)
 	condition:setParameter(CONDITION_PARAM_TICKS, 3000)
-	condition:setParameter(CONDITION_PARAM_SKILL_SHIELDPERCENT, 15)
+	condition:setParameter(CONDITION_PARAM_SKILL_SHIELDPERCENT, -100)
 	combat:addCondition(condition)
 
 function onCastSpell(creature, var)

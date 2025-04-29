@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <monster name="Lamassu" nameDescription="a lamassu" race="blood" experience="9000" speed="160">
 	<health now="8700" max="8700"/>
-	<look type="1190" head="50" body="2" legs="0" feet="95" corpse="36108"/>
+	<look type="1190" head="50" body="2" legs="0" feet="95" corpse="36229"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
 		<flag summonable="0"/>

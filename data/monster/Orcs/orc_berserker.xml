@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Orc Berserker" nameDescription="an orc berserker" race="blood" experience="195" speed="125" manacost="590" raceid="8">
+<monster name="Orc Berserker" nameDescription="an orc berserker" race="blood" experience="195" speed="125" manacost="590">
 	<health now="210" max="210"/>
 	<look type="8" corpse="5980"/>
 	<targetchange interval="4000" chance="10"/>
@@ -42,7 +42,7 @@
 		<item name="battle axe" chance="6110"/>
 		<item name="halberd" chance="7280"/>
 		<item name="chain armor" chance="890"/>
-		<item id="2671" chance="10400"/> <!-- ham -->
+		<item name="ham" chance="10400"/>
 		<item name="hunting spear" chance="5000"/>
 		<item name="orc tooth" chance="3000"/>
 		<item name="orcish gear" chance="9400"/>

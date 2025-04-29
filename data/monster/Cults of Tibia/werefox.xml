@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Werefox" nameDescription="a Werefox" race="blood" experience="1600" speed="140" raceid="1549">
+<monster name="Werefox" nameDescription="a Werefox" race="blood" experience="1600" speed="140">
 	<health now="1500" max="1500"/>
 	<look type="1030" corpse="30756"/>
 	<targetchange interval="4000" chance="10"/>
@@ -55,7 +55,7 @@
 	</voices>
 	<loot>
 		<!--Common-->
-		<item name="Gold Coin" countmax="200" chance="405000"/>
+		<item name="Gold Coin" countmax="200" chance="4050"/>
 		<item name="Platinum Coin" countmax="2" chance="4050"/>
 		<!--Uncommon-->
 		<item name="Fox Paw" countmax="2" chance="4050"/>

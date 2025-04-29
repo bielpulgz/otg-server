@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Bretzecutioner" nameDescription="Bretzecutioner" race="undead" experience="3700" speed="270" >
+<monster name="Bretzecutioner" nameDescription="Bretzecutioner" race="undead" experience="3700" speed="270">
 	<health now="5600" max="5600" />
 	<look type="236" corpse="6320" />
 	<targetchange interval="4000" chance="10" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -66,6 +66,6 @@
 		<item id="2125" chance="24000" /><!-- crystal necklace -->
 		<item id="2521" chance="16000" /><!-- dark shield -->
 		<item id="6300" chance="100000" /><!-- death ring -->
-		<item id="5741" chance="500" /><!-- skull helmet -->
+		<item id="5741" chance="4000" /><!-- skull helmet -->
 	</loot>
 </monster>

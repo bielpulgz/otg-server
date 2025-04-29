@@ -1,6 +1,8 @@
 /**
+ * @file outputmessage.cpp
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -26,7 +28,7 @@
 
 extern Scheduler g_scheduler;
 
-const uint16_t OUTPUTMESSAGE_FREE_LIST_CAPACITY = 35767;
+const uint16_t OUTPUTMESSAGE_FREE_LIST_CAPACITY = 2048;
 const std::chrono::milliseconds OUTPUTMESSAGE_AUTOSEND_DELAY {10};
 
 void OutputMessagePool::scheduleSendAll()

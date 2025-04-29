@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Dragon Lord" nameDescription="a dragon lord" race="blood" experience="2100" speed="100" raceid="39">
+<monster name="Dragon Lord" nameDescription="a dragon lord" race="blood" experience="2100" speed="100">
 	<health now="1900" max="1900"/>
 	<look type="39" corpse="5984"/>
 	<targetchange interval="4000" chance="10"/>
@@ -63,7 +63,7 @@
 		<item name="royal helmet" chance="280"/>
 		<item name="tower shield" chance="250"/>
 		<item name="power bolt" countmax="7" chance="6700"/>
-		<item id="2672" countmax="5" chance="80000"/> <!-- dragon ham -->
+		<item name="dragon ham" countmax="5" chance="80000"/>
 		<item name="green mushroom" chance="12000"/>
 		<item name="red dragon scale" chance="1920"/>
 		<item name="red dragon leather" chance="1040"/>

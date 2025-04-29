@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Humongous Fungus" nameDescription="a humongous fungus" race="blood" experience="2600" speed="130" raceid="881">
+<monster name="Humongous Fungus" nameDescription="a humongous fungus" race="blood" experience="2600" speed="130">
 	<health now="3400" max="3400" />
 	<look type="488" corpse="18382" />
 	<targetchange interval="4000" chance="15" />
@@ -60,7 +60,7 @@
 	</voices>
 	<loot>
 		<item name="gold coin" countmax="200" chance="100000" />
-		<item name="platinum coin" countmax="6" chance="999900" />
+		<item name="platinum coin" countmax="6" chance="9999" />
 		<item name="mushroom pie" countmax="3" chance="17130" />
 		<item name="brown piece of cloth" chance="15120" />
 		<item name="drill bolt" countmax="15" chance="15120" />

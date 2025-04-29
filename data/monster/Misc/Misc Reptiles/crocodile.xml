@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Crocodile" nameDescription="a crocodile" race="blood" experience="40" speed="100" manacost="350" raceid="119">
+<monster name="Crocodile" nameDescription="a crocodile" race="blood" experience="40" speed="78" manacost="350">
 	<health now="105" max="105" />
 	<look type="119" corpse="6046" />
 	<targetchange interval="5000" chance="0" />
@@ -32,7 +32,7 @@
 	</elements>
 	<loot>
 		<item name="gold coin" countmax="10" chance="50000" />
-		<item id="2671" chance="40000" /> <!-- ham -->
+		<item name="ham" chance="40000" />
 		<item name="crocodile boots" chance="100" />
 		<item name="piece of crocodile leather" chance="20180" />
 	</loot>

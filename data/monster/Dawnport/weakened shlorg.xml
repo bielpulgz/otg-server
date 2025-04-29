@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Weakened Shlorg" nameDescription="Weakened Shlorg" race="venom" experience="6500" speed="270" >
+<monster name="Weakened Shlorg" nameDescription="Weakened Shlorg" race="venom" experience="6500" speed="270" script="rewardboss.lua">
 	<health now="10000" max="10000"/>
 	<look type="565" corpse="21299"/>
 	<targetchange interval="60000" chance="0"/>
 	<flags>
+        <flag rewardboss="1" />
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -54,8 +55,8 @@
 		<item id="21400" chance="3000"/><!-- silver raid token -->
 		<item id="2148" countmax="105" chance="100000"/><!-- gold coin -->
 		<item id="2152" countmax="8" chance="100000"/><!-- platinum coin -->
-		<item id="21705" chance="100"/><!-- glass of goo -->
-		<item id="21706" chance="100"/><!-- goo shell -->
+		<item id="21705" chance="3000"/><!-- glass of goo -->
+		<item id="21706" chance="3000"/><!-- goo shell -->
 		<item id="2154" chance="10000"/><!-- yellow gem -->
 		<item id="2155" chance="10000"/><!-- green gem -->
 		<item id="8473" countmax="3" chance="10000"/><!-- ultimate health potion -->

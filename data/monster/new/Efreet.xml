@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Efreet" nameDescription="an efreet" race="blood" experience="410" speed="117" raceid="103">
+<monster name="Efreet" nameDescription="an efreet" race="blood" experience="410" speed="117">
 	<health now="550" max="550" />
 	<look type="103" corpse="7349" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />

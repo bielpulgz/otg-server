@@ -1,6 +1,8 @@
 /**
+ * @file npc.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_NPC_H_B090D0CB549D4435AFA03647195D156F
-#define FS_NPC_H_B090D0CB549D4435AFA03647195D156F
+#ifndef OT_SRC_NPC_H_
+#define OT_SRC_NPC_H_
 
 #include "creature.h"
 #include "luascript.h"
@@ -74,7 +76,7 @@ class NpcScriptInterface final : public LuaScriptInterface
 class NpcEventsHandler
 {
 	public:
-		NpcEventsHandler(const std::string& file, Npc* npc);
+		NpcEventsHandler(const std::string& file, Npc* npcEvent);
 
 		void onCreatureAppear(Creature* creature);
 		void onCreatureDisappear(Creature* creature);
@@ -124,12 +126,6 @@ class Npc final : public Creature
 		void setID() final {
 			if (id == 0) {
 				id = npcAutoID++;
-				setCombatID();
-			}
-		}
-		void setCombatID() final {
-			if (combatid == 0) {
-				combatid = id;
 			}
 		}
 
@@ -146,9 +142,11 @@ class Npc final : public Creature
 		const std::string& getName() const final {
 			return name;
 		}
+
 		void setName(std::string newName) {
 			name = newName;
 		}
+
 		const std::string& getNameDescription() const final {
 			return name;
 		}
@@ -244,7 +242,7 @@ class Npc final : public Creature
 
 		uint32_t walkTicks;
 		int32_t focusCreature;
-		int32_t masterRadius = 2;
+		int32_t masterRadius;
 
 		uint8_t speechBubble;
 

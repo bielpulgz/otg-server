@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="The Handmaiden" nameDescription="the Handmaiden" race="blood" experience="7500" speed="450" >
+<monster name="The Handmaiden" nameDescription="the Handmaiden" race="blood" experience="7500" speed="450">
 	<health now="19500" max="19500"/>
 	<look type="230" corpse="6312"/>
 	<targetchange interval="5000" chance="8"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>

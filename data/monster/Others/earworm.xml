@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <monster name="Earworm" nameDescription="a earworm" race="blood" experience="2000" speed="155">
 	<health now="4000" max="4000"/>
-	<look type="26" corpse="36376"/>
+	<look type="26" corpse="36497"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
 		<flag summonable="0"/>
@@ -42,7 +42,7 @@
 		<item name="Lump of Dirt" chance="42000"/>
 		<item name="Green Memory Shard" chance="35000"/>
 		<item name="Blue Memory Shard" chance="35000"/>
-		<item name="Violet Memory Shard" chance="32000"/> <!-- Violet Memory Shard -->
+		<item name="Violet Memory Shard" chance="32000"/>
 		<item name="Terra Amulet" chance="26000"/>
 		<item name="Terra hood" chance="16500"/>
 		<item name="Sacred Tree Amulet" chance="12300"/>

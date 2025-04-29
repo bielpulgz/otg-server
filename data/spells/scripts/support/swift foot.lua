@@ -1,7 +1,6 @@
 local combat = Combat()
 combat:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_MAGIC_GREEN)
 combat:setParameter(COMBAT_PARAM_AGGRESSIVE, 0)
-combat:setParameter(COMBAT_PARAM_DISPEL, CONDITION_PARALYZE)
 
 local exhaust = Condition(CONDITION_EXHAUST_COMBAT)
 exhaust:setParameter(CONDITION_PARAM_TICKS, 10000)

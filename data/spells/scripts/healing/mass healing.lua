@@ -1,18 +1,18 @@
 function onTargetCreature(creature, target)
 	local player = creature:getPlayer()
-	local min = (((player:getLevel() / 5) + (player:getMagicLevel() * 10.6) + 115)) * 1.05
-	local max = ((player:getLevel() / 5) + (player:getMagicLevel() * 12.6) + 130) * 0.93
+	local min = ((player:getLevel() / 5) + (player:getMagicLevel() * 4.6) + 100)
+	local max = ((player:getLevel() / 5) + (player:getMagicLevel() * 9.6) + 125)
 
 	local bosses = {"leiden", "ravennous hunger", "dorokoll the mystic", "eshtaba the conjurer", "eliz the unyielding", "mezlon the defiler", "malkhar deathbringer", "containment crystal"}
 	local master = target:getMaster()
 	if target:isMonster() and not master or master and master:isMonster() then
 		if (not isInArray(bosses, target:getName():lower())) then
-			return min, max
+			return true
 		end
 	end
 
-	doTargetCombat(creature:getId(), target, COMBAT_HEALING, creature:getSpellDamage(min, max, true), CONST_ME_NONE, ORIGIN_NONE)
-	return creature:getSpellDamage(min, max, true)
+	doTargetCombatHealth(0, target, COMBAT_HEALING, min, max, CONST_ME_NONE)
+	return true
 end
 
 local combat = Combat()

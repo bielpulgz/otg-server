@@ -1,47 +1,3 @@
-local function sendSquare(cid, color, sec, n, send)
-    local creature = Creature(cid)
-    if not creature then
-        return false
-    end
-    if n <= sec then
-        local pos = creature:getPosition()
-        local msg = NetworkMessage()
-        msg:addByte(0x93)
-        msg:addU32(cid)
-        msg:addByte(0x01)
-        msg:addByte(color)
-        for i = 1, #send do
-            if pos:getDistance(send[i]:getPosition()) <= 7 then
-                msg:sendToPlayer(send[i])
-            end
-        end
-        addEvent(sendSquare, 1000, cid, color, sec, n + 1, send)
-    end
-end
-
-function Creature:sendSquare(color, sec, canSee, n)
-    --// Creature:sendSquare(color, sec[, canSee])
-    local pos = self:getPosition()
-
-    --// Create a send table if canSee is an argument (otherwise uses spectators)
-    local specs = Game.getSpectators(pos, false, true, 0, 8, 0, 6)
-    local send = {}
-    if canSee then
-        if type(canSee) == 'table' then
-            for i = 1, #specs do
-                if isInArray(canSee, specs[i]:getName()) then
-                    send[#send+1] = specs[i]
-                end
-            end
-        else
-            return print('Error [Creature:sendSquare] invalid argument type for canSee')
-        end
-    end
-    send = (next(send) and send) or specs
-    sendSquare(self:getId(), color, sec, (n and n+1) or 0, send)
-    return true
-end
-
 function Creature.getClosestFreePosition(self, position, maxRadius, mustBeReachable)
 	maxRadius = maxRadius or 1
 
@@ -63,7 +19,7 @@ function Creature.getClosestFreePosition(self, position, maxRadius, mustBeReacha
 			end
 
 			local tile = Tile(checkPosition)
-			if tile:getCreatureCount() == 0 and not tile:hasProperty(CONST_PROP_IMMOVABLEBLOCKSOLID) and
+			if tile and tile:getCreatureCount() == 0 and not tile:hasProperty(CONST_PROP_IMMOVABLEBLOCKSOLID) and
 				(not mustBeReachable or self:getPathTo(checkPosition)) then
 				return checkPosition
 			end
@@ -72,13 +28,12 @@ function Creature.getClosestFreePosition(self, position, maxRadius, mustBeReacha
 	return Position()
 end
 
-
-function Creature.getMonster(self)
-	return self:isMonster() and self or nil
-end
-
 function Creature.getPlayer(self)
 	return self:isPlayer() and self or nil
+end
+
+function Creature.isContainer(self)
+	return false
 end
 
 function Creature.isItem(self)
@@ -94,6 +49,10 @@ function Creature.isNpc(self)
 end
 
 function Creature.isPlayer(self)
+	return false
+end
+
+function Creature.isTeleport(self)
 	return false
 end
 
@@ -135,17 +94,6 @@ function Creature:setItemOutfit(item, time)
 	return true
 end
 
-local function smallFixSummon(cid, mid)
-	local m = Monster(cid)
-	local p = Player(cid)
-	if not p or not  m then
-		return
-	end
-	local last = m:getPosition()
-	m:teleportTo(p:getPosition(), false)
-	m:teleportTo(last, false)
-end
-
 function Creature:addSummon(monster)
 	local summon = Monster(monster)
 	if not summon then
@@ -157,7 +105,8 @@ function Creature:addSummon(monster)
 	summon:setDropLoot(false)
 	summon:setSkillLoss(false)
 	summon:setMaster(self)
-	addEvent(smallFixSummon, 200, summon:getId(), self:getId())
+	summon:getPosition():notifySummonAppear(summon)
+
 	return true
 end
 
@@ -169,8 +118,8 @@ function Creature:removeSummon(monster)
 
 	summon:setTarget(nil)
 	summon:setFollowCreature(nil)
-	summon:setDropLoot(false)
-	summon:setSkillLoss(false)
+	summon:setDropLoot(true)
+	summon:setSkillLoss(true)
 	summon:setMaster(nil)
 
 	return true
@@ -182,7 +131,7 @@ function Creature:addDamageCondition(target, type, list, damage, period, rounds)
 	end
 
 	local condition = Condition(type)
-	condition:setParameter(CONDITION_PARAM_OWNER, self:getCombatId())
+	condition:setParameter(CONDITION_PARAM_OWNER, self:getId())
 	condition:setParameter(CONDITION_PARAM_DELAYED, true)
 
 	if list == DAMAGELIST_EXPONENTIAL_DAMAGE then
@@ -216,5 +165,12 @@ function Creature:addDamageCondition(target, type, list, damage, period, rounds)
 	end
 
 	target:addCondition(condition)
+	return true
+end
+
+function Creature:canAccessPz()
+	if self:isMonster() or (self:isPlayer() and self:isPzLocked()) then
+		return false
+	end
 	return true
 end

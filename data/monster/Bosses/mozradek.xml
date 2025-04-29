@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Mozradek" nameDescription="Mozradek" race="fire" experience="21000" speed="210" script="boss.lua">
+<monster name="Mozradek" nameDescription="Mozradek" race="fire" experience="21000" speed="210" script="rewardboss.lua">
 	<health now="28000" max="28000"/>
 	<look type="240" corpse="13973"/>
 	<targetchange interval="4000" chance="10"/>
@@ -41,7 +41,7 @@
 	</immunities>
 	<loot>
 	    <item name="Red Gem" chance="60000"/>
-		<item name="Golden Mask" chance="9000"/>
+		<item id="36204" chance="9000"/>
 		<item name="Sea Horse Figurine" chance="6000"/>
 		<item id="36392" chance="3500"/><!-- Enchanted blister Ring -->
 	</loot>	

@@ -137,20 +137,6 @@ registerMonsterType.changeTarget = function(mtype, mask)
 		end
 	end
 end
-registerMonsterType.immunityDamage = function(mtype, mask)
-	if mask.immunityDamage then
-		if mask.immunityDamage then
-			mtype:combatImmunities(mask.immunityDamage)
-		end
-	end
-end
-registerMonsterType.immunityCondition = function(mtype, mask)
-	if mask.immunityCondition then
-		if mask.immunityCondition then
-			mtype:conditionImmunities(mask.immunityCondition)
-		end
-	end
-end
 registerMonsterType.voices = function(mtype, mask)
 	if type(mask.voices) == "table" then
 		local interval; local chance;
@@ -183,12 +169,9 @@ registerMonsterType.events = function(mtype, mask)
 end
 registerMonsterType.loot = function(mtype, mask)
 	if type(mask.loot) == "table" then
-		local lootError = false
 		for _, loot in pairs(mask.loot) do
 			local parent = Loot()
-			if not parent:setId(loot.id) then
-				lootError = true
-			end
+			parent:setId(loot.id)
 			if loot.chance then
 				parent:setChance(loot.chance)
 			end
@@ -204,18 +187,10 @@ registerMonsterType.loot = function(mtype, mask)
 			if loot.text or loot.description then
 				parent:setDescription(loot.text or loot.description)
 			end
-			if loot.unique then
-				loot:setUnique(loot.unique)
-			end
-			if loot.raid then
-				loot:setRaid(loot.raid)
-			end
 			if loot.child then
 				for _, children in pairs(loot.child) do
 					local child = Loot()
-					if not child:setId(children.id) then
-						lootError = true
-					end
+					child:setId(children.id)
 					if children.chance then
 						child:setChance(children.chance)
 					end
@@ -231,19 +206,10 @@ registerMonsterType.loot = function(mtype, mask)
 					if children.text or children.description then
 						child:setDescription(children.text or children.description)
 					end
-					if children.unique then
-						child:setUnique(children.unique)
-					end
-					if children.raid then
-						child:setRaid(children.raid)
-					end
 					parent:addChildLoot(child)
 				end
 			end
 			mtype:addLoot(parent)
-		end
-		if lootError then
-			print("[Warning - end] Monster: \"".. mtype:name() .. "\" loot could not correctly be load.")
 		end
 	end
 end

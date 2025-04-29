@@ -1,6 +1,8 @@
 /**
+ * @file enums.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,72 +19,13 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_ENUMS_H_003445999FEE4A67BCECBE918B0124CE
-#define FS_ENUMS_H_003445999FEE4A67BCECBE918B0124CE
+#ifndef OT_SRC_ENUMS_H_
+#define OT_SRC_ENUMS_H_
 
 enum RuleViolationType_t : uint8_t {
 	REPORT_TYPE_NAME = 0,
 	REPORT_TYPE_STATEMENT = 1,
 	REPORT_TYPE_BOT = 2
-};
-
-enum CoinType_t : uint8_t {
-	COIN_TYPE_DEFAULT = 0,
-	COIN_TYPE_TRANSFERABLE = 1,
-	COIN_TYPE_TOURNAMENT = 2,
-};
-
-enum ResourceType_t : uint8_t {
-	RESOURCETYPE_BANK_GOLD = 0,
-	RESOURCETYPE_INVENTORY_GOLD = 1,
-	RESOURCETYPE_PREY_BONUS_REROLLS = 10, 
-	RESOURCETYPE_REWARD = 20, 
-
-	RESOURCETYPE_ALL = 255, // Just used internally
-};
-
-enum MessageDialog_t : uint8_t {
-	MESSAGEDIALOG_IMBUEMENT_SUCCESS = 0,
-	MESSAGEDIALOG_IMBUEMENT_ERROR = 1,
-	MESSAGEDIALOG_IMBUEMENT_ROLL_FAILED = 2,
-	MESSAGEDIALOG_IMBUING_STATION_NOT_FOUND = 3,
-	MESSAGEDIALOG_CLEARING_CHARM_SUCCESS = 10,
-	MESSAGEDIALOG_CLEARING_CHARM_ERROR = 11,
-	MESSAGEDIALOG_PREY_MESSAGE = 20,
-	MESSAGEDIALOG_PREY_ERROR = 21,
-};
-
-enum LootType_t : uint8_t
-{
-	LOOT_ARMOR = 1,
-	LOOT_AMULET = 2,
-	LOOT_BOOTS = 3,
-	LOOT_CONTAINER = 4,
-	LOOT_DECORATION = 5, // FALTA
-	LOOT_FOOD = 6, // FALTA
-	LOOT_HELMET = 7,
-	LOOT_LEGS = 8,
-	LOOT_OTHER = 9, // FALTA
-	LOOT_POTION = 10, // FALTA
-	LOOT_RING = 11,
-	LOOT_RUNE = 12,
-	LOOT_SHIELD = 13,
-	LOOT_TOOLS = 14, // FALTA
-	LOOT_VALUABLES = 15, // FALTA
-	LOOT_AMMO = 16,
-	LOOT_AXE = 17,
-	LOOT_CLUB = 18,
-	LOOT_DISTANCE = 19,
-	LOOT_SWORD = 20,
-	LOOT_WAND = 21,
-
-	LOOT_CREATURE_PRODUCT = 24, // FALTA
-
-	LOOT_RETRIEVE = 27, // FALTA
-	LOOT_GOLD = 30, // FALTA
-	LOOT_UNASSIGNED = 31,
-
-	LOOT_LAST = LOOT_UNASSIGNED
 };
 
 enum RuleViolationReasons_t : uint8_t {
@@ -150,12 +93,9 @@ enum itemAttrTypes : uint32_t {
 	ITEM_ATTRIBUTE_DOORID = 1 << 22,
 	ITEM_ATTRIBUTE_SPECIAL = 1 << 23,
 	ITEM_ATTRIBUTE_IMBUINGSLOTS = 1 << 24,
-	ITEM_ATTRIBUTE_QUICKLOOTCONTAINER = 1 << 25,
-	ITEM_ATTRIBUTE_OPENED = 1 << 26,
-	ITEM_ATTRIBUTE_DECAYTO = 1 << 27,
-	ITEM_ATTRIBUTE_IMBUED = 1 << 28,
-	ITEM_ATTRIBUTE_WRAPID = 1 << 29,
-
+	ITEM_ATTRIBUTE_OPENCONTAINER = 1 << 25,
+	ITEM_ATTRIBUTE_UNMOVEABLEDITEM = 1 << 26,
+	ITEM_ATTRIBUTE_WRAPCONTAINER = 1 << 27,
 	ITEM_ATTRIBUTE_CUSTOM = 1U << 31
 };
 
@@ -198,6 +138,7 @@ enum CreatureType_t : uint8_t {
 	CREATURETYPE_SUMMONPLAYER = 3,
 	CREATURETYPE_SUMMON_OWN = 3,
 	CREATURETYPE_SUMMON_OTHERS = 4,
+    CREATURETYPE_MONSTER_HIDDEN = 5,
 };
 
 enum OperatingSystem_t : uint8_t {
@@ -207,23 +148,20 @@ enum OperatingSystem_t : uint8_t {
 	CLIENTOS_WINDOWS = 2,
 	CLIENTOS_FLASH = 3,
 	CLIENTOS_NEW_WINDOWS = 5,
-	CLIENTOS_NEW_MAC = 6,
-	CLIENTOS_NEW_LINUX = 7,
 
 	CLIENTOS_OTCLIENT_LINUX = 10,
 	CLIENTOS_OTCLIENT_WINDOWS = 11,
 	CLIENTOS_OTCLIENT_MAC = 12,
-	
-		// by default OTCv8 uses CLIENTOS_WINDOWS for backward compatibility
-	// for correct value enable g_game.enableFeature(GameExtendedOpcode)
-	// in modules/game_features/features.lua
-	CLIENTOS_OTCLIENTV8_LINUX = 20,
-	CLIENTOS_OTCLIENTV8_WINDOWS = 21,
-	CLIENTOS_OTCLIENTV8_MAC = 22,
-	CLIENTOS_OTCLIENTV8_ANDROID = 23,
-	CLIENTOS_OTCLIENTV8_IOS = 24,
-	CLIENTOS_OTCLIENTV8_WEB = 25
-	
+
+	// by default OTCv8 uses CLIENTOS_WINDOWS for backward compatibility
+ 	// for correct value enable g_game.enableFeature(GameExtendedOpcode)
+ 	// in modules/game_features/features.lua
+ 	CLIENTOS_OTCLIENTV8_LINUX = 20,
+ 	CLIENTOS_OTCLIENTV8_WINDOWS = 21,
+ 	CLIENTOS_OTCLIENTV8_MAC = 22,
+ 	CLIENTOS_OTCLIENTV8_ANDROID = 23,
+ 	CLIENTOS_OTCLIENTV8_IOS = 24,
+ 	CLIENTOS_OTCLIENTV8_WEB = 25
 };
 
 enum SpellGroup_t : uint8_t {
@@ -233,43 +171,20 @@ enum SpellGroup_t : uint8_t {
 	SPELLGROUP_SUPPORT = 3,
 	SPELLGROUP_SPECIAL = 4,
 	SPELLGROUP_CONJURE = 5,
-	SPELLGROUP_ULTIMATE = 6,
 };
 
 // New Prey
-enum PreySlotNum_t : uint8_t
-{
-	PREY_SLOTNUM_FIRST = 0,
-	PREY_SLOTNUM_SECOND = 1,
-	PREY_SLOTNUM_THIRD = 2,
+enum ResourceType_t : uint8_t {
+	RESOURCETYPE_BANK_GOLD = 0,
+	RESOURCETYPE_INVENTORY_GOLD = 1,
+	RESOURCETYPE_PREY_BONUS_REROLLS = 10,
+
+	RESOURCETYPE_ALL = 255, // Just used internally
 };
 
-enum PreySlotStatus_t : uint8_t
-{
-	PREY_SLOT_LOCKED = 0,
-	PREY_SLOT_UNLOCKED = 1,
-};
-
-
-enum PreyState_t : uint8_t
-{
-	PREY_STATE_LOCKED = 0,
-	PREY_STATE_INACTIVE = 1,
-	PREY_STATE_ACTIVE = 2,
-	PREY_STATE_SELECTION = 3,
-	PREY_STATE_SELECTION_CHANGE_MONSTER = 4,
-};
-
-enum PreyBonusType_t : uint8_t
-{
-	PREY_BONUS_DAMAGE_BOOST = 0,
-	PREY_BONUS_DAMAGE_REDUCTION = 1,
-	PREY_BONUS_XP_BONUS = 2,
-	PREY_BONUS_IMPROVED_LOOT = 3,
-	PREY_BONUS_NONE = 4,
-
-	PREY_BONUS_FIRST = PREY_BONUS_DAMAGE_BOOST,
-	PREY_BONUS_LAST = PREY_BONUS_IMPROVED_LOOT,
+enum MessageDialog_t : uint8_t {
+	MESSAGEDIALOG_PREY_MESSAGE = 0,
+	MESSAGEDIALOG_PREY_ERROR = 1,
 };
 
 enum SpellType_t : uint8_t {
@@ -330,7 +245,6 @@ enum CombatParam_t {
 enum CallBackParam_t {
 	CALLBACK_PARAM_LEVELMAGICVALUE,
 	CALLBACK_PARAM_SKILLVALUE,
-	CALLBACK_PARAM_SKILLVALUE_EXTENDED,
 	CALLBACK_PARAM_TARGETTILE,
 	CALLBACK_PARAM_TARGETCREATURE,
 };
@@ -389,9 +303,9 @@ enum ConditionParam_t {
 	CONDITION_PARAM_SKILL_MANA_LEECH_CHANCE = 51,
 	CONDITION_PARAM_SKILL_MANA_LEECH_AMOUNT = 52,
 	CONDITION_PARAM_DISABLE_DEFENSE = 53,
-	CONDITION_PARAM_STAMINAGAIN = 54,
-	CONDITION_PARAM_STAMINATICKS = 55,
-
+	CONDITION_PARAM_STAT_CAPACITYPERCENT = 54,
+	CONDITION_PARAM_STAMINAGAIN = 55,
+	CONDITION_PARAM_STAMINATICKS = 56
 };
 
 enum BlockType_t : uint8_t {
@@ -428,16 +342,16 @@ enum stats_t {
 	STAT_MAXMANAPOINTS,
 	STAT_SOULPOINTS, // unused
 	STAT_MAGICPOINTS,
+	STAT_CAPACITY,
 
 	STAT_FIRST = STAT_MAXHITPOINTS,
-	STAT_LAST = STAT_MAGICPOINTS
+	STAT_LAST = STAT_CAPACITY
 };
 
 enum formulaType_t {
 	COMBAT_FORMULA_UNDEFINED,
 	COMBAT_FORMULA_LEVELMAGIC,
 	COMBAT_FORMULA_SKILL,
-	COMBAT_FORMULA_SKILL_EXTENDED,
 	COMBAT_FORMULA_DAMAGE,
 };
 
@@ -456,7 +370,7 @@ enum ConditionType_t {
 	CONDITION_MANASHIELD = 1 << 9,
 	CONDITION_INFIGHT = 1 << 10,
 	CONDITION_DRUNK = 1 << 11,
-	CONDITION_EXHAUST = 1 << 12, // unused
+	CONDITION_EXHAUST_WEAPON = 1 << 12, // unused
 	CONDITION_REGENERATION = 1 << 13,
 	CONDITION_SOUL = 1 << 14,
 	CONDITION_DROWN = 1 << 15,
@@ -473,7 +387,9 @@ enum ConditionType_t {
 	CONDITION_SPELLCOOLDOWN = 1 << 26,
 	CONDITION_SPELLGROUPCOOLDOWN = 1 << 27,
 	CONDITION_STAMINAREGEN = 1 << 28,
-	CONDITION_SOULBONUS = 1 << 29
+	CONDITION_SOULBONUS = 1 << 29,
+	CONDITION_EXHAUST = 1 << 30, //NON-DEFAULT /*leu
+	CONDITION_SUMMON = 1 << 31, // stay here for add new summons system
 };
 
 enum ConditionId_t : int8_t {
@@ -524,7 +440,6 @@ enum ReturnValue {
 	RETURNVALUE_FIRSTGODOWNSTAIRS,
 	RETURNVALUE_FIRSTGOUPSTAIRS,
 	RETURNVALUE_CONTAINERNOTENOUGHROOM,
-	RETURNVALUE_ONLYAMMOINQUIVER,
 	RETURNVALUE_NOTENOUGHCAPACITY,
 	RETURNVALUE_CANNOTPICKUP,
 	RETURNVALUE_THISISIMPOSSIBLE,
@@ -553,7 +468,6 @@ enum ReturnValue {
 	RETURNVALUE_CREATUREISNOTREACHABLE,
 	RETURNVALUE_TURNSECUREMODETOATTACKUNMARKEDPLAYERS,
 	RETURNVALUE_YOUNEEDPREMIUMACCOUNT,
-	RETURNVALUE_YOUNEEDVIPACCOUNT,
 	RETURNVALUE_YOUNEEDTOLEARNTHISSPELL,
 	RETURNVALUE_YOURVOCATIONCANNOTUSETHISSPELL,
 	RETURNVALUE_YOUNEEDAWEAPONTOUSETHISSPELL,
@@ -587,8 +501,6 @@ enum ReturnValue {
 	RETURNVALUE_PREYINTERNALERROR,
 	RETURNVALUE_NOTENOUGHMONEYFORREROLL,
 	RETURNVALUE_NOAVAILABLEBONUSREROLL,
-	RETURNVALUE_YOUDONTHAVEREQUIREDPROFESSION,
-	RETURNVALUE_CHOSENMONSTERISALREADYINUSE,
 };
 
 enum SpeechBubble_t
@@ -633,16 +545,6 @@ enum MapMark_t
 	MAPMARK_GREENSOUTH = 19,
 };
 
-enum StreakBonus_t : int8_t {
-	STREAKBONUS_NOBONUS = 0,
-	STREAKBONUS_HEALTHBONUS = 1,
-	STREAKBONUS_MANABONUS = 2,
-	STREAKBONUS_STAMINABONUS = 3,
-	STREAKBONUS_DOUBLEHEALTHBONUS = 4,
-	STREAKBONUS_DOUBLEMANABONUS = 5,
-	STREAKBONUS_SOULBONUS = 6
-};
-
 enum MagicEffectsType_t : uint8_t {
 	MAGIC_EFFECTS_END_LOOP = 0,//ends magic effect loop
 	MAGIC_EFFECTS_DELTA = 1,//needs uint8_t delta after type to adjust position
@@ -652,45 +554,68 @@ enum MagicEffectsType_t : uint8_t {
 	MAGIC_EFFECTS_CREATE_DISTANCEEFFECT_REVERSED = 5,//needs uint8_t and deltaX(int8_t), deltaY(int8_t) after type
 };
 
-enum QuickLootFilter_t
-{
-	QUICKLOOTFILTER_SKIPPEDLOOT = 0,
-	QUICKLOOTFILTER_ACCEPTEDLOOT = 1,
+enum PremiumTrigger_t : uint8_t {
+	PREMIUM_TRIGGER_PREMIUM_AREAS = 0,
+	PREMIUM_TRIGGER_OFFLINE_TRAINING = 1,
+	PREMIUM_TRIGGER_SPELLS = 2,
+	PREMIUM_TRIGGER_INSTANT_TRAVEL = 3,
+	PREMIUM_TRIGGER_TAME_MOUNTS = 4,
+	PREMIUM_TRIGGER_OUTFITS = 5,
+	PREMIUM_TRIGGER_XPBOOST = 6,
+	PREMIUM_TRIGGER_PROMOTION_DEATH = 7,
+	PREMIUM_TRIGGER_MARKET = 8,
+	PREMIUM_TRIGGER_DECORATIONS = 9,
+	PREMIUM_TRIGGER_EXTENDED_VIPLIST = 10,
+	PREMIUM_TRIGGER_EXTENDED_DEPOT = 11,
+	PREMIUM_TRIGGER_PRIVATE_CHATS = 12,
+	PREMIUM_TRIGGER_PROMOTION_STRONGER = 13,
+	PREMIUM_TRIGGER_PREMIUM_EXPIRATIONS = 14,
+	PREMIUM_TRIGGER_PVP_ARENAS = 15,
+	PREMIUM_TRIGGER_FREE_PREY_SLOTS = 16,
+	PREMIUM_TRIGGER_IMBUING = 17,
+	PREMIUM_TRIGGER_DAILY_REWARDS = 18,
+	PREMIUM_TRIGGER_ANALYTICS = 19,
+	PREMIUM_TRIGGER_EXCLUSIVE_QUESTS = 20,
+	PREMIUM_TRIGGER_PRIORITY_LOGIN = 21,
+	PREMIUM_TRIGGER_MIGHTY_SUMMON = 22,
 };
 
-enum ObjectCategory_t
-{
-	OBJECTCATEGORY_NONE = 0,
-	OBJECTCATEGORY_ARMORS = 1,
-	OBJECTCATEGORY_NECKLACES = 2,
-	OBJECTCATEGORY_BOOTS = 3,
-	OBJECTCATEGORY_CONTAINERS = 4,
-	OBJECTCATEGORY_DECORATION = 5,
-	OBJECTCATEGORY_FOOD = 6,
-	OBJECTCATEGORY_HELMETS = 7,
-	OBJECTCATEGORY_LEGS = 8,
-	OBJECTCATEGORY_OTHERS = 9,
-	OBJECTCATEGORY_POTIONS = 10,
-	OBJECTCATEGORY_RINGS = 11,
-	OBJECTCATEGORY_RUNES = 12,
-	OBJECTCATEGORY_SHIELDS = 13,
-	OBJECTCATEGORY_TOOLS = 14,
-	OBJECTCATEGORY_VALUABLES = 15,
-	OBJECTCATEGORY_AMMO = 16,
-	OBJECTCATEGORY_AXES = 17,
-	OBJECTCATEGORY_CLUBS = 18,
-	OBJECTCATEGORY_DISTANCEWEAPONS = 19,
-	OBJECTCATEGORY_SWORDS = 20,
-	OBJECTCATEGORY_WANDS = 21,
-	OBJECTCATEGORY_PREMIUMSCROLLS = 22, // not used in quickloot
-	OBJECTCATEGORY_TIBIACOINS = 23, // not used in quickloot
-	OBJECTCATEGORY_CREATUREPRODUCTS = 24,
-	OBJECTCATEGORY_STASHRETRIEVE = 27,
-	OBJECTCATEGORY_GOLD = 30,
-	OBJECTCATEGORY_DEFAULT = 31, // unassigned loot
+enum InspectObjectTypes : uint8_t {
+	INSPECT_NORMALOBJECT = 0,
+	INSPECT_NPCTRADE = 1,
+	INSPECT_UNKNOWN = 2,
+	INSPECT_CYCLOPEDIA = 3
+};
 
-	OBJECTCATEGORY_FIRST = OBJECTCATEGORY_ARMORS,
-	OBJECTCATEGORY_LAST = OBJECTCATEGORY_DEFAULT,
+enum CyclopediaCharacterInfoType_t : uint8_t {
+	CYCLOPEDIA_CHARACTERINFO_BASEINFORMATION = 0,
+	CYCLOPEDIA_CHARACTERINFO_GENERALSTATS = 1,
+	CYCLOPEDIA_CHARACTERINFO_COMBATSTATS = 2,
+	CYCLOPEDIA_CHARACTERINFO_RECENTDEATHS = 3,
+	CYCLOPEDIA_CHARACTERINFO_RECENTPVPKILLS = 4,
+	CYCLOPEDIA_CHARACTERINFO_ACHIEVEMENTS = 5,
+	CYCLOPEDIA_CHARACTERINFO_ITEMSUMMARY = 6,
+	CYCLOPEDIA_CHARACTERINFO_OUTFITSMOUNTS = 7,
+	CYCLOPEDIA_CHARACTERINFO_STORESUMMARY = 8,
+	CYCLOPEDIA_CHARACTERINFO_INSPECTION = 9,
+	CYCLOPEDIA_CHARACTERINFO_BADGES = 10,
+	CYCLOPEDIA_CHARACTERINFO_TITLES = 11
+};
+
+enum CyclopediaCharacterInfo_OutfitType_t : uint8_t {
+	CYCLOPEDIA_CHARACTERINFO_OUTFITTYPE_NONE = 0,
+	CYCLOPEDIA_CHARACTERINFO_OUTFITTYPE_QUEST = 1,
+	CYCLOPEDIA_CHARACTERINFO_OUTFITTYPE_STORE = 2
+};
+
+enum StreakBonus_t : int8_t {
+	STREAKBONUS_NOBONUS = 0,
+	STREAKBONUS_HEALTHBONUS = 1,
+	STREAKBONUS_MANABONUS = 2,
+	STREAKBONUS_STAMINABONUS = 3,
+	STREAKBONUS_DOUBLEHEALTHBONUS = 4,
+	STREAKBONUS_DOUBLEMANABONUS = 5,
+	STREAKBONUS_SOULBONUS = 6
 };
 
 struct Outfit_t {
@@ -708,7 +633,7 @@ struct LightInfo {
 	uint8_t level = 0;
 	uint8_t color = 0;
 	constexpr LightInfo() = default;
-	constexpr LightInfo(uint8_t level, uint8_t color) : level(level), color(color) {}
+	constexpr LightInfo(uint8_t newLevel, uint8_t newColor) : level(newLevel), color(newColor) {}
 };
 
 struct ShopInfo {
@@ -725,8 +650,8 @@ struct ShopInfo {
 		sellPrice = 0;
 	}
 
-	ShopInfo(uint16_t itemId, int32_t subType = 0, uint32_t buyPrice = 0, uint32_t sellPrice = 0, std::string realName = "")
-		: itemId(itemId), subType(subType), buyPrice(buyPrice), sellPrice(sellPrice), realName(std::move(realName)) {}
+	ShopInfo(uint16_t newItemId, int32_t newSubType = 0, uint32_t newBuyPrice = 0, uint32_t newSellPrice = 0, std::string newRealName = "")
+		: itemId(newItemId), subType(newSubType), buyPrice(newBuyPrice), sellPrice(newSellPrice), realName(std::move(newRealName)) {}
 };
 
 struct MarketOffer {
@@ -786,8 +711,8 @@ struct ModalWindow
 	uint8_t defaultEnterButton, defaultEscapeButton;
 	bool priority;
 
-	ModalWindow(uint32_t id, std::string title, std::string message)
-		: title(std::move(title)), message(std::move(message)), id(id), defaultEnterButton(0xFF), defaultEscapeButton(0xFF), priority(false) {}
+	ModalWindow(uint32_t newId, std::string newTitle, std::string newMessage)
+		: title(std::move(newTitle)), message(std::move(newMessage)), id(newId), defaultEnterButton(0xFF), defaultEscapeButton(0xFF), priority(false) {}
 };
 
 enum CombatOrigin
@@ -797,7 +722,6 @@ enum CombatOrigin
 	ORIGIN_SPELL,
 	ORIGIN_MELEE,
 	ORIGIN_RANGED,
-	ORIGIN_CHARM,
 };
 
 struct CombatDamage
@@ -823,7 +747,7 @@ struct CombatDamage
 
 using MarketOfferList = std::list<MarketOffer>;
 using HistoryMarketOfferList = std::list<HistoryMarketOffer>;
-using ShopInfoList = std::list<ShopInfo>;
+using ShopInfoList = std::vector<ShopInfo>;
 
 enum MonstersEvent_t : uint8_t {
 	MONSTERS_EVENT_NONE = 0,
@@ -832,25 +756,6 @@ enum MonstersEvent_t : uint8_t {
 	MONSTERS_EVENT_DISAPPEAR = 3,
 	MONSTERS_EVENT_MOVE = 4,
 	MONSTERS_EVENT_SAY = 5,
-};
-
-struct BestiaryPoints
-{
-	int32_t kills = 0;
-	bool gained = false;
-};
-
-struct StoreHistory {
-	StoreHistory(uint32_t time, uint8_t mode, uint32_t amount, uint8_t coinMode, std::string description, int32_t cust) : 
-		time(time), mode(mode), amount(amount), coinMode(coinMode), description(std::move(description)), cust(cust) {}
-
-	uint32_t time;
-	uint8_t mode;
-	uint32_t amount;
-	uint8_t coinMode;
-	std::string description;
-	int32_t cust;
-
 };
 
 #endif

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Tanjis" nameDescription="Tanjis" race="blood" experience="15000" speed="220" script="deeplings.lua">
+<monster name="Tanjis" nameDescription="Tanjis" race="blood" experience="15000" speed="560" script="rewardboss.lua">
 	<health now="30000" max="30000"/>
 	<look type="446" corpse="15228"/>
 	<targetchange interval="2000" chance="50"/>
 	<flags>
+		<!-- <flag preyable="0"/> -->
 		<flag rewardboss="1"/>
 		<flag summonable="0"/>
 		<flag attackable="1"/>
@@ -15,9 +16,6 @@
 		<flag canpushcreatures="1"/>
 		<flag targetdistance="0"/>
 		<flag runonhealth="60"/>
-		<flag canwalkonfire="1" />
-		<flag canwalkonenergy="1" />
-		<flag canwalkonpoison="1" />
 	</flags>
 	<attacks>
 		<attack name="melee" interval="2000" min="0" max="-600"/>
@@ -56,6 +54,7 @@
 	<immunities>
 		<immunity ice="1"/>
 		<immunity paralyze="1"/>
+		<immunity drown="1"/>
 		<immunity fire="1"/>
 		<immunity invisible="1"/>
 	</immunities>
@@ -63,15 +62,14 @@
 		<voice sentence="JAU QJELL, JAKHN JEH KENH!!"/>
 	</voices>
 	<elements>
-		<element earthPercent="-5"/>
-		<element energyPercent="10"/>
-		<element physicalPercent="0"/>
-		<element deathPercent="50"/>
-		<element holyPercent="5"/>
+		<element earthPercent="-20"/>
+		<element energyPercent="-20"/>
+		<element physicalPercent="-20"/>
+		<element deathPercent="-20"/>
 	</elements>
 	<loot>
-		<item id="15409" chance="1000"/><!-- depth ocrea -->
-		<item id="15414" chance="500"/><!-- ornate mace -->
-		<item id="15413" chance="500"/><!-- ornate shield -->
+		<item id="15409" chance="5000"/><!-- depth ocrea -->
+		<item id="15414" chance="20000" unique="1"/><!-- ornate mace -->
+		<item id="15413" chance="2000"/><!-- ornate shield -->
 	</loot>
 </monster>

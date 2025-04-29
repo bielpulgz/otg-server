@@ -1,6 +1,8 @@
 /**
+ * @file iomarket.cpp
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -42,7 +44,7 @@ MarketOfferList IOMarket::getActiveOffers(MarketAction_t action, uint16_t itemId
 		return offerList;
 	}
 
-	const int32_t marketOfferDuration = 2592000;
+	const int32_t marketOfferDuration = g_config.getNumber(ConfigManager::MARKET_OFFER_DURATION);
 
 	do {
 		MarketOffer offer;
@@ -64,7 +66,7 @@ MarketOfferList IOMarket::getOwnOffers(MarketAction_t action, uint32_t playerId)
 {
 	MarketOfferList offerList;
 
-	const int32_t marketOfferDuration = 2592000;
+	const int32_t marketOfferDuration = g_config.getNumber(ConfigManager::MARKET_OFFER_DURATION);
 
 	std::ostringstream query;
 	query << "SELECT `id`, `amount`, `price`, `created`, `itemtype` FROM `market_offers` WHERE `player_id` = " << playerId << " AND `sale` = " << action;
@@ -193,7 +195,7 @@ void IOMarket::processExpiredOffers(DBResult_ptr result, bool)
 
 void IOMarket::checkExpiredOffers()
 {
-	const time_t lastExpireDate = OS_TIME(nullptr) - 2592000;
+	const time_t lastExpireDate = time(nullptr) - g_config.getNumber(ConfigManager::MARKET_OFFER_DURATION);
 
 	std::ostringstream query;
 	query << "SELECT `id`, `amount`, `price`, `itemtype`, `player_id`, `sale` FROM `market_offers` WHERE `created` <= " << lastExpireDate;
@@ -223,7 +225,7 @@ MarketOfferEx IOMarket::getOfferByCounter(uint32_t timestamp, uint16_t counter)
 {
 	MarketOfferEx offer;
 
-	const int32_t created = timestamp - 2592000;
+	const int32_t created = timestamp - g_config.getNumber(ConfigManager::MARKET_OFFER_DURATION);
 
 	std::ostringstream query;
 	query << "SELECT `id`, `sale`, `itemtype`, `amount`, `created`, `price`, `player_id`, `anonymous`, (SELECT `name` FROM `players` WHERE `id` = `player_id`) AS `player_name` FROM `market_offers` WHERE `created` = " << created << " AND (`id` & 65535) = " << counter << " LIMIT 1";
@@ -231,7 +233,6 @@ MarketOfferEx IOMarket::getOfferByCounter(uint32_t timestamp, uint16_t counter)
 	DBResult_ptr result = Database::getInstance().storeQuery(query.str());
 	if (!result) {
 		offer.id = 0;
-		offer.playerId = 0;
 		return offer;
 	}
 
@@ -254,7 +255,7 @@ MarketOfferEx IOMarket::getOfferByCounter(uint32_t timestamp, uint16_t counter)
 void IOMarket::createOffer(uint32_t playerId, MarketAction_t action, uint32_t itemId, uint16_t amount, uint32_t price, bool anonymous)
 {
 	std::ostringstream query;
-	query << "INSERT INTO `market_offers` (`player_id`, `sale`, `itemtype`, `amount`, `price`, `created`, `anonymous`) VALUES (" << playerId << ',' << action << ',' << itemId << ',' << amount << ',' << price << ',' << OS_TIME(nullptr) << ',' << anonymous << ')';
+	query << "INSERT INTO `market_offers` (`player_id`, `sale`, `itemtype`, `amount`, `price`, `created`, `anonymous`) VALUES (" << playerId << ',' << action << ',' << itemId << ',' << amount << ',' << price << ',' << time(nullptr) << ',' << anonymous << ')';
 	Database::getInstance().executeQuery(query.str());
 }
 
@@ -277,13 +278,13 @@ void IOMarket::appendHistory(uint32_t playerId, MarketAction_t type, uint16_t it
 	std::ostringstream query;
 	query << "INSERT INTO `market_history` (`player_id`, `sale`, `itemtype`, `amount`, `price`, `expires_at`, `inserted`, `state`) VALUES ("
 		<< playerId << ',' << type << ',' << itemId << ',' << amount << ',' << price << ','
-		<< timestamp << ',' << OS_TIME(nullptr) << ',' << state << ')';
+		<< timestamp << ',' << time(nullptr) << ',' << state << ')';
 	g_databaseTasks.addTask(query.str());
 }
 
 bool IOMarket::moveOfferToHistory(uint32_t offerId, MarketOfferState_t state)
 {
-	const int32_t marketOfferDuration = 2592000;
+	const int32_t marketOfferDuration = g_config.getNumber(ConfigManager::MARKET_OFFER_DURATION);
 
 	Database& db = Database::getInstance();
 

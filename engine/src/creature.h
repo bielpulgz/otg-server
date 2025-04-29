@@ -1,6 +1,8 @@
 /**
+ * @file creature.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_CREATURE_H_5363C04015254E298F84E6D59A139508
-#define FS_CREATURE_H_5363C04015254E298F84E6D59A139508
+#ifndef OT_SRC_CREATURE_H_
+#define OT_SRC_CREATURE_H_
 
 #include "map.h"
 #include "position.h"
@@ -30,13 +32,6 @@
 
 using ConditionList = std::list<Condition*>;
 using CreatureEventList = std::list<CreatureEvent*>;
-
-enum creatureCombatStatus_T : int8_t
-{
-	COMBAT_STATUS_NONE = 0,
-	COMBAT_STATUS_IN_CHECK = 1,
-	COMBAT_STATUS_CHECKED = 2,
-};
 
 enum slots_t : uint8_t {
 	CONST_SLOT_WHEREEVER = 0,
@@ -83,7 +78,7 @@ static constexpr int32_t EVENT_CHECK_CREATURE_INTERVAL = (EVENT_CREATURE_THINK_I
 class FrozenPathingConditionCall
 {
 	public:
-		explicit FrozenPathingConditionCall(Position targetPos) : targetPos(std::move(targetPos)) {}
+		explicit FrozenPathingConditionCall(Position newTargetPos) : targetPos(std::move(newTargetPos)) {}
 
 		bool operator()(const Position& startPos, const Position& testPos,
 						const FindPathParams& fpp, int32_t& bestMatchDist) const;
@@ -112,14 +107,6 @@ class Creature : virtual public Thing
 		// non-copyable
 		Creature(const Creature&) = delete;
 		Creature& operator=(const Creature&) = delete;
-
-		void setSpectatorId(uint32_t sid) {
-			spectatorId = static_cast<uint16_t>(sid);
-        }
-
-        uint16_t getSpectatorId() const {
-            return spectatorId;
-        }
 
 		Creature* getCreature() final {
 			return this;
@@ -152,16 +139,12 @@ class Creature : virtual public Thing
 		virtual CreatureType_t getType() const = 0;
 
 		virtual void setID() = 0;
-		virtual void setCombatID() = 0;
 		void setRemoved() {
 			isInternalRemoved = true;
 		}
 
 		uint32_t getID() const {
 			return id;
-		}
-		uint32_t getCombatID() const {
-			return combatid;
 		}
 		virtual void removeList() = 0;
 		virtual void addList() = 0;
@@ -261,21 +244,6 @@ class Creature : virtual public Thing
 			return 0;
 		}
 
-		creatureCombatStatus_T getProtectionCombatStatus() {
-			return protectionCombatStatus;
-		}
-
-		void updateProtectionCombatStatus(creatureCombatStatus_T value) {
-			protectionCombatStatus = value;
-		}
-		int32_t getProtectionCombat() {
-			return protectionCombat;
-		}
-
-		void updateProtectionCombat(int32_t value) {
-			protectionCombat += value;
-		}
-
 		const Outfit_t getCurrentOutfit() const {
 			return currentOutfit;
 		}
@@ -351,9 +319,6 @@ class Creature : virtual public Thing
 		virtual float getDefenseFactor() const {
 			return 1.0f;
 		}
-		virtual bool isDead() const {
-			return false;
-		}
 
 		virtual uint8_t getSpeechBubble() const {
 			return SPEECHBUBBLE_NONE;
@@ -407,7 +372,7 @@ class Creature : virtual public Thing
 		virtual void onEndCondition(ConditionType_t type);
 		void onTickCondition(ConditionType_t type, bool& bRemove);
 		virtual void onCombatRemoveCondition(Condition* condition);
-		virtual void onAttackedCreature(Creature*, bool = true) {}
+		virtual void onAttackedCreature(Creature*) {}
 		virtual void onAttacked();
 		virtual void onAttackedCreatureDrainHealth(Creature* target, int32_t points);
 		virtual void onTargetCreatureGainHealth(Creature*, int32_t) {}
@@ -447,8 +412,6 @@ class Creature : virtual public Thing
 
 		virtual void onPlacedCreature() {}
 
-		virtual void setRemoveTime(int32_t) {}
-
 		virtual bool getCombatValues(int32_t&, int32_t&) {
 			return false;
 		}
@@ -456,11 +419,11 @@ class Creature : virtual public Thing
 		size_t getSummonCount() const {
 			return summons.size();
 		}
-		void setDropLoot(bool lootDrop) {
-			this->lootDrop = lootDrop;
+		void setDropLoot(bool newLootDrop) {
+			this->lootDrop = newLootDrop;
 		}
-		void setSkillLoss(bool skillLoss) {
-			this->skillLoss = skillLoss;
+		void setSkillLoss(bool newSkillLoss) {
+			this->skillLoss = newSkillLoss;
 		}
 		void setUseDefense(bool useDefense) {
 			canUseDefense = useDefense;
@@ -548,7 +511,6 @@ class Creature : virtual public Thing
 		uint64_t lastStep = 0;
 		uint32_t referenceCounter = 0;
 		uint32_t id = 0;
-		uint32_t combatid = 0;
 		uint32_t scriptEventsBitField = 0;
 		uint32_t eventWalk = 0;
 		uint32_t walkUpdateTicks = 0;
@@ -561,9 +523,6 @@ class Creature : virtual public Thing
 		int32_t varSpeed = 0;
 		int32_t health = 1000;
 		int32_t healthMax = 1000;
-		uint16_t spectatorId = 0;
-		int32_t protectionCombat = 0;
-		creatureCombatStatus_T protectionCombatStatus = COMBAT_STATUS_NONE;
 
 		Outfit_t currentOutfit;
 		Outfit_t defaultOutfit;

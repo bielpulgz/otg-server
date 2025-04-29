@@ -4,13 +4,13 @@
 	<look type="994" corpse="0" />
 	<targetchange interval="4000" chance="20" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag pet="1" />
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="0" />
 		<flag illusionable="0" />
-		<flag convinceable="0" />
+		<flag convinceable="1" />
 		<flag pushable="1" />
 		<flag canpushitems="0" />
 		<flag canpushcreatures="1" />
@@ -29,7 +29,7 @@
 		</attack>
 	</attacks>
 	<defenses armor="55" defense="95">
-		<defense name="healing" interval="2000" chance="100" min="80" max="1200">
+		<defense name="healing" interval="3000" chance="25" min="80" max="600">
 			<attribute key="areaEffect" value="blueshimmer" />
 		</defense>
 		<defense name="Challenge" interval="100" chance="15">

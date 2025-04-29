@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Flameborn" nameDescription="Flameborn" experience="2550" speed="260" race="fire" >
+<monster name="Flameborn" nameDescription="Flameborn" experience="2550" speed="260" race="fire">
 	<health now="3500" max="3500" />
 	<targetchange interval="4000" chance="15" />
 	<look type="322" corpse="9923" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />

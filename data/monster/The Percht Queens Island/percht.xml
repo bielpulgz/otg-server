@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Percht" nameDescription="an percht" race="blood" experience="600" speed="135" raceid="1740">
+<monster name="Percht" nameDescription="an percht" race="blood" experience="600" speed="135">
 	<health now="620" max="620" />
 	<look type="1161" head="95" body="42" legs="19" feet="57" corpse="35125" />
 	<targetchange interval="5000" chance="8" />
@@ -19,8 +19,8 @@
 		<flag canwalkonfire="1" />
 		<flag canwalkonpoison="1" />
 	</flags>
-	<attacks>
-		<attack name="melee" interval="2000" min="-100" max="-200" />
+<attacks>
+			<attack name="melee" interval="2000" min="-100" max="-200" />
  		<attack name="ice" interval="2000" chance="70" range="7" min="-100" max="-125">
 			<attribute key="shootEffect" value="snowball" />
 		</attack>
@@ -36,8 +36,7 @@
 			<attack name="fire" interval="2000" chance="50"  length="3" spread="0" min="-100" max="-250">
 			<attribute key="areaEffect" value="FIREATTACK" />
 		</attack>
-	</attacks>
-
+		</attacks>
 	<defenses armor="40" defense="40" />
 	<elements>
 		<element icePercent="-20" />
@@ -58,7 +57,7 @@
 		<item name="grainy fireworks powder" chance="6640" />
 		<item name="broken bell" chance="5390" />
 		<item name="versicolour fireworks powder" chance="4220" />
-		<item id="37322" chance="3190" /> <!-- dark bell -->
+		<item id="35152" chance="3190" />
 		<item name="green fireworks powder" chance="2790" />
 		<item name="purple fireworks powder" chance="2090" />
 		<item name="turquoise fireworks powder" chance="1980" />

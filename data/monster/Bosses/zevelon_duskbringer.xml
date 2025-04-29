@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Zevelon Duskbringer" nameDescription="Zevelon Duskbringer" race="undead" experience="1800" speed="310" >
+<monster name="Zevelon Duskbringer" nameDescription="Zevelon Duskbringer" race="undead" experience="1800" speed="310">
 	<health now="1400" max="1400"/>
 	<look type="287" corpse="8937"/>
 	<targetchange interval="5000" chance="10"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -31,8 +31,8 @@
 		</defense>
 		<defense name="invisible" interval="3000" chance="25" duration="6000">
 			<attribute key="areaEffect" value="blueshimmer"/>
-		</defense>
 		<defense name="outfit" interval="4500" chance="30" monster="bat" duration="4000"/>
+		</defense>
 	</defenses>
 	<elements>
 		<element physicalPercent="20"/>

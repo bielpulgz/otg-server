@@ -41,12 +41,6 @@ function Party:onPassLeadership(player)
 end
 
 
-local config = {
-	{amount = 2, multiplier = 1.3},
-	{amount = 3, multiplier = 1.6},
-	{amount = 4, multiplier = 2}
-}
-
 function Party:onShareExperience(exp)
 	local sharedExperienceMultiplier = 1.20 --20%
 	local vocationsIds = {}

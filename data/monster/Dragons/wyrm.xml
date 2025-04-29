@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Wyrm" nameDescription="a wyrm" race="blood" experience="1550" speed="140" raceid="461">
+<monster name="Wyrm" nameDescription="a wyrm" race="blood" experience="1550" speed="140">
 	<health now="1825" max="1825"/>
 	<look type="291" corpse="8941"/>
 	<targetchange interval="4000" chance="10"/>
@@ -64,7 +64,7 @@
 		<item name="gold coin" countmax="30" chance="30000"/>
 		<item name="crossbow" chance="5920"/>
 		<item name="burst arrow" countmax="10" chance="7650"/>
-		<item id="2672" countmax="3" chance="34800"/> <!-- dragon ham -->
+		<item name="dragon ham" countmax="3" chance="34800"/>
 		<item name="dragonbone staff" chance="110"/>
 		<item name="strong health potion" chance="19970"/>
 		<item name="strong mana potion" chance="15310"/>

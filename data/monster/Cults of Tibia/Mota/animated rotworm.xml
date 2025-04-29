@@ -4,7 +4,7 @@
 	<look type="26" corpse="5967" />
 	<targetchange interval="4000" chance="0" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -30,7 +30,7 @@
 		<item id="2376" chance="3000" /><!-- sword -->
 		<item name="mace" chance="4500" />
 		<item name="meat" chance="20000" />
-		<item id="2671" chance="20120" /> <!-- ham -->
+		<item name="ham" chance="20120" />
 		<item name="worm" countmax="3" chance="3000" />
 		<item name="lump of dirt" chance="10000" />
 	</loot>

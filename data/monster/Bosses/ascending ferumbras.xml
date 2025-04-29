@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Ascending Ferumbras" nameDescription="ascending ferumbras" race="venom" experience="12000" speed="0" >
+<monster name="Ascending Ferumbras" nameDescription="ascending ferumbras" race="venom" experience="12000" speed="0">
 	<health now="150000" max="150000"/>
 	<look type="844" corpse="6078"/>
 	<targetchange interval="5000" chance="20"/>
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -19,7 +19,7 @@
 		<flag canwalkonenergy="1" />
 		<flag canwalkonfire="1" />
 		<flag canwalkonpoison="1" />
-		</flags>
+	</flags>
 	<attacks>
 		<attack name="melee" interval="2000" skill="90" attack="200"/>
 		<attack name="manadrain" interval="2000" chance="20" radius="9" target="0" min="-425" max="-810">

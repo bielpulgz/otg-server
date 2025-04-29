@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Time Waster" nameDescription="a time waster" race="undead" experience="0" speed="100" >
+<monster name="Time Waster" nameDescription="a time waster" race="undead" experience="0" speed="100">
 	<health now="1000" max="1000"/>
-	<look typeex="27631" corpse="0"/>
+	<look typeex="26397" corpse="0"/>
 	<targetchange interval="5000" chance="8"/>
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>

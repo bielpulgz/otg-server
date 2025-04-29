@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Retching Horror" nameDescription="a retching horror" race="fire" experience="3900" speed="140" raceid="1018">
+<monster name="Retching Horror" nameDescription="a retching horror" race="fire" experience="3900" speed="180">
 	<health now="5300" max="5300"/>
 	<look type="588" corpse="22508"/>
 	<targetchange interval="4000" chance="10"/>
@@ -19,18 +19,21 @@
 		<flag canwalkonfire="0"/>
 	</flags>
 	<attacks>
-		<attack name="melee" interval="2000" min="-120" max="-400"/>
-		<attack name="speed" interval="4000" chance="10" radius="4" target="1" speedchange="-700" duration="15000">
+		<attack name="melee" interval="2000" min="0" max="-400"/>
+		<attack name="drunk" interval="2000" chance="10" length="4" spread="3" target="1" duration="5000">
+			<attribute key="areaEffect" value="greenshimmer"/>
+		</attack>
+		<attack name="speed" interval="2000" chance="15" radius="4" target="1" speedchange="-700" duration="15000">
 			<attribute key="shootEffect" value="whirlwindclub"/>
 			<attribute key="areaEffect" value="stun"/>
 		</attack>
-		<attack name="physical" interval="2000" chance="15" radius="4" target="0" min="-120" max="-250">
+		<attack name="physical" interval="2000" chance="15" radius="4" target="0" min="0" max="-110">
 			<attribute key="areaEffect" value="blackspark"/>
 		</attack>
-		<attack name="physical" interval="2000" chance="15" radius="1" target="1" min="-100" max="-350">
+		<attack name="physical" interval="2000" chance="15" radius="1" target="1" min="0" max="-200">
 			<attribute key="shootEffect" value="sniperarrow"/>
 		</attack>
-		<attack name="fire" interval="2000" chance="10" radius="1" target="1" min="-200" max="-400">
+		<attack name="fire" interval="2000" chance="10" radius="1" target="1" min="-200" max="-350">
 			<attribute key="shootEffect" value="fire"/>
 			<attribute key="areaEffect" value="fireattack"/>
 		</attack>

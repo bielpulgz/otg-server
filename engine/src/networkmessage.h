@@ -1,6 +1,8 @@
 /**
+ * @file networkmessage.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_NETWORKMESSAGE_H_B853CFED58D1413A87ACED07B2926E03
-#define FS_NETWORKMESSAGE_H_B853CFED58D1413A87ACED07B2926E03
+#ifndef OT_SRC_NETWORKMESSAGE_H_
+#define OT_SRC_NETWORKMESSAGE_H_
 
 #include "const.h"
 
@@ -124,6 +126,10 @@ class NetworkMessage
 
 		MsgSize_t getBufferPosition() const {
 			return info.position;
+		}
+
+		void setBufferPosition(MsgSize_t newPosition) {
+			info.position = newPosition;
 		}
 
 		uint16_t getLengthHeader() const {

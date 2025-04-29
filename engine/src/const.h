@@ -1,6 +1,8 @@
 /**
+ * @file const.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,29 +19,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_CONST_H_0A49B5996F074465BF44B90F4F780E8B
-#define FS_CONST_H_0A49B5996F074465BF44B90F4F780E8B
+#ifndef OT_SRC_CONST_H_
+#define OT_SRC_CONST_H_
 
 static constexpr int32_t NETWORKMESSAGE_MAXSIZE = 65500;
-
-// baseado em "data/modules/scripts/blessings/blessings.lua"
-enum BlessType_t : uint8_t
-{
-	ADVENTURE_BLESS = 0,
-	TWIST_OF_FATE = 1, // PVP
-	WISDOM_OF_SOLITUDE = 2,
-	SPARK_OF_THE_PHOENIX = 3,
-	FIRE_OF_THE_SUNS = 4,
-	SPIRITUAL_SHIELDING = 5,
-	EMBRACE_OF_TIBIA = 6,
-	HEART_OF_THE_MOUNTAIN = 7, // mountain
-	BLOOD_OF_THE_MOUNTAIN = 8, // mountain
-
-	BLESS_ADV_FIRST = ADVENTURE_BLESS,
-	BLESS_FIRST = TWIST_OF_FATE,
-	BLESS_PVE_FIRST = WISDOM_OF_SOLITUDE,
-	BLESS_LAST = BLOOD_OF_THE_MOUNTAIN
-};
 
 enum MagicEffectClasses : uint8_t {
 	CONST_ME_NONE,
@@ -376,10 +359,6 @@ const uint8_t fluidMap[] = {
 
 enum SquareColor_t : uint8_t {
 	SQ_COLOR_BLACK = 0,
-	SQ_COLOR_BROWN = 114,
-	SQ_COLOR_ORANGE = 198,
-	SQ_COLOR_YELLOW = 210,
-	SQ_COLOR_NONE = 255, // internal
 };
 
 enum TextColor_t : uint8_t {
@@ -417,7 +396,40 @@ enum Icons_t {
 	ICON_REDSWORDS = 1 << 13,
 	ICON_PIGEON = 1 << 14,
 	ICON_BLEEDING = 1 << 15,
-	ICON_WITHIN_RESTING_AREA = 1<<16 //client 11.40+
+	ICON_WITHIN_RESTING_AREA = 1 << 16 //client 11.40+
+};
+
+enum QuickLootCategory_t : uint8_t {
+	LOOT_NONE = 0,
+	LOOT_ARMOR = 1,
+	LOOT_AMULET = 2,
+	LOOT_BOOTS = 3,
+	LOOT_CONTAINER = 4,
+	LOOT_DECORATION = 5,
+	LOOT_FOOD = 6,
+	LOOT_HELMET = 7,
+	LOOT_LEGS = 8,
+	LOOT_OTHER = 9,
+	LOOT_POTION = 10,
+	LOOT_RING = 11,
+	LOOT_RUNE = 12,
+	LOOT_SHIELD = 13,
+	LOOT_TOOL = 14,
+	LOOT_VALUABLE = 15,
+	LOOT_WEAPON_AMMO = 16,
+	LOOT_WEAPON_AXE = 17,
+	LOOT_WEAPON_CLUB = 18,
+	LOOT_WEAPON_DISTANCE = 19,
+	LOOT_WEAPON_SWORD = 20,
+	LOOT_WEAPON_WAND = 21,
+	LOOT_CREATURE_PRODUCT = 24,
+	LOOT_STASH_RETRIEVE = 27,
+	LOOT_GOLD = 30,
+	LOOT_UNASSIGNED = 31,
+
+	LOOT_START = LOOT_ARMOR,
+	LOOT_END = LOOT_UNASSIGNED
+
 };
 
 enum WeaponType_t : uint8_t {
@@ -429,7 +441,6 @@ enum WeaponType_t : uint8_t {
 	WEAPON_DISTANCE,
 	WEAPON_WAND,
 	WEAPON_AMMO,
-	WEAPON_QUIVER,
 };
 
 enum Ammo_t : uint8_t {
@@ -494,12 +505,12 @@ enum GuildEmblems_t : uint8_t {
 
 enum item_t : uint16_t {
 	ITEM_BROWSEFIELD = 460, // for internal use
-	ITEM_PVP_SAFE_NULL = 461, // for internal use
 
-	ITEM_DEPOT_NULL = 25452, // for internal use
 	ITEM_GOLD_POUCH = 26377,
 	TRANSFORM_BOX_ID = 26054, // for internal use
+	ITEM_SUPPLY_STASH = 32450,
 
+	ITEM_DEPOT_NULL = 25452, // for internal use
 	ITEM_DEPOT_I = 25453,
 	ITEM_DEPOT_II = 25454,
 	ITEM_DEPOT_III = 25455,
@@ -517,7 +528,7 @@ enum item_t : uint16_t {
 	ITEM_DEPOT_XV = 25467,
 	ITEM_DEPOT_XVI = 25468,
 	ITEM_DEPOT_XVII = 25469,
-	ITEM_DEPOT_XVIII = 36629,
+	ITEM_DEPOT_XVIII = 36750,
 
 	ITEM_FIREFIELD_PVP_FULL = 1487,
 	ITEM_FIREFIELD_PVP_MEDIUM = 1488,
@@ -526,9 +537,6 @@ enum item_t : uint16_t {
 	ITEM_FIREFIELD_PERSISTENT_MEDIUM = 1493,
 	ITEM_FIREFIELD_PERSISTENT_SMALL = 1494,
 	ITEM_FIREFIELD_NOPVP = 1500,
-	ITEM_FIREFIELD_NOPVP_FULL = 1500,
-	ITEM_FIREFIELD_NOPVP_MEDIUM = 1501,
-	ITEM_FIREFIELD_NOPVP_SMALL = 1502,
 
 	ITEM_POISONFIELD_PVP = 1490,
 	ITEM_POISONFIELD_PERSISTENT = 1496,
@@ -541,18 +549,18 @@ enum item_t : uint16_t {
 	ITEM_MAGICWALL = 1497,
 	ITEM_MAGICWALL_PERSISTENT = 1498,
 	ITEM_MAGICWALL_SAFE = 11098,
-	ITEM_MAGICWALL_NOPVP = 20669,
 
 	ITEM_WILDGROWTH = 1499,
 	ITEM_WILDGROWTH_PERSISTENT = 2721,
 	ITEM_WILDGROWTH_SAFE = 11099,
-	ITEM_WILDGROWTH_NOPVP = 20670,
 
 	ITEM_BAG = 1987,
+	ITEM_SHOPPING_BAG = 23782,
 
 	ITEM_GOLD_COIN = 2148,
 	ITEM_PLATINUM_COIN = 2152,
 	ITEM_CRYSTAL_COIN = 2160,
+	ITEM_STORE_COIN = 24774,
 
 	ITEM_REWARD_CONTAINER = 21518,
 	ITEM_REWARD_CHEST = 21584,
@@ -562,7 +570,6 @@ enum item_t : uint16_t {
 	ITEM_INBOX = 14404,
 	ITEM_MARKET = 14405,
 	ITEM_STORE_INBOX = 26052,
-	ITEM_SUPPLY_STASH = 33248,
 
 	ITEM_MALE_CORPSE = 3058,
 	ITEM_FEMALE_CORPSE = 3065,
@@ -577,8 +584,8 @@ enum item_t : uint16_t {
 
 	ITEM_AMULETOFLOSS = 2173,
 
-	ITEM_TIBIA_COIN = 24774,
-	ITEM_STORECOINS = 24774,
+	ITEM_EXERCISE_START = 32384,
+	ITEM_EXERCISE_END = 32389,
 
 	/** Casks and Kegs **/
 	ITEM_HEALTH_CASK_START = 28555,
@@ -640,7 +647,6 @@ enum PlayerFlags : uint64_t {
 enum ReloadTypes_t : uint8_t  {
 	RELOAD_TYPE_ALL,
 	RELOAD_TYPE_ACTIONS,
-	RELOAD_TYPE_BESTIARY,
 	RELOAD_TYPE_CHAT,
 	RELOAD_TYPE_COMMANDS,
 	RELOAD_TYPE_CONFIG,
@@ -654,30 +660,12 @@ enum ReloadTypes_t : uint8_t  {
 	RELOAD_TYPE_MOUNTS,
 	RELOAD_TYPE_MOVEMENTS,
 	RELOAD_TYPE_NPCS,
-	RELOAD_TYPE_QUESTS,
 	RELOAD_TYPE_RAIDS,
 	RELOAD_TYPE_SCRIPTS,
 	RELOAD_TYPE_SPELLS,
 	RELOAD_TYPE_TALKACTIONS,
 	RELOAD_TYPE_WEAPONS,
-	RELOAD_TYPE_STORE,
 	RELOAD_TYPE_IMBUEMENTS,
-	RELOAD_TYPE_FREE_PASS,
-};
-
-enum NameEval_t : uint8_t {
-	VALID,
-	INVALID,
-	INVALID_LENGTH,
-	INVALID_TOKEN_LENGTH,
-	INVALID_FORBIDDEN,
-	INVALID_CHARACTER
-};
-
-enum DailyRewardStorages_t: uint32_t {
-	DAILYREWARDSTORAGE_NEXTREWARDPICK = 69799,
-	DAILYREWARDSTORAGE_LASTREWARDPICK = 69800,
-	DAILYREWARDSTORAGE_STREAKDAYS = 69801
 };
 
 // OTCv8 features (from src/client/const.h)
@@ -799,13 +787,24 @@ enum GameFeature {
 	LastGameFeature = 120
 };
 
+enum NameEval_t : uint8_t {
+	VALID,
+	INVALID,
+	INVALID_LENGTH,
+	INVALID_TOKEN_LENGTH,
+	INVALID_FORBIDDEN,
+	INVALID_CHARACTER
+};
+
+enum DailyRewardStorages_t : uint32_t {
+	DAILYREWARDSTORAGE_NEXTREWARDPICK = 69799,
+	DAILYREWARDSTORAGE_LASTREWARDPICK = 69800,
+	DAILYREWARDSTORAGE_STREAKDAYS = 69801
+};
+
 static constexpr int32_t CHANNEL_GUILD = 0x00;
 static constexpr int32_t CHANNEL_PARTY = 0x01;
 static constexpr int32_t CHANNEL_PRIVATE = 0xFFFF;
-
-static constexpr int32_t CHANNEL_CAST = 0xFFFE;
-
-const std::string LIVE_CAST_CHAT_NAME = "Live Cast Chat";
 
 static constexpr int32_t STORAGEVALUE_PROMOTION = 30018;
 static constexpr int32_t STORAGEVALUE_EMOTE = 30019;
@@ -824,7 +823,5 @@ static constexpr int32_t PSTRG_MOUNTS_CURRENTMOUNT = (PSTRG_MOUNTS_RANGE_START +
 #define IS_IN_KEYRANGE(key, range) (key >= PSTRG_##range##_START && ((key - PSTRG_##range##_START) <= PSTRG_##range##_SIZE))
 
 #define PREY_SLOTCOUNT 3
-
-static constexpr int32_t PSTRG_BLESS_RUNA = 6984;
 
 #endif

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Orc Cult Minion" nameDescription="an orc cult minion" race="blood" experience="850" speed="105" manacost="310" raceid="1507">
+<monster name="Orc Cult Minion" nameDescription="an orc cult minion" race="blood" experience="850" speed="105" manacost="310">
 	<health now="1000" max="1000" />
 	<look type="50" corpse="5996" />
 	<targetchange interval="4000" chance="10" />
@@ -14,8 +14,6 @@
 		<flag canpushcreatures="0" />
 		<flag targetdistance="1" />
 		<flag canwalkonenergy="0" />
-		<flag canwalkonpoison="0" />
-		<flag canwalkonfire="1" />
 	</flags>
 	<attacks>
 		<attack name="melee" interval="2000" min="0" max="-230" />
@@ -24,6 +22,12 @@
 		</attack>
 	</attacks>
 	<defenses armor="30" defense="30" />
+	<elements>
+		<!-- <element energyPercent="20" /> -->
+		<!-- <element holyPercent="20" /> -->
+		<!-- <element earthPercent="-10" /> -->
+		<element deathPercent="10" />
+	</elements>
 	<immunities>
 		<immunity invisible="1" />
 	</immunities>
@@ -36,7 +40,7 @@
 		<item name="small topaz" countmax="3" chance="1238" />
 		<item name="orcish axe" chance="9190" />
 		<item name="cultish robe" chance="19360" />
-		<item id="2788" countmax="3" chance="6250" /> <!-- red mushroom -->
+		<item name="red mushroom" countmax="3" chance="6250" />
 		<item name="berserk potion" countmax="2" chance="860" />
 		<item name="meat" chance="4780" />
 	</loot>

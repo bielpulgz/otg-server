@@ -1,25 +1,10 @@
 --Pre-made areas
 
 --Waves
-AREA_DIAGONALWAVE_IZCANDAR = {
-	{0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 0, 0, 0},
-	{0, 0, 0, 0, 1, 1, 3},
-	{0, 1, 1, 1, 1, 0, 0},
-	{1, 1, 0, 0, 0, 0, 0},
-	{1, 1, 0, 0, 0, 0, 0}
-}
-
 AREA_SHORTWAVE3 = {
 {1, 1, 1},
 {1, 1, 1},
 {0, 3, 0}
-}
-
-AREA_MINIWAVE3 = {
-{0,0,0},
-{1, 3, 1}
 }
 
 AREA_WAVE10 = {
@@ -384,7 +369,7 @@ function Creature:addDamageCondition(target, conditionType, listType, damage, ti
 	end
 
 	local condition = Condition(conditionType)
-	condition:setParameter(CONDITION_PARAM_OWNER, self:getCombatId())
+	condition:setParameter(CONDITION_PARAM_OWNER, self:getId())
 	condition:setParameter(CONDITION_PARAM_DELAYED, true)
 
 	if listType == 0 then

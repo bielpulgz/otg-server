@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Massacre" nameDescription="Massacre" race="blood" experience="20000" speed="430" >
+<monster name="Massacre" nameDescription="Massacre" race="blood" experience="20000" speed="430">
 	<health now="32000" max="32000"/>
 	<look type="244" corpse="6336"/>
 	<targetchange interval="2000" chance="5"/>
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -58,7 +58,7 @@
 		<item id="7591" chance="5880"/><!-- great health potion -->
 		<item id="7590" chance="5880"/><!-- great mana potion -->
 		<item id="2148" countmax="157" chance="94120"/><!-- gold coin -->
-		<item id="2522" chance="100"/><!-- great shield -->
+		<item id="2522" chance="500"/><!-- great shield -->
 		<item id="2666" countmax="9" chance="88240"/><!-- meat -->
 		<item id="5022" countmax="7" chance="82350"/><!-- orichalcum pearl -->
 		<item id="2221" chance="64710"/><!-- old twig -->

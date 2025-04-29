@@ -15,46 +15,77 @@ function ItemType.usesSlot(self, slot)
 	return bit.band(self:getSlotPosition(), slotBits[slot] or 0) ~= 0
 end
 
-if not ItemTypeBuyValue then
-	ItemTypeBuyValue = {}
-end
-if not ItemTypeSellValue then
-	ItemTypeSellValue = {}
+function ItemType:isHelmet()
+	return self:usesSlot(CONST_SLOT_HEAD)
 end
 
-function ItemType.getSellValue(self)
-	if isInArray({ITEM_CRYSTAL_COIN, ITEM_PLATINUM_COIN, ITEM_GOLD_COIN}, self:getId()) then
-		local worth = {
-			[2148] = 1, -- gold
-			[2152] = 100, -- platinum
-			[2160] = 1000, -- crystal
-		}
-		return worth[self:getId()]
-	end
-
-	local values = ItemTypeSellValue[self:getId()] or {}
-	if #values == 0 then
-		return 0
-	end
-
-	return table.mean(values)
+function ItemType:isArmor()
+	return self:usesSlot(CONST_SLOT_ARMOR)
 end
 
-function ItemType.getBuyValue(self)
-	if isInArray({ITEM_CRYSTAL_COIN, ITEM_PLATINUM_COIN, ITEM_GOLD_COIN}, self:getId()) then
-		local worth = {
-			[2148] = 1, -- gold
-			[2152] = 100, -- platinum
-			[2160] = 1000, -- crystal
-		}
-		return worth[self:getId()]
-	end
-
-	local values = ItemTypeBuyValue[self:getId()] or {}
-	if #values == 0 then
-		return 0
-	end
-
-	return table.mean(values)
+function ItemType:isLegs()
+	return self:usesSlot(CONST_SLOT_LEGS)
 end
 
+function ItemType:isBoots()
+	return self:usesSlot(CONST_SLOT_FEET)
+end
+
+local notWeapons = {WEAPON_NONE, WEAPON_SHIELD, WEAPON_AMMO}
+function ItemType:isWeapon()
+	return not table.contains(notWeapons, self:getWeaponType())
+end
+
+function ItemType:isTwoHanded()
+	return bit.band(self:getSlotPosition(), SLOTP_TWO_HAND) ~= 0
+end
+
+function ItemType:isBow()
+	local ammoType = self:getAmmoType()
+	return self:getWeaponType() == WEAPON_DISTANCE and (ammoType == AMMO_ARROW or ammoType == AMMO_BOLT)
+end
+
+function ItemType:isMissile()
+	local ammoType = self:getAmmoType()
+	return self:getWeaponType() == WEAPON_DISTANCE and ammoType ~= AMMO_ARROW and ammoType ~= AMMO_BOLT
+end
+
+function ItemType:isQuiver()
+	return self:getWeaponType() == WEAPON_QUIVER
+end
+
+function ItemType:isWand()
+	return self:getWeaponType() == WEAPON_WAND
+end
+
+function ItemType:isShield()
+	return self:getWeaponType() == WEAPON_SHIELD
+end
+
+function ItemType:isBackpack()
+	return self:usesSlot(CONST_SLOT_BACKPACK)
+end
+
+function ItemType:isNecklace()
+	return self:usesSlot(CONST_SLOT_NECKLACE)
+end
+
+function ItemType:isRing()
+	return self:usesSlot(CONST_SLOT_RING)
+end
+
+function ItemType:isAmmo()
+	return self:getWeaponType() == WEAPON_AMMO
+end
+
+function ItemType:isTrinket()
+	return self:usesSlot(CONST_SLOT_AMMO) and self:getWeaponType() == WEAPON_NONE
+end
+
+function ItemType:isKey()
+	return self:getType() == ITEM_TYPE_KEY
+end
+
+function ItemType:isBed()
+	return self:getType() == ITEM_TYPE_BED
+end

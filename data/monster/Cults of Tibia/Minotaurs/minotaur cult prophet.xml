@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Minotaur Cult Prophet" nameDescription="a minotaur cult prophet" race="blood" experience="1100" raceid="1509">
+<monster name="Minotaur Cult Prophet" nameDescription="a minotaur cult prophet" race="blood" experience="1100">
 	<health now="1700" max="1700" />
 	<look type="23" corpse="5981" />
 	<targetchange interval="4000" chance="10" />
@@ -63,7 +63,7 @@
 		<!-- <item name="minotaur trophy" chance="220" /> -->
 		<item name="red gem" chance="390" />
 		<item name="meat" chance="8040" />
-		<item id="2671" chance="60140" /> <!-- ham -->
+		<item name="ham" chance="60140" />
 		<item name="minotaur leather" chance="14230" />
 		<item name="minotaur horn" countmax="2" chance="18270" />
 	</loot>

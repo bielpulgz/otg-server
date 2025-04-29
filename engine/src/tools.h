@@ -1,6 +1,8 @@
 /**
+ * @file tools.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_TOOLS_H_5F9A9742DA194628830AA1C64909AE43
-#define FS_TOOLS_H_5F9A9742DA194628830AA1C64909AE43
+#ifndef OT_SRC_TOOLS_H_
+#define OT_SRC_TOOLS_H_
 
 #include <random>
 #include <regex>
@@ -104,51 +106,27 @@ int32_t OS_TIME(time_t* timer);
 
 SpellGroup_t stringToSpellGroup(std::string value);
 
-std::string getObjectCategoryName(ObjectCategory_t category);
-
-std::string generateRK(size_t length);
-
 template<typename T>
 std::vector<T> selectRandom(std::vector<T> from, size_t k) {
-	std::shuffle(begin(from), std::end(from), getRandomGenerator());
-	from.resize(std::min<size_t>(k, from.size()));
-	std::sort(std::begin(from), std::end(from));
-	return from;
+    std::shuffle(begin(from), std::end(from), getRandomGenerator());
+    from.resize(std::min<size_t>(k, from.size()));
+    std::sort(std::begin(from), std::end(from));
+    return from;
 }
 
 template<typename T, typename... Args>
 std::vector<T> selectRandom(std::vector<T> from, size_t k, const std::vector<T>& elim, Args&&... args) {
-	std::vector<T> wh;
+    std::vector<T> wh;
 
-	auto it2 = std::begin(elim);
-	for (auto it1 = std::begin(from); it1 != std::end(from); it1++) {
-		while (it2 != std::end(elim) && *it2 < *it1) it2++;
-		if (it2 == std::end(elim) || *it2 > *it1) {
-			wh.emplace_back(std::move(*it1));
-		}
-	}
+    auto it2 = std::begin(elim);
+    for (auto it1 = std::begin(from); it1 != std::end(from); it1++) {
+        while (it2 != std::end(elim) && *it2 < *it1) it2++;
+        if (it2 == std::end(elim) || *it2 > * it1) {
+            wh.emplace_back(std::move(*it1));
+        }
+    }
 
-	return selectRandom(std::move(wh), k, std::forward<Args>(args)...);
+    return selectRandom(std::move(wh), k, std::forward<Args>(args)...);
 }
-
-template<typename T>
-void fastVectorRemoveOne(std::vector<T>& vec, T obj)
-{
-	for (size_t i = 0, len = vec.size(); i < len; i++) {
-		if (vec[i] == obj) {
-			T tmp = vec[len-1];
-			vec[len-1] = vec[i];
-			vec[i] = tmp;
-			vec.pop_back();
-			break;
-		}
-	}
-}
-
-#if BOOST_VERSION >= 107000
-#define GET_io_context(s) ((boost::asio::io_context&)(s).get_executor().context())
-#else
-#define GET_io_context(s) ((s).get_io_context())
-#endif
 
 #endif

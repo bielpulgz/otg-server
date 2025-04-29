@@ -7,7 +7,7 @@ combat:setParameter(COMBAT_PARAM_DISPEL, CONDITION_PARALYZE)
 function onGetFormulaValues(player, level, maglevel)
 	local min = (level / 5) + (maglevel * 1.4) + 8
 	local max = (level / 5) + (maglevel * 1.8) + 11
-	return player:getSpellDamage(min, max, true)
+	return min, max
 end
 
 combat:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")

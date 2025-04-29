@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Tentacle of the Deep Terror" nameDescription="a tentacle of the deep terror" race="venom" experience="5850" speed="350" >
+<monster name="Tentacle of the Deep Terror" nameDescription="a tentacle of the deep terror" race="venom" experience="5850" speed="350">
 	<health now="25500" max="25500"/>
 	<look type="681"/>
   	<targetchange interval="5000" chance="8"/>
   	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
     		<flag summonable="0"/>
     		<flag attackable="1"/>
     		<flag hostile="1"/>
@@ -17,7 +17,7 @@
     		<flag staticattack="90"/>
     		<flag runonhealth="800"/>
 			<flag canwalkonenergy="1"/><flag canwalkonfire="1"/><flag canwalkonpoison="1"/>
-	<flag preyable="0"/></flags>
+	<!-- <flag preyable="0"/> --></flags>
 		<script>
 		<event name="TentacleDeep"/>
 	</script>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Splasher" nameDescription="Splasher" race="blood" experience="500" speed="520" >
+<monster name="Splasher" nameDescription="Splasher" race="blood" experience="500" speed="520">
 	<health now="1700" max="1700"/>
 	<look type="72" corpse="6064"/>
 	<targetchange interval="5000" chance="8"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>

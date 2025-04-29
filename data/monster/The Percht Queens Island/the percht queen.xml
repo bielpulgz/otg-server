@@ -4,7 +4,7 @@
 	<look typeex="35168" corpse="35101" />
 	<targetchange interval="5000" chance="8" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -49,11 +49,11 @@
 		<item name="Ultimate Mana Potion" countmax="20" chance="61000" />
 		<item name="Bullseye Potion" countmax="10" chance="25500" />
 		<item name="Chaos Mace" chance="25000" />
-		<item id="7301" chance="24500" /> <!-- Frozen Claw -->
+		<item name="Frozen Claw" chance="24500" />
 		<item name="Berserk Potion" countmax="10" chance="23000" />
 		<item name="Red Gem" chance="22500" />
 		<item name="Soul Stone" chance="224000" />
-		<item id="34989" chance="25000" /> <!-- The Crown of the Percht Queen -->
+		<item name="The Crown of the Percht Queen" chance="25000" />
 		<item name="Flames of the Percht Queen" chance="18000" />
 		<item name="Small Ladybug" chance="24980" />
 		<item name="Gold Ingot" chance="22480" />
@@ -63,13 +63,13 @@
 		<item name="Magic Sulphur" chance="25480" />
 		<item name="Percht Queen's Frozen Heart" chance="26800" />
 		<item name="Percht Skull" chance="25842" />
-		<item id="34991" chance="25840" /> <!-- Icicle -->
-		<item id="34990" chance="21848" /> <!-- The Crown of the Percht Queen -->
+		<item name="Icicle" chance="25840" />
+		<item name="The Crown of the Percht Queen" chance="21848" />
 		<item name="Silver Token" countmax="5" chance="5480" />
 		<item name="Percht Handkerchief" chance="5808" />
 		<item name="Ring of the Sky" chance="5100" />
 		<item id="26185" chance="8486" /> <!-- ring of blue plasma -->
-		<item id="35035" chance="4848" /> <!-- Fly Agaric -->
+		<item name="Fly Agaric" chance="4848" />
 		<item name="Percht Broom" chance="6485" />
 		<item name="Ice Hatchet" chance="5485" />
 		<item id="26189" chance="4858" /> <!-- ring of red plasma -->

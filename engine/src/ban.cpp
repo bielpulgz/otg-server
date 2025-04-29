@@ -1,6 +1,8 @@
 /**
+ * @file ban.cpp
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,19 +25,16 @@
 #include "database.h"
 #include "databasetasks.h"
 #include "tools.h"
-#include "configmanager.h"
 
-extern ConfigManager g_config;
-
-bool Ban::acceptConnection(uint32_t clientip)
+bool Ban::acceptConnection(uint32_t clientIP)
 {
 	std::lock_guard<std::recursive_mutex> lockClass(lock);
 
 	uint64_t currentTime = OTSYS_TIME();
 
-	auto it = ipConnectMap.find(clientip);
+	auto it = ipConnectMap.find(clientIP);
 	if (it == ipConnectMap.end()) {
-		ipConnectMap.emplace(clientip, ConnectBlock(currentTime, 0, 1));
+		ipConnectMap.emplace(clientIP, ConnectBlock(currentTime, 0, 1));
 		return true;
 	}
 
@@ -63,7 +62,7 @@ bool Ban::acceptConnection(uint32_t clientip)
 
 bool IOBan::isAccountBanned(uint32_t accountId, BanInfo& banInfo)
 {
-	Database& db = Database::getInstance();	
+	Database& db = Database::getInstance();
 
 	std::ostringstream query;
 	query << "SELECT `reason`, `expires_at`, `banned_at`, `banned_by`, (SELECT `name` FROM `players` WHERE `id` = `banned_by`) AS `name` FROM `account_bans` WHERE `account_id` = " << accountId;
@@ -74,7 +73,7 @@ bool IOBan::isAccountBanned(uint32_t accountId, BanInfo& banInfo)
 	}
 
 	int64_t expiresAt = result->getNumber<int64_t>("expires_at");
-	if (expiresAt != 0 && OS_TIME(nullptr) > expiresAt) {
+	if (expiresAt != 0 && time(nullptr) > expiresAt) {
 		// Move the ban to history if it has expired
 		query.str(std::string());
 		query << "INSERT INTO `account_ban_history` (`account_id`, `reason`, `banned_at`, `expired_at`, `banned_by`) VALUES (" << accountId << ',' << db.escapeString(result->getString("reason")) << ',' << result->getNumber<time_t>("banned_at") << ',' << expiresAt << ',' << result->getNumber<uint32_t>("banned_by") << ')';
@@ -92,16 +91,16 @@ bool IOBan::isAccountBanned(uint32_t accountId, BanInfo& banInfo)
 	return true;
 }
 
-bool IOBan::isIpBanned(uint32_t clientip, BanInfo& banInfo)
+bool IOBan::isIpBanned(uint32_t clientIP, BanInfo& banInfo)
 {
-	if (clientip == 0) {
+	if (clientIP == 0) {
 		return false;
 	}
 
 	Database& db = Database::getInstance();
 
 	std::ostringstream query;
-	query << "SELECT `reason`, `expires_at`, (SELECT `name` FROM `players` WHERE `id` = `banned_by`) AS `name` FROM `ip_bans` WHERE `ip` = " << clientip;
+	query << "SELECT `reason`, `expires_at`, (SELECT `name` FROM `players` WHERE `id` = `banned_by`) AS `name` FROM `ip_bans` WHERE `ip` = " << clientIP;
 
 	DBResult_ptr result = db.storeQuery(query.str());
 	if (!result) {
@@ -109,9 +108,9 @@ bool IOBan::isIpBanned(uint32_t clientip, BanInfo& banInfo)
 	}
 
 	int64_t expiresAt = result->getNumber<int64_t>("expires_at");
-	if (expiresAt != 0 && OS_TIME(nullptr) > expiresAt) {
+	if (expiresAt != 0 && time(nullptr) > expiresAt) {
 		query.str(std::string());
-		query << "DELETE FROM `ip_bans` WHERE `ip` = " << clientip;
+		query << "DELETE FROM `ip_bans` WHERE `ip` = " << clientIP;
 		g_databaseTasks.addTask(query.str());
 		return false;
 	}

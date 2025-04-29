@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Zugurosh" nameDescription="Zugurosh" race="fire" experience="10000" speed="165" >
+<monster name="Zugurosh" nameDescription="Zugurosh" race="fire" experience="10000" speed="165">
 	<health now="90500" max="90500"/>
 	<look type="12" head="2" body="35" legs="57" feet="91" corpse="8721"/>
 	<targetchange interval="5000" chance="15"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -91,6 +91,6 @@
 		<item id="2195" chance="8700"/>						<!-- boots of haste -->
 		<item id="2173" chance="6000"/>						<!-- amulet of loss -->
 		<item id="2645" chance="4500"/>						<!-- steel boots -->
-		<item id="2646" chance="200"/>						<!-- golden boots -->
+		<item id="2646" chance="1500"/>						<!-- golden boots -->
 	</loot>
 </monster>

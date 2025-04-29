@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Behemoth" nameDescription="a behemoth" race="blood" experience="2500" speed="170" raceid="55">
+<monster name="Behemoth" nameDescription="a behemoth" race="blood" experience="2500" speed="170">
 	<health now="4000" max="4000"/>
 	<look type="55" corpse="5999"/>
 	<targetchange interval="4000" chance="10"/>
@@ -47,9 +47,9 @@
 		<voice sentence="Crush the intruders!"/>
 	</voices>
 	<loot>
-		<item id="2023" chance="100"/> <!-- amphora -->
+		<item id="2023" chance="100"/><!-- amphora -->
 		<item name="crystal necklace" chance="2530"/>
-		<item name="gold coin" countmax="100" chance="595300"/>
+		<item name="gold coin" countmax="100" chance="59530"/>
 		<item name="gold coin" countmax="99" chance="40000"/>
 		<item name="small amethyst" countmax="5" chance="6380"/>
 		<item name="platinum coin" countmax="5" chance="59800"/>
@@ -62,7 +62,7 @@
 		<item name="war axe" chance="50"/>
 		<item name="plate armor" chance="3930"/>
 		<item name="dark armor" chance="4370"/>
-		<item id="2553" chance="650"/> <!-- pick -->
+		<item id="2553" chance="650"/><!-- pick -->
 		<item name="steel boots" chance="380"/>
 		<item name="meat" countmax="6" chance="30000"/>
 		<item name="perfect behemoth fang" chance="1090"/>

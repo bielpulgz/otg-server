@@ -1,6 +1,8 @@
 /**
+ * @file configmanager.cpp
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -93,18 +95,6 @@ float getGlobalFloat(lua_State* L, const char* identifier, const float defaultVa
 	return val;
 }
 
-double getGlobalDouble(lua_State* L, const char* identifier, const double defaultValue = 0.0)
-{
-	lua_getglobal(L, identifier);
-	if (!lua_isnumber(L, -1)) {
-		return defaultValue;
-	}
-
-	double val = lua_tonumber(L, -1);
-	lua_pop(L, 1);
-	return val;
-}
-
 }
 
 bool ConfigManager::load()
@@ -142,25 +132,8 @@ bool ConfigManager::load()
 		integer[GAME_PORT] = getGlobalNumber(L, "gameProtocolPort", 7172);
 		integer[LOGIN_PORT] = getGlobalNumber(L, "loginProtocolPort", 7171);
 		integer[STATUS_PORT] = getGlobalNumber(L, "statusProtocolPort", 7171);
-		integer[CHECK_PORT] = getGlobalNumber(L, "checkProtocolPort", 7175);
-		integer[MARKET_OFFER_DURATION] = getGlobalNumber(L, "marketOfferDuration", 30 * 24 * 60 * 60);
 
-		// Load proxy list
-		string[PROXY_LIST] = getGlobalString(L, "proxyList", "");
-		StringVector proxies = explodeString(string[PROXY_LIST], ";");
-		for (const std::string& proxyInfo : proxies) {
-			StringVector info = explodeString(proxyInfo, ",");
-			if (info.size() == 4) {
-				const std::string& ip = info[1];
-				const std::string& name = info[3];
-				uint16_t proxyId = std::stoi(info[0]);
-				uint16_t port = std::stoi(info[2]);
-				auto it = proxyList.emplace(std::piecewise_construct, std::forward_as_tuple(proxyId), std::forward_as_tuple(ip, port, name));
-				if (it.second) {
-					std::cout << "> Loaded proxy with id: " << proxyId << ", ip: " << ip << ", port: " << port << ", name: " << name << std::endl;
-				}
-			}
-		}
+		integer[MARKET_OFFER_DURATION] = getGlobalNumber(L, "marketOfferDuration", 30 * 24 * 60 * 60);
 
 		integer[VERSION_MIN] = getGlobalNumber(L, "clientVersionMin", CLIENT_VERSION_MIN);
 		integer[VERSION_MAX] = getGlobalNumber(L, "clientVersionMax", CLIENT_VERSION_MAX);
@@ -168,11 +141,6 @@ bool ConfigManager::load()
 		integer[PREMIUM_DEPOT_LIMIT] = getGlobalNumber(L, "premiumDepotLimit", 8000);
 		integer[DEPOT_BOXES] = getGlobalNumber(L, "depotBoxes", 17);
 		integer[AUTOLOOT_MODE] = getGlobalNumber(L, "autolootmode", 0); //Autoloot
-
-		boolean[PROTO_BUFF] = getGlobalNumber(L, "protobuff", false); //Autoloot
-
-		doubling[SPAWN_SPEED] = getGlobalNumber(L, "spawnSpeed", 1.0);
-
 	}
 
 	boolean[ALLOW_CHANGEOUTFIT] = getGlobalBoolean(L, "allowChangeOutfit", true);
@@ -197,13 +165,10 @@ bool ConfigManager::load()
 	boolean[REMOVE_POTION_CHARGES] = getGlobalBoolean(L, "removeChargesFromPotions", true);
 	boolean[STOREMODULES] = getGlobalBoolean(L, "gamestoreByModules", true);
 	boolean[QUEST_LUA] = getGlobalBoolean(L, "loadQuestLua", true);
-	boolean[EXPERT_PVP] = getGlobalBoolean(L, "expertPvp", false);
-	boolean[SHOW_PACKETS] = getGlobalBoolean(L, "showPackets", false);
-	boolean[ENABLE_LIVE_CASTING] = getGlobalBoolean(L, "enableLiveCasting", false);
-	boolean[MAINTENANCE] = getGlobalBoolean(L, "maintenance", false);
-	boolean[FORCE_MONSTERTYPE_LOAD] = getGlobalBoolean(L, "forceMonsterTypesOnLoad", true);
-	boolean[YELL_ALLOW_PREMIUM] = getGlobalBoolean(L, "yellAlwaysAllowPremium", false);
-	boolean[BLESS_RUNE] = getGlobalBoolean(L, "blessRune", true);
+	boolean[SERVER_SAVE_NOTIFY_MESSAGE] = getGlobalBoolean(L, "serverSaveNotifyMessage", true);
+	boolean[SERVER_SAVE_CLEAN_MAP] = getGlobalBoolean(L, "serverSaveCleanMap", false);
+	boolean[SERVER_SAVE_CLOSE] = getGlobalBoolean(L, "serverSaveClose", false);
+	boolean[SERVER_SAVE_SHUTDOWN] = getGlobalBoolean(L, "serverSaveShutdown", true);
 
 	string[DEFAULT_PRIORITY] = getGlobalString(L, "defaultPriority", "high");
 	string[SERVER_NAME] = getGlobalString(L, "serverName", "");
@@ -213,11 +178,7 @@ bool ConfigManager::load()
 	string[LOCATION] = getGlobalString(L, "location", "");
 	string[MOTD] = getGlobalString(L, "motd", "");
 	string[WORLD_TYPE] = getGlobalString(L, "worldType", "pvp");
-	string[STORE_IMAGES_URL] = getGlobalString(L, "storeImagesUrl", "http://os.quelibra.online/images/store/");
-	string[DEFAULT_OFFER] = getGlobalString(L, "defaultStoreOffer", "Blessings");
-	string[BLOCK_WORD] = getGlobalString(L, "blockWord", "");
-	string[MONSTER_URL] = getGlobalString(L, "monsterImageUrl", "AnimatedOutfits/outfit.php?");
-	string[ITEM_URL] = getGlobalString(L, "itemImagemUrl", "layouts/tibiacom/images/shop/items/");
+	string[STORE_IMAGES_URL] = getGlobalString(L, "coinImagesURL", "");
 
 	integer[MAX_PLAYERS] = getGlobalNumber(L, "maxPlayers");
 	integer[PZ_LOCKED] = getGlobalNumber(L, "pzLocked", 60000);
@@ -245,24 +206,20 @@ bool ConfigManager::load()
 	integer[CHECK_EXPIRED_MARKET_OFFERS_EACH_MINUTES] = getGlobalNumber(L, "checkExpiredMarketOffersEachMinutes", 60);
 	integer[MAX_MARKET_OFFERS_AT_A_TIME_PER_PLAYER] = getGlobalNumber(L, "maxMarketOffersAtATimePerPlayer", 100);
 	integer[MAX_PACKETS_PER_SECOND] = getGlobalNumber(L, "maxPacketsPerSecond", 25);
-	integer[STORE_COINS_PACKET_SIZE] = getGlobalNumber(L, "storeCoinsPacketSize", 25);
+	integer[STORE_COIN_PACKET] = getGlobalNumber(L, "coinPacketSize", 25);
 	integer[DAY_KILLS_TO_RED] = getGlobalNumber(L, "dayKillsToRedSkull", 3);
 	integer[WEEK_KILLS_TO_RED] = getGlobalNumber(L, "weekKillsToRedSkull", 5);
 	integer[MONTH_KILLS_TO_RED] = getGlobalNumber(L, "monthKillsToRedSkull", 10);
 	integer[RED_SKULL_DURATION] = getGlobalNumber(L, "redSkullDuration", 30);
 	integer[BLACK_SKULL_DURATION] = getGlobalNumber(L, "blackSkullDuration", 45);
 	integer[ORANGE_SKULL_DURATION] = getGlobalNumber(L, "orangeSkullDuration", 7);
-	integer[NETWORK_ATTACK_THRESHOLD] = getGlobalNumber(L, "networkAttackThreshold", 10);
-	integer[LIVE_CAST_PORT] = getGlobalNumber(L, "liveCastPort", 7173);
 	integer[SERVER_SAVE_NOTIFY_DURATION] = getGlobalNumber(L, "serverSaveNotifyDuration", 5);
-	integer[YELL_MINIMUM_LEVEL] = getGlobalNumber(L, "yellMinimumLevel", 2);
+	integer[NETWORK_ATTACK_THRESHOLD] = getGlobalNumber(L, "networkAttackThreshold", 10);
 	integer[TIME_GMT] = getGlobalNumber(L, "timeGMT", -3 * 60 * 60);
 
 	floating[RATE_MONSTER_HEALTH] = getGlobalFloat(L, "rateMonsterHealth", 1.0);
 	floating[RATE_MONSTER_ATTACK] = getGlobalFloat(L, "rateMonsterAttack", 1.0);
 	floating[RATE_MONSTER_DEFENSE] = getGlobalFloat(L, "rateMonsterDefense", 1.0);
-
-	doubling[RATE_MONSTER_SPEED] = getGlobalDouble(L, "rateMonsterSpeed", 1.95);
 
 	loaded = true;
 	lua_close(L);
@@ -289,6 +246,15 @@ const std::string& ConfigManager::getString(string_config_t what) const
 	return string[what];
 }
 
+int16_t ConfigManager::getShortNumber(integer_config_t what) const
+{
+	if (what >= LAST_INTEGER_CONFIG) {
+		std::cout << "[Warning - ConfigManager::getShortNumber] Accessing invalid index: " << what << std::endl;
+		return 0;
+	}
+	return integer[what];
+}
+
 int32_t ConfigManager::getNumber(integer_config_t what) const
 {
 	if (what >= LAST_INTEGER_CONFIG) {
@@ -296,16 +262,6 @@ int32_t ConfigManager::getNumber(integer_config_t what) const
 		return 0;
 	}
 	return integer[what];
-}
-
-static ConfigManager::ProxyInfo dummyInfo;
-std::pair<bool, const ConfigManager::ProxyInfo&> ConfigManager::getProxyInfo(uint16_t proxyId) {
-	auto it = proxyList.find(proxyId);
-	if (it == proxyList.end()) {
-		return {false, dummyInfo};
-	}
-
-	return {true, it->second};
 }
 
 bool ConfigManager::getBoolean(boolean_config_t what) const
@@ -324,13 +280,4 @@ float ConfigManager::getFloat(floating_config_t what) const
 		return 0;
 	}
 	return floating[what];
-}
-
-double ConfigManager::getDouble(doubling_config_t what) const
-{
-	if (what >= LAST_DOUBLING_CONFIG) {
-		std::cout << "[Warning - ConfigManager::getDouble] Accessing invalid index: " << what << std::endl;
-		return 0;
-	}
-	return doubling[what];
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Ragiaz" nameDescription="ragiaz" race="undead" experience="100000" speed="340">
+<monster name="Ragiaz" nameDescription="ragiaz" race="undead" experience="100000" speed="340" script="rewardboss.lua">
 	<health now="380000" max="380000" />
 	<look type="862" head="76" body="57" legs="19" feet="0" addons="3" corpse="25151" />
 	<targetchange interval="5000" chance="8" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -63,7 +63,7 @@
 		<immunity paralyze="1"/>
 	</immunities>
 	<loot>
-		<item id="25172" chance="1000000"/><!-- silver token -->
+		<item id="25172" chance="100000"/><!-- silver token -->
 		<item id="6558" chance="10000"/><!-- concentrate demonic blood -->
 		<item id="6558" chance="10000"/><!-- concentrate demonic blood -->
 		<item id="6558" chance="10000"/><!-- concentrate demonic blood -->

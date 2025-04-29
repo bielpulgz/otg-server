@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Snake Thing" nameDescription="Snake Thing" race="venom" experience="8400" speed="240" >
+<monster name="Snake Thing" nameDescription="Snake Thing" race="venom" experience="8400" speed="240">
 	<health now="70000" max="70000"/>
 	<look type="220" corpse="0"/>
 	<targetchange interval="2000" chance="10"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>

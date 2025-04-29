@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Draken Elite" nameDescription="a draken elite" race="blood" experience="4200" speed="166" raceid="672">
+<monster name="Draken Elite" nameDescription="a draken elite" race="blood" experience="4200" speed="166">
 	<health now="5550" max="5550"/>
 	<look type="362" corpse="12609"/>
 	<targetchange interval="5000" chance="10"/>
@@ -34,7 +34,7 @@
 		</attack>
 	</attacks>
 	<defenses armor="45" defense="45">
-		<defense name="healing" interval="2000" chance="10" min="230" max="510">
+		<defense name="healing" interval="2000" chance="15" min="510" max="600">
 			<attribute key="areaEffect" value="blueshimmer"/>
 		</defense>
 	</defenses>

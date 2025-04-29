@@ -1,6 +1,8 @@
 /**
+ * @file bed.cpp
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -23,12 +25,10 @@
 #include "game.h"
 #include "iologindata.h"
 #include "scheduler.h"
-#include "configmanager.h"
 
 extern Game g_game;
-extern ConfigManager g_config;
 
-BedItem::BedItem(uint16_t id) : Item(id)
+BedItem::BedItem(uint16_t initId) : Item(initId)
 {
 	internalRemoveSleeper();
 }
@@ -219,7 +219,7 @@ void BedItem::wakeUp(Player* player)
 
 void BedItem::regeneratePlayer(Player* player) const
 {
-	const uint32_t sleptTime = OS_TIME(nullptr) - sleepStart;
+	const uint32_t sleptTime = time(nullptr) - sleepStart;
 
 	Condition* condition = player->getCondition(CONDITION_REGENERATION, CONDITIONID_DEFAULT);
 	if (condition) {
@@ -267,7 +267,7 @@ void BedItem::internalSetSleeper(const Player* player)
 	std::string desc_str = player->getName() + " is sleeping there.";
 
 	sleeperGUID = player->getGUID();
-	sleepStart = OS_TIME(nullptr);
+	sleepStart = time(nullptr);
 	setSpecialDescription(desc_str);
 }
 

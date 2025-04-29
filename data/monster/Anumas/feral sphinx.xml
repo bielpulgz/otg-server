@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Feral Sphinx" nameDescription="a feral sphinx" race="blood" experience="8800" speed="160" raceid="1807" >
+<monster name="Feral Sphinx" nameDescription="a feral sphinx" race="blood" experience="8800" speed="160">
 	<health now="9800" max="9800"/>
-	<look type="1188" head="76" body="75" legs="38" feet="50" addons="2" corpse="36372"/>
+	<look type="1188" head="76" body="75" legs="38" feet="50" addons="2" corpse="36493"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
 		<flag summonable="0"/>
@@ -52,7 +52,7 @@
 		<item name="wand of draconia" chance="4770"/>
 		<item name="sphinx feather" chance="3450"/>
 		<item name="fire axe" chance="2650"/>
-		<item id="36152" chance="3450"/><!-- Sphinx Tiara -->
+		<item id="36273" chance="3450"/><!-- Sphinx Tiara -->
 		<item name="magma legs" chance="1860"/>
 		<item name="magma monocle" chance="1590"/>
 		<item name="magma boots" chance="2120"/>

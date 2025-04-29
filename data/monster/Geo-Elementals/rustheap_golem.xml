@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Rustheap Golem" nameDescription="a rustheap golem" race="energy" experience="2300" speed="125" raceid="1041">
+<monster name="Rustheap Golem" nameDescription="a rustheap golem" race="energy" experience="2300" speed="125">
 	<health now="2800" max="2800"/>
 	<look type="603" corpse="23355"/>
   <targetchange interval="2000" chance="5"/>
@@ -10,15 +10,12 @@
     <flag illusionable="0"/>
     <flag convinceable="0"/>
     <flag pushable="0"/>
-	<flag isblockable="0"/>
+			<flag isblockable="0"/>
     <flag canpushitems="1"/>
     <flag canpushcreatures="1"/>
     <flag targetdistance="1"/>
     <flag staticattack="90"/>
     <flag runonhealth="0"/>
-    <flag canwalkonenergy="1"/>
-    <flag canwalkonfire="0"/>
-    <flag canwalkonpoison="1"/>
   </flags>
   <attacks>
     <attack name="melee" interval="2000" skill="118" attack="50"/>

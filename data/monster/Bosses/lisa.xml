@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Lisa" nameDescription="Lisa" race="venom" experience="18000" speed="200" >
+<monster name="Lisa" nameDescription="Lisa" race="venom" experience="18000" speed="200">
 	<health now="55000" max="55000"/>
 	<look type="604" corpse="23359"/>
 	<targetchange interval="2000" chance="3"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -66,7 +66,7 @@
 		<item id="7591" countmax="5" chance="30000"/><!-- great health potion -->
 		<item id="7590" countmax="5" chance="30000"/><!-- great mana potion -->
 		<item id="8472" countmax="5" chance="30000"/><!-- great spirit potion -->
-		<item id="23589" chance="500"/><!-- lisa's doll -->
+		<item id="23589" chance="800"/><!-- lisa's doll -->
 		<item id="23568" countmax="3" chance="100000"/><!-- slimy leaf tentacle -->
 		<item id="2150" countmax="5" chance="50000"/><!-- small amethyst -->
 		<item id="2147" countmax="5" chance="50000"/><!-- small ruby -->

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Icicle" nameDescription="an icicle" race="undead" experience="0" speed="0" >
+<monster name="Icicle" nameDescription="an icicle" race="undead" experience="0" speed="0">
 	<health now="8200" max="8200"/>
 	<look type="904" corpse="2253"/>
 	<targetchange interval="2000" chance="0"/>
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>

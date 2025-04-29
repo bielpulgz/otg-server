@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Fallen Challenger" nameDescription="a fallen challenger" race="undead" experience="0" speed="300" >
+<monster name="Fallen Challenger" nameDescription="a fallen challenger" race="undead" experience="0" speed="300" script="fallenChallenger.lua">
 	<health now="9000" max="9000"/>
 	<look type="231" corpse="1397"/>
 	<targetchange interval="5000" chance="8"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -17,6 +17,9 @@
 		<flag targetdistance="1"/>
 		<flag runonhealth="0"/>
 	</flags>
+	<script>
+		<event name="Fallen Death"/>
+	</script>
 	<attacks>
 		<attack name="melee" interval="2000" skill="120" attack="130"/>
 		<attack name="lifedrain" interval="1000" chance="13" radius="1" target="1" min="-400" max="-600"/>

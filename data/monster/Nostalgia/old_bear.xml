@@ -4,7 +4,7 @@
 	<look type="919" corpse="5975"/>
 	<targetchange interval="4000" chance="0"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -35,6 +35,6 @@
 	</voices>
 	<loot>
 		<item name="meat" countmax="5" chance="39750"/>
-		<item id="2671" countmax="2" chance="20000"/> <!-- ham -->
+		<item name="ham" countmax="2" chance="20000"/>
 	</loot>
 </monster>

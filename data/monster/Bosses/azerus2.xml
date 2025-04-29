@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Azerus" nameDescription="Azerus" race="blood" experience="6000" speed="143" >
+<monster name="Azerus" nameDescription="Azerus" race="blood" experience="6000" speed="143">
 	<health now="26000" max="26000"/>
 	<look type="309" corpse="0"/>
 	<targetchange interval="5000" chance="8"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -16,9 +16,6 @@
 		<flag targetdistance="1"/>
 		<flag staticattack="85"/>
 		<flag runonhealth="0"/>
-		<flag canwalkonenergy="1" />
-		<flag canwalkonfire="1" />
-		<flag canwalkonpoison="1" />
 	</flags>
 	<attacks>
 		<attack name="melee" interval="2000" min="0" max="-900"/>

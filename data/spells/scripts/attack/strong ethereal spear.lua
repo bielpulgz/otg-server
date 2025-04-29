@@ -7,7 +7,7 @@ combat:setParameter(COMBAT_PARAM_BLOCKARMOR, 1)
 function onGetFormulaValues(player, attack, factor)
 	local skillTotal = 2 * player:getEffectiveSkillLevel(SKILL_DISTANCE)
 	local levelTotal = player:getLevel() / 5
-	return player:getSpellDamage(-(((skillTotal + attack / 2500) * 2.50) + (levelTotal) + 8), -(((skillTotal + attack / 1900) * 2.50) + (levelTotal) + 12))
+	return -(((skillTotal + attack / 2500) * 2.30) + (levelTotal) + 7), -(((skillTotal + attack / 1875) * 3.30) + (levelTotal) + 13)
 end
 
 combat:setCallback(CALLBACK_PARAM_SKILLVALUE, "onGetFormulaValues")

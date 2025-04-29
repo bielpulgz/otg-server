@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Prince Drazzak" nameDescription="Prince Drazzak" race="fire" experience="210000" speed="480">
+<monster name="Prince Drazzak" nameDescription="Prince Drazzak" race="fire" experience="210000" speed="480" script="rewardboss.lua">
 	<health now="330000" max="330000"/>
 	<look type="12" head="77" body="78" legs="94" feet="54" addons="0" corpse="6068"/>
 	<targetchange interval="2000" chance="25"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag rewardboss="1"/>
 		<flag summonable="0"/>
 		<flag attackable="1"/>
@@ -60,8 +60,9 @@
 		<voice sentence="They used you fools to escape and they left ME behind!!??"/>
 	</voices>
 	<loot>
-		<item id="22396" countmax="5" chance="100000"/><!-- cluster of solace -->
-		<item id="22598" countmax="3" chance="1000"/><!-- unrealized dream -->
+		<item id="22397" chance="100000" /><!-- Dream Matter -->
+		<item id="22396" countmax="2" chance="100000" /><!-- cluster of solace -->		
+		<item id="22598" countmax="3" chance="93750" /><!-- Unrealized Dream -->
 		<item id="6500" countmax="2" chance="100000"/><!-- demonic essence -->
 		<item id="5954" chance="50000"/><!-- demon horn -->
 		<item id="2152" countmax="50" chance="100000"/><!-- platinum coin -->
@@ -72,7 +73,7 @@
 		<item id="22608" chance="2500"/><!-- nightmare horn -->
 		<item id="22611" chance="25000"/><!-- psychodelic tapestry -->
 		<item id="22612" chance="25000"/><!-- demonic tapestry -->
-		<item id="5741" chance="500"/><!-- skull helmet -->
+		<item id="5741" chance="2500"/><!-- skull helmet -->
 		<item id="7417" chance="2500" unique="1"/><!-- Runed Sword -->
 		<item id="22610" chance="7000" unique="1"/><!-- dream warden mask -->
 		<item id="7418" chance="1000"/><!-- Nightmare Blade -->

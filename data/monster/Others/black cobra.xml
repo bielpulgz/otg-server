@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <monster name="Black Cobra" nameDescription="a black cobra" race="blood" experience="0" speed="150">
 	<health now="8200" max="8200"/>
-	<look type="81" corpse="36016" />
+	<look type="81"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
 		<flag summonable="0"/>

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Mad Technomancer" nameDescription="a mad technomancer" race="blood" experience="55" speed="200" >
+<monster name="Mad Technomancer" nameDescription="a mad technomancer" race="blood" experience="55" speed="200">
 	<health now="1800" max="1800"/>
 	<look type="66" corpse="6015"/>
 	<targetchange interval="500" chance="25"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -52,6 +52,6 @@
 		<voice sentence="Gentlemen, you can't fight here! This is the War Room!"/>
 	</voices>
 	<loot>
-		<item id="7699" chance="1000000"/><!-- beard -->
+		<item id="7699" chance="100000"/><!-- beard -->
 	</loot>
 </monster>

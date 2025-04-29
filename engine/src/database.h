@@ -1,6 +1,8 @@
 /**
+ * @file database.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_DATABASE_H_A484B0CDFDE542838F506DCE3D40C693
-#define FS_DATABASE_H_A484B0CDFDE542838F506DCE3D40C693
+#ifndef OT_SRC_DATABASE_H_
+#define OT_SRC_DATABASE_H_
 
 #include <boost/lexical_cast.hpp>
 
@@ -38,13 +40,6 @@ class Database
 		Database& operator=(const Database&) = delete;
 
 		/**
-		 * Connects to the database
-		 *
-		 * @return true on successful connection, false on error
-		 */
-		bool connect();
-
-		/**
 		 * Singleton implementation.
 		 *
 		 * @return database connection handler singleton
@@ -54,6 +49,13 @@ class Database
 			static Database instance;
 			return instance;
 		}
+
+		/**
+		 * Connects to the database
+		 *
+		 * @return true on successful connection, false on error
+		 */
+		bool connect();
 
 		/**
 		 * Executes command.

@@ -1,6 +1,8 @@
 /**
+ * @file iologindata.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_IOLOGINDATA_H_28B0440BEC594654AC0F4E1A5E42B2EF
-#define FS_IOLOGINDATA_H_28B0440BEC594654AC0F4E1A5E42B2EF
+#ifndef OT_SRC_IOLOGINDATA_H_
+#define OT_SRC_IOLOGINDATA_H_
 
 #include "account.h"
 #include "player.h"
@@ -33,10 +35,7 @@ class IOLoginData
 		static bool saveAccount(const Account& acc);
 
 		static bool loginserverAuthentication(const std::string& name, const std::string& password, Account& account);
-		static uint32_t gameworldAuthentication(const std::string& accountName, const std::string& password, std::string& characterName, std::string& token, uint32_t tokenTime);
-
-		static bool loginserverAuthenticationEmail(const std::string& name, const std::string& password, Account& account);
-		static uint32_t gameworldAuthenticationEmail(const std::string& accountName, const std::string& password, std::string& characterName, std::string& token, uint32_t tokenTime);
+		static uint32_t gameworldAuthentication(const std::string& accountName, const std::string& password, std::string& characterName);
 
 		static AccountType_t getAccountType(uint32_t accountId);
 		static void setAccountType(uint32_t accountId, AccountType_t accountType);
@@ -62,19 +61,14 @@ class IOLoginData
 		static void addPremiumDays(uint32_t accountId, int32_t addDays);
 		static void removePremiumDays(uint32_t accountId, int32_t removeDays);
 
-		static void setVipDays(uint32_t accountId, int32_t addDays);
-
-		static bool loadAccountStoreHistory(uint32_t accountId);
-
 	protected:
 		using ItemMap = std::map<uint32_t, std::pair<Item*, uint32_t>>;
 
+		static void loadItems(ItemMap& itemMap, DBResult_ptr result);
+		static bool saveItems(const Player* player, const ItemBlockList& itemList, DBInsert& query_insert, PropWriteStream& stream);
 		static void loadPreyData(std::vector<PreyData>& preyData, DBResult_ptr result);
 		static void readPreyList(std::vector<std::string>& preyList, PropStream& propStream);
 		static bool savePreyData(const Player* player);
-		static void loadItems(ItemMap& itemMap, DBResult_ptr result);
-		static bool saveItems(const Player* player, const ItemBlockList& itemList, DBInsert& query_insert, PropWriteStream& stream);
-
 };
 
 #endif

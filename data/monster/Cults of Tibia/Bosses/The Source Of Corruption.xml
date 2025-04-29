@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="The Source Of Corruption" nameDescription="The Source Of Corruption" race="undead" experience="0" speed="120">
+<monster name="The Source Of Corruption" nameDescription="The Source Of Corruption" race="undead" experience="0" speed="120" script="rewardboss.lua">
 	<health now="500000" max="500000" />
 	<look type="979" corpse="26223"/>
 	<targetchange interval="5000" chance="20" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag rewardboss="1"/>
 		<flag summonable="0" />
 		<flag attackable="1" />

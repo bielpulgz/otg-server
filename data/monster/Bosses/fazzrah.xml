@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Fazzrah" nameDescription="Fazzrah" race="blood" experience="2600" speed="290" >
+<monster name="Fazzrah" nameDescription="Fazzrah" race="blood" experience="2600" speed="290">
 	<health now="2955" max="2955" />
 	<look type="343" corpse="11284" />
 	<targetchange interval="5000" chance="8" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />

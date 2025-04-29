@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Grynch Clan Goblin" nameDescription="Grynch Clan Goblin" race="blood" experience="4" speed="100" raceid="393">
+<monster name="Grynch Clan Goblin" nameDescription="Grynch Clan Goblin" race="blood" experience="4" speed="100">
 	<health now="80" max="80"/>
 	<look type="61" corpse="6002"/>
 	<targetchange interval="5000" chance="0"/>
@@ -84,6 +84,6 @@
 		<item name="christmas present bag" chance="7000"/>
 		<item name="gingerbreadman" countmax="2" chance="4000"/>
 		<item name="walnut" countmax="5" chance="3500"/>
-		<item id="7910" countmax="100" chance="3500"/> <!-- peanut -->
+		<item name="peanut" countmax="100" chance="3500"/>
 	</loot>
 </monster>

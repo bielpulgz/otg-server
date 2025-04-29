@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Draken Spellweaver" nameDescription="a draken spellweaver" race="blood" experience="3100" speed="168" raceid="618">
+<monster name="Draken Spellweaver" nameDescription="a draken spellweaver" race="blood" experience="3100" speed="168">
 	<health now="5000" max="5000"/>
 	<look type="340" corpse="11316"/>
 	<targetchange interval="4000" chance="10"/>
@@ -42,7 +42,7 @@
 		<defense name="invisible" interval="2000" chance="10" duration="5000">
 			<attribute key="areaEffect" value="redshimmer"/>
 		</defense>
-		<defense name="healing" interval="2000" chance="10" min="230" max="510">
+		<defense name="healing" interval="2000" chance="15" min="270" max="530">
 			<attribute key="areaEffect" value="blueshimmer"/>
 		</defense>
 	</defenses>

@@ -1,6 +1,8 @@
 /**
+ * @file tools.cpp
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -211,17 +213,17 @@ std::string generateToken(const std::string& key, uint32_t ticks)
 
 	// hmac concat outer pad with message, conversion from hex to int needed
 	for (uint8_t i = 0; i < message.length(); i += 2) {
-		oKeyPad.push_back(static_cast<char>(std::strtoul(message.substr(i, 2).c_str(), nullptr, 16)));
+		oKeyPad.push_back(static_cast<char>(std::stol(message.substr(i, 2), nullptr, 16)));
 	}
 
 	// hmac second pass
 	message.assign(transformToSHA1(oKeyPad));
 
 	// calculate hmac offset
-	uint32_t offset = static_cast<uint32_t>(std::strtoul(message.substr(39, 1).c_str(), nullptr, 16) & 0xF);
+	uint32_t offset = static_cast<uint32_t>(std::stol(message.substr(39, 1), nullptr, 16) & 0xF);
 
 	// get truncated hash
-	uint32_t truncHash = static_cast<uint32_t>(std::strtoul(message.substr(2 * offset, 8).c_str(), nullptr, 16)) & 0x7FFFFFFF;
+	uint32_t truncHash = std::stol(message.substr(2 * offset, 8), nullptr, 16) & 0x7FFFFFFF;
 	message.assign(std::to_string(truncHash));
 
 	// return only last AUTHENTICATOR_DIGITS (default 6) digits, also asserts exactly 6 digits
@@ -1046,8 +1048,6 @@ itemAttrTypes stringToItemAttribute(const std::string& str)
 		return ITEM_ATTRIBUTE_FLUIDTYPE;
 	} else if (str == "doorid") {
 		return ITEM_ATTRIBUTE_DOORID;
-	} else if (str == "wrapid") {
-		return ITEM_ATTRIBUTE_WRAPID;
 	}
 	return ITEM_ATTRIBUTE_NONE;
 }
@@ -1109,9 +1109,6 @@ const char* getReturnMessage(ReturnValue value)
 
 		case RETURNVALUE_CONTAINERNOTENOUGHROOM:
 			return "You cannot put more objects in this container.";
-		
-		case RETURNVALUE_ONLYAMMOINQUIVER:
-          return "This quiver only holds arrows and bolts.\nYou cannot put any other items in it.";
 
 		case RETURNVALUE_NEEDEXCHANGE:
 		case RETURNVALUE_NOTENOUGHROOM:
@@ -1210,9 +1207,6 @@ const char* getReturnMessage(ReturnValue value)
 		case RETURNVALUE_YOUNEEDPREMIUMACCOUNT:
 			return "You need a premium account.";
 
-		case RETURNVALUE_YOUNEEDVIPACCOUNT:
-			return "You need a vip account.";
-
 		case RETURNVALUE_YOUNEEDTOLEARNTHISSPELL:
 			return "You need to learn this spell first.";
 
@@ -1279,21 +1273,6 @@ const char* getReturnMessage(ReturnValue value)
 		case RETURNVALUE_YOUCANNOTTRADETHISHOUSE:
 			return "You can not trade this house.";
 
-		case RETURNVALUE_YOUDONTHAVEREQUIREDPROFESSION:
-			return "You don't have the required profession.";
-
-		case RETURNVALUE_PREYINTERNALERROR:
-			return "An internal error occurred. Please try again.";
-
-		case RETURNVALUE_CHOSENMONSTERISALREADYINUSE:
-			return "Chosen monster is already in use.";
-
-		case RETURNVALUE_NOTENOUGHMONEYFORREROLL:
-			return "Not enough money for reroll.";
-
-		case RETURNVALUE_NOAVAILABLEBONUSREROLL:
-			return "You don't have any available bonus reroll.";
-
 		case RETURNVALUE_NOTENOUGHFISTLEVEL:
 			return "You do not have enough fist level";
 
@@ -1314,6 +1293,15 @@ const char* getReturnMessage(ReturnValue value)
 
 		case RETURNVALUE_NOTENOUGHFISHLEVEL:
 			return "You do not have enough fishing level";
+
+		case RETURNVALUE_PREYINTERNALERROR:
+			return "An internal error occurred. Please try again.";
+
+		case RETURNVALUE_NOTENOUGHMONEYFORREROLL:
+			return "Not enough money for reroll.";
+
+		case RETURNVALUE_NOAVAILABLEBONUSREROLL:
+			return "You don't have any available bonus reroll.";
 
 		default: // RETURNVALUE_NOTPOSSIBLE, etc
 			return "Sorry, not possible.";
@@ -1345,8 +1333,6 @@ SpellGroup_t stringToSpellGroup(std::string value)
 		return SPELLGROUP_SUPPORT;
 	} else if (tmpStr == "special" || tmpStr == "4") {
 		return SPELLGROUP_SPECIAL;
-	} else if (tmpStr == "ultimate" || tmpStr == "6") {
-		return SPELLGROUP_ULTIMATE;
 	}
 
 	return SPELLGROUP_NONE;
@@ -1403,50 +1389,3 @@ bool isCaskItem(uint16_t itemId)
 		(itemId >= ITEM_MANA_CASK_START && itemId <= ITEM_MANA_CASK_END) || 
 		(itemId >= ITEM_SPIRIT_CASK_START && itemId <= ITEM_SPIRIT_CASK_END);
 }
-
-std::string getObjectCategoryName(ObjectCategory_t category)
-{
-	switch (category) {
-		case OBJECTCATEGORY_ARMORS: return "armors";
-		case OBJECTCATEGORY_NECKLACES: return "amulets";
-		case OBJECTCATEGORY_BOOTS: return "boots";
-		case OBJECTCATEGORY_CONTAINERS: return "containers";
-		case OBJECTCATEGORY_DECORATION: return "decoration";
-		case OBJECTCATEGORY_FOOD: return "food";
-		case OBJECTCATEGORY_HELMETS: return "helmets";
-		case OBJECTCATEGORY_LEGS: return "legs";
-		case OBJECTCATEGORY_OTHERS: return "others";
-		case OBJECTCATEGORY_POTIONS: return "potions";
-		case OBJECTCATEGORY_RINGS: return "rings";
-		case OBJECTCATEGORY_RUNES: return "runes";
-		case OBJECTCATEGORY_SHIELDS: return "shields";
-		case OBJECTCATEGORY_TOOLS: return "tools";
-		case OBJECTCATEGORY_VALUABLES: return "valuables";
-		case OBJECTCATEGORY_AMMO: return "weapons: ammunition";
-		case OBJECTCATEGORY_AXES: return "weapons: axes";
-		case OBJECTCATEGORY_CLUBS: return "weapons: clubs";
-		case OBJECTCATEGORY_DISTANCEWEAPONS: return "weapons: distance";
-		case OBJECTCATEGORY_SWORDS: return "weapons: swords";
-		case OBJECTCATEGORY_WANDS: return "weapons: wands";
-		case OBJECTCATEGORY_PREMIUMSCROLLS: return "premium scrolls";
-		case OBJECTCATEGORY_TIBIACOINS: return "tibia coins";
-		case OBJECTCATEGORY_CREATUREPRODUCTS: return "creature products";
-		case OBJECTCATEGORY_STASHRETRIEVE: return "stash retrieve";
-		case OBJECTCATEGORY_GOLD: return "gold";
-		case OBJECTCATEGORY_DEFAULT: return "unassigned loot";
-		default: return std::string();
-	}
-}
-
-std::string generateRK(size_t length)
-{
-	std::ostringstream newkey;
-	std::string consonants = "ABCDEFGHIJLMNOPQRSTUVWXYZ0123456789";
-	while (newkey.str().length() < length)
-	{
-		uint8_t pos = uniform_random(1, consonants.length());
-		newkey << consonants.substr(pos, 1);
-	}
-	return newkey.str();
-}
-

@@ -1,6 +1,8 @@
 /**
+ * @file protocolstatus.cpp
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -28,7 +30,7 @@ extern ConfigManager g_config;
 extern Game g_game;
 
 std::map<uint32_t, int64_t> ProtocolStatus::ipConnectMap;
-const uint64_t ProtocolStatus::start = OTSYS_TIME(true);
+const uint64_t ProtocolStatus::start = OTSYS_TIME();
 
 enum RequestedInfo_t : uint16_t {
 	REQUEST_BASIC_SERVER_INFO = 1 << 0,
@@ -115,7 +117,6 @@ void ProtocolStatus::sendStatusString()
 	pugi::xml_node owner = tsqp.append_child("owner");
 	owner.append_attribute("name") = g_config.getString(ConfigManager::OWNER_NAME).c_str();
 	owner.append_attribute("email") = g_config.getString(ConfigManager::OWNER_EMAIL).c_str();
-
 
 	pugi::xml_node players = tsqp.append_child("players");
 	players.append_attribute("online") = std::to_string(g_game.getPlayersOnline()).c_str();

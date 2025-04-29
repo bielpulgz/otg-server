@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Dragon" nameDescription="a dragon" race="blood" experience="700" speed="86" raceid="34">
+<monster name="Dragon" nameDescription="a dragon" race="blood" experience="700" speed="86">
 	<health now="1000" max="1000"/>
 	<look type="34" corpse="5973"/>
 	<targetchange interval="4000" chance="10"/>
@@ -62,7 +62,7 @@
 		<item name="dragon shield" chance="320"/>
 		<item name="burst arrow" countmax="10" chance="8060"/>
 		<item name="plate legs" chance="2000"/>
-		<item id="2672" countmax="3" chance="65500"/> <!-- dragon ham -->
+		<item name="dragon ham" countmax="3" chance="65500"/>
 		<item name="green dragon leather" chance="1005"/>
 		<item name="green dragon scale" chance="1000"/>
 		<item name="dragonbone staff" chance="110"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Guard Captain Quaid" nameDescription="a guard captain quaid" race="blood" experience="28000" speed="185" script="boss.lua">
+<monster name="Guard Captain Quaid" nameDescription="a guard captain quaid" race="blood" experience="28000" speed="185" script="rewardboss.lua">
 	<health now="55000" max="55000"/>
 	<look type="1217" head="38" body="57" legs="21" feet="2" addons="2" corpse="36489"/>
 	<targetchange interval="4000" chance="10"/>

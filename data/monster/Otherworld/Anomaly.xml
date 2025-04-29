@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Anomaly" nameDescription="Anomaly" race="energy" experience="120000" speed="400">
+<monster name="Anomaly" nameDescription="Anomaly" race="energy" experience="120000" speed="400" script="rewardboss.lua">
 	<health now="290000" max="290000"/>
 	<look type="876" head="19" body="98" legs="19" feet="79" addons="1" corpse="26220"/>
 	<targetchange interval="2000" chance="25"/>
@@ -70,10 +70,7 @@
 		<item id="26167" chance="8000"/><!-- curious matter -->
 		<item id="26175" chance="8000"/><!-- frozen lightning -->
 		<item id="2154" chance="8000"/><!-- yellow gem -->
-		<item id="25377" countmax="1" chance="100000"/><!-- gold token -->
-		<item id="25377" countmax="1" chance="100000"/><!-- gold token -->
-		<item id="25377" countmax="1" chance="100000"/><!-- gold token -->
-		<item id="25377" countmax="1" chance="100000"/><!-- gold token -->
+		<item id="25377" chance="100000"/><!-- gold token -->
 		<item id="26165" chance="100000"/><!-- mysterious remains -->
 		<item id="26166" chance="100000"/><!-- odd organ -->
 		<item id="2158" chance="6000"/><!-- blue gem -->

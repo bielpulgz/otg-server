@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Zulazza The Corruptor" nameDescription="Zulazza The Corruptor" race="blood" experience="9800" speed="290">
+<monster name="Zulazza The Corruptor" nameDescription="Zulazza The Corruptor" race="blood" experience="9800" speed="290" script="rewardboss.lua">
 	<health now="28000" max="28000" />
 	<look type="334" corpse="11107" />
 	<targetchange interval="2000" chance="10" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag rewardboss="1" />
 		<flag summonable="0" />
 		<flag attackable="1" />
@@ -63,7 +63,7 @@
 		<item id="9971" countmax="4" chance="33000" /><!-- gold ingot -->
 		<item id="2158" chance="30500" /><!-- blue gem -->
 		<item id="2155" chance="20500" /><!-- green gem -->
-		<item id="8473" chance="500" /><!-- dragon scale boots -->
+		<item id="8473" chance="10500" /><!-- dragon scale boots -->
 		<item id="11118" chance="5500" /><!-- ultimate health potion -->
 		<item id="5944" countmax="4" chance="19250" /><!-- soul orb -->
 		<item id="2528" chance="15500" /><!-- tower shield -->
@@ -74,7 +74,7 @@
 		<item id="7440" chance="10500" /><!-- mastermind potion -->
 		<item id="2153" chance="25500" /><!-- violet gem -->
 		<item id="7590" chance="20500" /><!-- great mana potion -->
-		<item id="8882" chance="500" /><!-- earthborn titan armor -->
+		<item id="8882" chance="5500" /><!-- earthborn titan armor -->
 		<item id="2514" chance="5500" /><!-- mastermind shield -->
 		<item id="2127" chance="10500" /><!-- emerald bangle -->
 		<item id="8891" chance="5500" /><!-- paladin armor -->

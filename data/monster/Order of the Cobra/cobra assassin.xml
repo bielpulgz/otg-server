@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <monster name="Cobra Assassin" nameDescription="a cobra assassin" race="blood" experience="6300" speed="140">
 	<health now="8200" max="8200"/>
-	<look type="1217" head="2" body="2" legs="77" feet="1" addons="1" corpse="36261"/>
+	<look type="1217" head="2" body="2" legs="77" feet="1" addons="1" corpse="36382"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
 		<flag summonable="0"/>
@@ -31,7 +31,7 @@
 	</attacks>
 	<defenses armor="81" defense="81"/>
 	<elements>
-		<element physicalPercent="20"/>
+		<element physicalPercent="80"/>
 	</elements>
 	<immunities>
 		<immunity earth="1"/>

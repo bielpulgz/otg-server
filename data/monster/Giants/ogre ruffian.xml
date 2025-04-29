@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Ogre Ruffian" nameDescription="an ogre ruffian" race="blood" experience="5000" speed="215" raceid="1820" >
+<monster name="Ogre Ruffian" nameDescription="an ogre ruffian" race="blood" experience="5000" speed="215">
 	<health now="5500" max="5500"/>
-	<look type="1212" corpse="36241"/>
+	<look type="1212" corpse="36362"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
 		<flag summonable="0"/>

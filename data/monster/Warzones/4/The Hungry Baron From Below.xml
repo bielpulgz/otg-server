@@ -20,20 +20,20 @@
 		<flag canwalkonpoison="1" />
 	</flags>
 	<attacks>
-		<attack name="melee" interval="2000" min="0" max="-1250" />
-		<attack name="physical" interval="2000" chance="15" radius="8" min="0" max="-1700">
+		<attack name="melee" interval="2000" min="0" max="-550" />
+		<attack name="physical" interval="2000" chance="15" radius="8" min="0" max="-1000">
 			<attribute key="areaEffect" value="blackspark" />
 		</attack>
-		<attack name="earth" interval="2000" chance="15" length="8" spread="5" min="0" max="-2300">
+		<attack name="earth" interval="2000" chance="15" length="8" spread="5" min="0" max="-1000">
 			<attribute key="areaEffect" value="yellowbubble" />
 		</attack>
-		<attack name="earth" interval="2000" chance="15" length="8" spread="9" min="0" max="-2200">
+		<attack name="earth" interval="2000" chance="15" length="8" spread="9" min="0" max="-1000">
 			<attribute key="areaEffect" value="poff" />
 		</attack>
-		<attack name="death" interval="2000" chance="100" radius="3" min="0" max="-1700">
+		<attack name="death" interval="2000" chance="100" radius="3" min="0" max="-1000">
 			<attribute key="areaEffect" value="mortarea" />
 		</attack>
-		<attack name="earth" interval="2000" chance="15" radius="5" min="0" max="-1900" >
+		<attack name="earth" interval="2000" chance="15" radius="5" min="0" max="-1000">
 			<attribute key="areaEffect" value="smallplants"/>
 		</attack>
 	</attacks>

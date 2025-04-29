@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Paiz The Pauperizer" nameDescription="Paiz The Pauperizer" race="blood" experience="6300" speed="280" >
+<monster name="Paiz The Pauperizer" nameDescription="Paiz The Pauperizer" race="blood" experience="6300" speed="280">
 	<health now="8500" max="8500" />
 	<look type="362" corpse="12609" />
 	<targetchange interval="5000" chance="10" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -78,7 +78,7 @@
 		<item id="8880" chance="10870" />					<!-- swamplair armor -->
 		<item id="12613" chance="10870" />					<!-- twiceslicer -->
 		<item id="2158" chance="8700" />						<!-- blue gem -->
-		<item id="12607" chance="600" />					<!-- elite draken mail -->
+		<item id="12607" chance="8700" />					<!-- elite draken mail -->
 		<item id="2149" countmax="8" chance="8700" />		<!-- small emerald -->
 		<item id="13294" chance="4350" />					<!-- harness -->
 	</loot>

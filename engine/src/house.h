@@ -1,6 +1,8 @@
 /**
+ * @file house.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,11 +19,10 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_HOUSE_H_EB9732E7771A438F9CD0EFA8CB4C58C4
-#define FS_HOUSE_H_EB9732E7771A438F9CD0EFA8CB4C58C4
+#ifndef OT_SRC_HOUSE_H_
+#define OT_SRC_HOUSE_H_
 
 #include <regex>
-#include <unordered_set>
 
 #include "container.h"
 #include "housetile.h"
@@ -119,7 +120,7 @@ class HouseTransferItem final : public Item
 	public:
 		static HouseTransferItem* createHouseTransferItem(House* house);
 
-		explicit HouseTransferItem(House* house) : Item(0), house(house) {}
+		explicit HouseTransferItem(House* newHouse) : Item(0), house(newHouse) {}
 
 		void onTradeEvent(TradeEvents_t event, Player* owner) final;
 		bool canTransform() const final {
@@ -157,8 +158,8 @@ class House
 			return posEntry;
 		}
 
-		void setName(std::string houseName) {
-			this->houseName = houseName;
+		void setName(std::string newHouseName) {
+			this->houseName = newHouseName;
 		}
 		const std::string& getName() const {
 			return houseName;
@@ -176,8 +177,8 @@ class House
 			return paidUntil;
 		}
 
-		void setRent(uint32_t rent) {
-			this->rent = rent;
+		void setRent(uint32_t newRent) {
+			this->rent = newRent;
 		}
 		uint32_t getRent() const {
 			return rent;
@@ -190,8 +191,8 @@ class House
 			return rentWarnings;
 		}
 
-		void setTownId(uint32_t townId) {
-			this->townId = townId;
+		void setTownId(uint32_t newTownId) {
+			this->townId = newTownId;
 		}
 		uint32_t getTownId() const {
 			return townId;

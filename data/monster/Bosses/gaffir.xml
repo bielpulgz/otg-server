@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Gaffir" nameDescription="a gaffir" race="blood" experience="25000" speed="190" script="boss.lua">
+<monster name="Gaffir" nameDescription="a gaffir" race="blood" experience="25000" speed="190" script="rewardboss.lua">
 	<health now="48500" max="48500"/>
-	<look type="1217" head="34" body="129" legs="113" feet="19" addons="0" corpse="36021"/>
+	<look type="1217" head="34" body="129" legs="113" feet="19" addons="0" corpse="36142"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
 		<flag rewardboss="1"/>

@@ -6,7 +6,7 @@ local monsters = {
 local function functionBack(position, oldpos)
 	local guardian = Tile(position):getTopCreature()
 	local bool, diference, health = false, 0, 0
-	local spectators, spectator = Game.getSpectators(Position(32813, 32664, 15), false, false, 15, 15, 15, 15)
+	local spectators, spectator = Game.getSpectators(Position(32813, 32664, 14), false, false, 15, 15, 15, 15)
 	for v = 1, #spectators do
 		spectator = spectators[v]
 		if spectator:getName():lower() == 'the blazing time guardian' or spectator:getName():lower() == 'the freezing time guardian' then
@@ -18,7 +18,7 @@ local function functionBack(position, oldpos)
 		guardian:remove()
 		return true
 	end
-	local specs, spec = Game.getSpectators(Position(32813, 32664, 15), false, false, 15, 15, 15, 15)
+	local specs, spec = Game.getSpectators(Position(32813, 32664, 14), false, false, 15, 15, 15, 15)
 	for i = 1, #specs do
 		spec = specs[i]
 		if spec:isMonster() and spec:getName():lower() == 'the blazing time guardian' or spec:getName():lower() == 'the freezing time guardian' then
@@ -34,7 +34,7 @@ end
 function onCastSpell(creature, var)
 	local index = math.random(1, 2)
 	local monsterPos = creature:getPosition()
-	if monsterPos.z ~= 15 then
+	if monsterPos.z ~= 14 then
 		return true
 	end
 	local position = monsters[index].pos

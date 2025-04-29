@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <monster name="Sphinx" nameDescription="a sphinx" race="blood" experience="7500" speed="145">
 	<health now="8500" max="8500"/>
-	<look type="1188" head="50" body="39" legs="0" feet="3" addons="1" corpse="36100"/>
+	<look type="1188" head="50" body="39" legs="0" feet="3" addons="1" corpse="36221"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
 		<flag summonable="0"/>
@@ -48,7 +48,7 @@
 	    <item name="Platinum Coin" countmax="3" chance="100000"/>
 		<item name="Sphinx Feather" chance="9300"/>
 		<item name="Magma Amulet" chance="7000"/>
-		<item id="36152" chance="5500"/><!-- Sphinx Tiara -->
+		<item id="36273" chance="5500"/><!-- Sphinx Tiara -->
 		<item name="Magma Boots" chance="3600"/>
 		<item name="Lightning Pendant" chance="3500"/>
 		<item name="Lightning Headband" chance="3100"/>

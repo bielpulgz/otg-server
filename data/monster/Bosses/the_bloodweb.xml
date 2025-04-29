@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="The Bloodweb" nameDescription="the Bloodweb" race="undead" experience="1450" speed="340" >
+<monster name="The Bloodweb" nameDescription="the Bloodweb" race="undead" experience="1450" speed="340">
 	<health now="1750" max="1750"/>
 	<look type="263" corpse="7344"/>
 	<targetchange interval="20000" chance="8"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>
@@ -54,7 +54,7 @@
 		<item id="7896" chance="33333"/><!-- glacier kilt -->
 		<item id="11306" chance="20000"/><!-- sais -->
 		<item id="7437" chance="20000"/><!-- sapphire hammer -->
-		<item id="5801" chance="500"/><!-- jewelled backpack -->
+		<item id="5801" chance="7692"/><!-- jewelled backpack -->
 		<item id="2476" chance="7692"/><!-- knight armor -->
 		<item id="2477" chance="5555"/><!-- knight legs -->
 		<item id="7290" chance="3703"/><!-- shard -->

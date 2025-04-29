@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Dark Faun" nameDescription="a dark faun" race="blood" experience="900" speed="108" manacost="450" raceid="1496">
+<monster name="Dark Faun" nameDescription="a dark faun" race="blood" experience="900" speed="108" manacost="450">
 	<look type="980" head="94" body="114" legs="57" feet="94" corpse="29101"/>
 	<health now="1100" max="1100"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
-		<flag respawntype="nightandcave"/>
+		<flag respawntype="night"/>
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>

@@ -7,6 +7,6 @@ function logCommand(player, words, param)
 	end
 
 	io.output(file)
-	io.write(logFormat:format(os.sdate("%d/%m/%Y %H:%M"), words, param):trim() .. "\n")
+	io.write(logFormat:format(os.date("%d/%m/%Y %H:%M"), words, param):trim() .. "\n")
 	io.close(file)
 end

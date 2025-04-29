@@ -1,6 +1,8 @@
 /**
+ * @file signals.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_SIGNALHANDLINGTHREAD_H_01C6BF08B0EFE9E200175D108CF0B35F
-#define FS_SIGNALHANDLINGTHREAD_H_01C6BF08B0EFE9E200175D108CF0B35F
+#ifndef OT_SRC_SIGNALS_H_
+#define OT_SRC_SIGNALS_H_
 
 #include <boost/asio.hpp>
 
@@ -26,12 +28,13 @@ class Signals
 {
 	boost::asio::signal_set set;
 	public:
-		explicit Signals(boost::asio::io_context& service);
+		explicit Signals(boost::asio::io_service& service);
 
 	private:
 		void asyncWait();
 		static void dispatchSignalHandler(int signal);
 
+		static void sigbreakHandler();
 		static void sigintHandler();
 		static void sighupHandler();
 		static void sigtermHandler();

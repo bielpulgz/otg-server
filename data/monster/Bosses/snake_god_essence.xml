@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Snake God Essence" nameDescription="Snake God Essence" race="blood" experience="7410" speed="300" >
+<monster name="Snake God Essence" nameDescription="Snake God Essence" race="blood" experience="7410" speed="300">
 	<health now="65000" max="65000"/>
 	<look type="356" corpse="0"/>
 	<targetchange interval="2000" chance="10"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>

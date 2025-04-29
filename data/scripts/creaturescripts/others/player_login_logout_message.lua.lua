@@ -1,8 +1,5 @@
 local loginMessage = CreatureEvent("loginMessage")
 
--- Training storage definition
-local isTrainingStorage = 12835
-
 -- Function to add initial items for new players
 local function confirmAddItem(playerid)
     local config = {
@@ -40,11 +37,6 @@ function loginMessage.onLogin(player)
     -- Log to console
     print(string.format("[LOGIN] Player %s has logged in.", player:getName()))
 
-    -- Check training storage
-    if player:getStorageValue(isTrainingStorage) >= 1 then
-        player:setStorageValue(isTrainingStorage, -1)
-    end
-
     -- Check guild and register events
     local g = player:getGuild()
     if g then
@@ -70,7 +62,7 @@ function loginMessage.onLogin(player)
 
         player:sendTutorial(1)
     else
-        loginStr = string.format("Your last visit was on %s.", os.sdate("%a %b %d %X %Y", player:getLastLoginSaved()))
+        loginStr = string.format("Your last visit was on %s.", os.date("%a %b %d %X %Y", player:getLastLoginSaved()))
         player:sendTextMessage(MESSAGE_EVENT_ORANGE, "Welcome to " .. serverName .. "!")
     end
 
@@ -101,29 +93,6 @@ function loginMessage.onLogin(player)
         player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format(
             "Check your inbox, you have %d item%s.", inboxItems, inboxItems > 1 and "s" or ""
         ))
-    end
-
-    -- Boosted Creatures
-    local boostMessages = {}
-    for _, boosted in ipairs(boostCreature) do
-        local categoryMessage
-        if boosted.category == "normal" then
-            categoryMessage = "Monster (weak)"
-        elseif boosted.category == "second" then
-            categoryMessage = "Monster (medium)"
-        elseif boosted.category == "third" then
-            categoryMessage = "Monster (strong)"
-        elseif boosted.category == "boss" then
-            categoryMessage = "Boss"
-        end
-        table.insert(boostMessages, string.format("%s: %s [+%d%% exp, +%d%% loot]", 
-            categoryMessage, boosted.name, boosted.exp, boosted.loot))
-    end
-
-    if #boostMessages > 0 then
-        player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "The following creatures are boosted:\n" ..
-            table.concat(boostMessages, "\n") ..
-            "\nBoosted monsters grant more loot, experience, and spawn faster.")
     end
 
     -- Open chat channels
@@ -175,7 +144,7 @@ function loginMessage.onLogin(player)
 
     -- GM Time Information
     if player:getGroup():getId() > 5 then
-        player:sendTextMessage(MESSAGE_INFO_DESCR, "Current server time: " .. os.date("%d.%m.%Y - %X") .. "\nTime with dump: " .. os.sdate("%d.%m.%Y - %X", os.stime()))
+        player:sendTextMessage(MESSAGE_INFO_DESCR, "Current server time: " .. os.date("%d.%m.%Y - %X") .. "\nTime with dump: " .. os.date("%d.%m.%Y - %X", os.time()))
     end
 
     -- Ghost Mode for High-Level Staff
@@ -193,11 +162,6 @@ function loginMessage.onLogin(player)
     local stats = player:inBossFight()
     if stats then
         stats.playerId = player:getId()
-    end
-
-    -- Spawn Speed Notification
-    if configManager.getDouble(configKeys.SPAWN_SPEED) > 1.0 then
-        player:sendTextMessage(MESSAGE_INFO_DESCR, "All spawns are faster.")
     end
 
     -- AutoLootList

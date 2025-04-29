@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Ferumbras Mortal Shell" nameDescription="ferumbras mortal shell" race="venom" experience="42000" speed="390">
+<monster name="Ferumbras Mortal Shell" nameDescription="ferumbras mortal shell" race="venom" experience="42000" speed="390" script="rewardboss.lua">
 	<health now="500000" max="500000"/>
 	<look type="229" corpse="6078"/>
 	<targetchange interval="5000" chance="8"/>
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag rewardboss="1" />
 		<flag summonable="0"/>
 		<flag attackable="1"/>
@@ -101,7 +101,7 @@
 		<item id="7418" chance="600"/><!--nightmare blade -->
 		<item id="2539" chance="800"/><!--phoenix shield -->
 		<item id="2520" chance="800"/><!-- demon shield-->
-		<item id="25521" chance="150"/><!--mysterious scroll -->
+		<item id="34784" chance="150"/><!--mysterious scroll -->
 		<item id="2148" countmax="100" chance="100000"/><!-- gold coin -->
 		<item id="7896" chance="800"/><!-- glacier kilt-->
 		<item id="2472" chance="400"/><!--Magic plate armor -->
@@ -121,7 +121,7 @@
 		<item id="2155" chance="4000"/><!--green gem -->
 		<item id="2514" chance="600"/><!--MMS -->
 		<item id="7435" chance="800"/><!--impaler -->
-		<item id="25172" countmax="3" chance="1000000"/><!-- silver token -->
+		<item id="25172" countmax="3" chance="100000"/><!-- silver token -->
 		<item id="2144" countmax="5" chance="10000"/><!-- black pearl -->
 		<item id="2145" countmax="10" chance="10000"/><!-- small diamond-->
 		<item id="25427" chance="800"/><!-- Scroll of Ascension -->

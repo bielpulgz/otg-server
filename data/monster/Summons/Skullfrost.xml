@@ -4,7 +4,7 @@
 	<look type="991" corpse="0" />
 	<targetchange interval="4000" chance="20" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag pet="1" />
 		<flag summonable="0" />
 		<flag attackable="1" />
@@ -34,7 +34,7 @@
 		</attack>
 	</attacks>
 	<defenses armor="55" defense="95">
-		<defense name="healing" interval="2000" chance="100" min="80" max="1200">
+		<defense name="healing" interval="3000" chance="25" min="80" max="400">
 			<attribute key="areaEffect" value="blueshimmer" />
 		</defense>
 	</defenses>

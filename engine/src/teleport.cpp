@@ -1,6 +1,8 @@
 /**
+ * @file teleport.cpp
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -70,10 +72,33 @@ void Teleport::addThing(Thing* thing)
 	return addThing(0, thing);
 }
 
+bool Teleport::checkInfinityLoop(Tile* destTile)
+{
+	if (!destTile) {
+		return false;
+	}
+
+	if (Teleport* teleport = destTile->getTeleportItem()) {
+		const Position& nextDestPos = teleport->getDestPos();
+		if (getPosition() == nextDestPos) {
+			return true;
+		}
+		return checkInfinityLoop(g_game.map.getTile(nextDestPos));
+	}
+	return false;
+}
+
 void Teleport::addThing(int32_t, Thing* thing)
 {
 	Tile* destTile = g_game.map.getTile(destPos);
 	if (!destTile) {
+		return;
+	}
+	
+	// Prevent infinity loop
+	if (checkInfinityLoop(destTile)) {
+		const Position& pos = getPosition();
+		std::cout << "Warning: infinity loop teleport. " << pos << std::endl;
 		return;
 	}
 

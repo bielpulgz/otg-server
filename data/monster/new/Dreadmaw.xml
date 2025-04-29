@@ -4,7 +4,7 @@
 	<look type="119" corpse="6046" />
 	<targetchange interval="5000" chance="0" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -38,7 +38,7 @@
 	<loot>
 		<item name="gold coin" countmax="10" chance="99990" />
 		<item name="gold ingot" chance="99990" />
-		<item id="2671" chance="50000" /> <!-- ham -->
+		<item name="ham" chance="50000" />
 		<item name="piece of crocodile leather" chance="99990" />
 	</loot>
 </monster>

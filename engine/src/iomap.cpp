@@ -1,6 +1,8 @@
 /**
+ * @file iomap.cpp
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -67,7 +69,7 @@ Tile* IOMap::createTile(Item*& ground, Item* item, uint16_t x, uint16_t y, uint8
 	return tile;
 }
 
-bool IOMap::loadMap(Map* map, const std::string& fileName, const Position& relativePosition)
+bool IOMap::loadMap(Map* map, const std::string& fileName)
 {
 	int64_t start = OTSYS_TIME();
 	OTB::Loader loader{fileName, OTB::Identifier{{'O', 'T', 'B', 'M'}}};
@@ -134,7 +136,7 @@ bool IOMap::loadMap(Map* map, const std::string& fileName, const Position& relat
 
 	for (auto& mapDataNode : mapNode.children) {
 		if (mapDataNode.type == OTBM_TILE_AREA) {
-			if (!parseTileArea(loader, mapDataNode, *map, relativePosition)) {
+			if (!parseTileArea(loader, mapDataNode, *map)) {
 				return false;
 			}
 		} else if (mapDataNode.type == OTBM_TOWNS) {
@@ -204,7 +206,7 @@ bool IOMap::parseMapDataAttributes(OTB::Loader& loader, const OTB::Node& mapNode
 	return true;
 }
 
-bool IOMap::parseTileArea(OTB::Loader& loader, const OTB::Node& tileAreaNode, Map& map, const Position& relativePosition)
+bool IOMap::parseTileArea(OTB::Loader& loader, const OTB::Node& tileAreaNode, Map& map)
 {
 	PropStream propStream;
 	if (!loader.getProps(tileAreaNode, propStream)) {
@@ -218,8 +220,8 @@ bool IOMap::parseTileArea(OTB::Loader& loader, const OTB::Node& tileAreaNode, Ma
 		return false;
 	}
 
-	uint16_t base_x = area_coord.x + relativePosition.x;
-	uint16_t base_y = area_coord.y + relativePosition.y;
+	uint16_t base_x = area_coord.x;
+	uint16_t base_y = area_coord.y;
 	uint16_t z = area_coord.z;
 
 	static std::map<uint64_t, uint64_t> teleportMap;

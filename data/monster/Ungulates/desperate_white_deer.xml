@@ -28,7 +28,7 @@
 		<voice sentence="*wheeze*"/>
 	</voices>
 	<loot>
-		<item id="2671" countmax="3" chance="20000"/> <!-- ham -->
+		<item name="ham" countmax="3" chance="20000"/>
 		<item name="white deer antlers" chance="20000"/>
 		<item name="white deer skin" chance="20000"/>
 	</loot>

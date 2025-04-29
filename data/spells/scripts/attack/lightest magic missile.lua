@@ -10,13 +10,5 @@ end
 combat:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
 
 function onCastSpell(creature, var, isHotkey)
-	local player = Player(creature:getId())
-	if player then
-		if not player:isWarAllowed(CONST_WAR_RUNE) then
-			player:sendCancelMessage("This action is not allowed here.")
-			player:getPosition():sendMagicEffect(CONST_ME_POFF)
-			return false
-		end
-	end
 	return combat:execute(creature, var)
 end

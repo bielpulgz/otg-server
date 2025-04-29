@@ -6,7 +6,7 @@ combat:setParameter(COMBAT_PARAM_DISTANCEEFFECT, CONST_ANI_SMALLEARTH)
 function onGetFormulaValues(player, level, maglevel)
 	local min = (level / 5) + (maglevel * 1.4) + 8
 	local max = (level / 5) + (maglevel * 2.2) + 14
-	return player:getSpellDamage(-min, -max)
+	return -min, -max
 end
 
 combat:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")

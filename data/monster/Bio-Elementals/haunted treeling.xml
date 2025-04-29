@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Haunted Treeling" nameDescription="a haunted treeling" experience="310" speed="115" race="undead" raceid="511">
+<monster name="Haunted Treeling" nameDescription="a haunted treeling" experience="310" speed="115" race="undead">
 	<health now="450" max="450" />
 	<look type="310" corpse="9867" />
 	<targetchange interval="4000" chance="10" />
@@ -59,7 +59,7 @@
 		<item name="gold coin" countmax="95" chance="91920" />
 		<item id="4860" chance="29190" /><!-- wooden trash -->
 		<!-- semi-rare -->
-		<item id="2788" chance="7700" /> <!-- red mushroom -->
+		<item name="red mushroom" chance="7700" />
 		<item name="health potion" chance="5130" />
 		<item name="white mushroom" countmax="2" chance="5030" />
 		<item name="haunted piece of wood" chance="4950" />

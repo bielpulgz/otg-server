@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Boogey" nameDescription="Boogey" race="undead" experience="475" speed="400" >
+<monster name="Boogey" nameDescription="Boogey" race="undead" experience="475" speed="400">
 	<health now="930" max="930" />
 	<look type="300" corpse="8955" />
 	<targetchange interval="5000" chance="10" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -30,7 +30,7 @@
 			<attribute key="shootEffect" value="fire" />
 			<attribute key="areaEffect" value="redspark" />
 		</attack>
-		<attack name="physical" interval="1500" chance="40" length="8" spread="3" min="-20" max="-30">
+		<attack name="physical" interval="1500" chance="40" lenght="8" spread="3" min="-20" max="-30">
 			<attribute key="areaEffect" value="mortarea" />
 		</attack>
 	</attacks>

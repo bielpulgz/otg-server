@@ -3,7 +3,6 @@ function canJoin(player)
 end
 
 local CHANNEL_ADVERTISING = 5
-local storage = STORAGE_MUTED_ON_CHANNELS + CHANNEL_ADVERTISING
 
 local muted = Condition(CONDITION_CHANNELMUTEDTICKS, CONDITIONID_DEFAULT)
 muted:setParameter(CONDITION_PARAM_SUBID, CHANNEL_ADVERTISING)
@@ -21,11 +20,6 @@ function onSpeak(player, type, message)
 		player:sendCancelMessage("You may not speak into channels as long as you are on level 1.")
 		return false
 	end
-	
-	if player:getStorageValue(storage) > os.stime() then
-        player:sendCancelMessage("You are muted from the advertising channel for using it inappropriately.")
-        return false
-    end
 
 	if player:getCondition(CONDITION_CHANNELMUTEDTICKS, CONDITIONID_DEFAULT, CHANNEL_ADVERTISING) then
 		player:sendCancelMessage("You may only place one offer in two minutes.")

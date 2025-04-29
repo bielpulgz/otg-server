@@ -9,19 +9,11 @@ function onGetFormulaValues(player, level, maglevel)
 	maglevel = math.min(maglevel, 20)
 	local min = (level / 5) + (maglevel * 0.3) + 2
 	local max = (level / 5) + (maglevel * 0.45) + 3
-	return player:getSpellDamage(-min, -max)
+	return -min, -max
 end
 
 combat:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, "onGetFormulaValues")
 
 function onCastSpell(creature, variant, isHotkey)
-	local player = Player(creature:getId())
-	if player then
-		if not player:isWarAllowed(CONST_WAR_RUNE) then
-			player:sendCancelMessage("This action is not allowed here.")
-			player:getPosition():sendMagicEffect(CONST_ME_POFF)
-			return false
-		end
-	end
 	return combat:execute(creature, variant)
 end

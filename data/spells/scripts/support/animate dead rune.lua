@@ -1,32 +1,30 @@
-function onCastSpell(creature, variant, isHotkey)
-	if not creature:isPlayer() then
-		return false
-	end
-
-	local position = Variant.getPosition(variant)
+function onCastSpell(player, variant)
+	local position = variant:getPosition()
 	local tile = Tile(position)
-	if tile and creature:getSkull() ~= SKULL_BLACK then
+	if tile then
 		local corpse = tile:getTopDownItem()
 		if corpse then
 			local itemType = corpse:getType()
 			if itemType:isCorpse() and itemType:isMovable() then
-				local summonCount = creature:getSummons()
-				if #summonCount < 2 then
-					local monster = Game.createMonster("Skeleton", position)
-					if monster then
+				if #player:getSummons() < 2 and player:getSkull() ~= SKULL_BLACK then
+					local summon = Game.createMonster("Skeleton", position, true, true)
+					if summon then
 						corpse:remove()
-						monster:setMaster(creature)
-						position:sendMagicEffect(CONST_ME_MAGIC_BLUE)						
+						player:addSummon(summon)
+						summon:reload()
+						position:sendMagicEffect(CONST_ME_MAGIC_BLUE)
+						return true
 					end
 				else
-					creature:sendCancelMessage("You can only have 2 summons per time.")
-					return true
+					player:sendCancelMessage("You cannot control more creatures.")
+					player:getPosition():sendMagicEffect(CONST_ME_POFF)
+					return false
 				end
 			end
 		end
 	end
 
-	creature:getPosition():sendMagicEffect(CONST_ME_POFF)
-	creature:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
+	player:getPosition():sendMagicEffect(CONST_ME_POFF)
+	player:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
 	return false
 end

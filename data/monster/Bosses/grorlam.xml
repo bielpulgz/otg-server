@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Grorlam" nameDescription="Grorlam" race="blood" experience="2400" speed="240" >
+<monster name="Grorlam" nameDescription="Grorlam" race="blood" experience="2400" speed="240">
 	<health now="3000" max="3000" />
 	<look type="205" corpse="6005" />
 	<targetchange interval="5000" chance="3" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />

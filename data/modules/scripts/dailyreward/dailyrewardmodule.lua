@@ -6,8 +6,8 @@
 
 DailyRewardSystem = {
     Developer = "Leu (jlcvp@github)",
-    Version = "0.2",
-    lastUpdate = "28/02/2018 - 16:18"
+    Version = "0.3",
+    lastUpdate = "28/03/2019"
 }
 
 local exhaustTime = 5 -- seconds
@@ -17,9 +17,7 @@ local ServerPackets = {
     OpenRewardWall = 0xE2, -- 226
     CloseRewardWall = 0xE3, -- 227
     DailyRewardBasic = 0xE4,-- 228
-    DailyRewardHistory = 0xE5, -- 229
-    CollectionResource = 0x14,
-    JokerResource = 0x15
+    DailyRewardHistory = 0xE5 -- 229
 }
 
 local ClientPackets ={
@@ -37,7 +35,7 @@ end
 
 function Player:sendAvailableTokens()
     local client = self:getClient()
-    if ((client.version <= 1100 and client.os ~= CLIENTOS_FLASH) or client.version < 1140) then
+    if ((client.os ~= CLIENTOS_NEW_WINDOWS and client.os ~= CLIENTOS_FLASH) or client.version < 1140) then
         return false --silently ignore
     end
 
@@ -121,16 +119,16 @@ end
 function Player:sendDailyRewardBasic()
 
     local client = self:getClient()
-    if ((client.version <= 1100 and client.os ~= CLIENTOS_FLASH) or client.version < 1140) then
+    if ((client.os ~= CLIENTOS_NEW_WINDOWS and client.os ~= CLIENTOS_FLASH) or client.version < 1140) then
         return
     end
-    if self:getStorageValue(Storage.dailyReward.exhaust) > os.stime() then
+    if self:getStorageValue(Storage.dailyReward.exhaust) > os.time() then
         self:sendCancelMessage(RETURNVALUE_YOUAREEXHAUSTED)
         self:getPosition():sendMagicEffect(CONST_ME_POFF)
         return
     end
 
-    self:setStorageValue(Storage.dailyReward.exhaust, os.stime() + exhaustTime)
+    self:setStorageValue(Storage.dailyReward.exhaust, os.time() + exhaustTime)
 
     local rewardCount = #REWARD_LANE["PREMIUM_ACC"] --reads doubled because of the free/pacc
     local msg = NetworkMessage()
@@ -229,7 +227,7 @@ end
 function onRecvbyte(player, msg, byte)
     if(byte == ClientPackets.RewardConfirm) then
         local client = player:getClient()
-        if ((client.version <= 1100 and client.os ~= CLIENTOS_FLASH) or client.version < 1140) then
+        if ((client.os ~= CLIENTOS_NEW_WINDOWS and client.os ~= CLIENTOS_FLASH) or client.version < 1140) then
             return player:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
         end
         local currentRewardIndex = player:getCurrentRewardLaneIndex(--[[zerobased=]]true) --zero-based
@@ -288,7 +286,7 @@ function onRecvbyte(player, msg, byte)
         end
     elseif byte == ClientPackets.OpenRewardWallButton then
         local client = player:getClient()
-        if ((client.version <= 1100 and client.os ~= CLIENTOS_FLASH) or client.version < 1140) then
+        if ((client.os ~= CLIENTOS_NEW_WINDOWS and client.os ~= CLIENTOS_FLASH) or client.version < 1140) then
             return player:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
         end
 

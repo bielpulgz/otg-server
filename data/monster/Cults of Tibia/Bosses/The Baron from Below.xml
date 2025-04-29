@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="The Baron from Below" nameDescription="a the baron from below" race="blood" experience="40000" speed="170" >
+<monster name="The Baron from Below" nameDescription="a the baron from below" race="blood" experience="40000" speed="170">
 	<health now="50000" max="50000" />
 	<look type="1064" corpse="27922" />
 	<targetchange interval="4000" chance="10" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />

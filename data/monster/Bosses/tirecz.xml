@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Tirecz" nameDescription="Tirecz" race="blood" experience="6000" speed="220" >
+<monster name="Tirecz" nameDescription="Tirecz" race="blood" experience="6000" speed="220">
 	<health now="25000" max="25000" />
 	<look type="334" corpse="0" />
 	<targetchange interval="5000" chance="8" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -23,7 +23,7 @@
 			<attribute key="shootEffect" value="fire" />
 			<attribute key="areaEffect" value="firearea" />
 		</attack>
-		<attack name="fire" interval="2000" chance="25" length="8" spread="3" min="-120" max="-460">
+		<attack name="fire" interval="2000" chance="25" lenght="8" spread="3" min="-120" max="-460">
 			<attribute key="shootEffect" value="fire" />
 			<attribute key="areaEffect" value="firearea" />
 		</attack>

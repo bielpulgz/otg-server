@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Eradicator" nameDescription="Eradicator" race="energy" experience="112000" speed="450">
+<monster name="Eradicator" nameDescription="Eradicator" race="energy" experience="112000" speed="450" script="rewardboss.lua">
 	<health now="290000" max="290000"/>
 	<look type="875" head="94" body="3" legs="78" feet="94" addons="1" corpse="26220"/>
 	<targetchange interval="2000" chance="25"/>
@@ -67,7 +67,7 @@
 		<item id="26191" chance="8000"/><!-- energy bar -->
 		<item id="26176" chance="8000"/><!-- plasmatic lightning -->
 		<item id="26174" chance="8000"/><!-- spark sphere -->
-		<item id="25377" countmin="4" countmax="4" chance="100000"/><!-- gold token -->
+		<item id="25377" chance="100000"/><!-- gold token -->
 		<item id="26165" chance="100000"/><!-- mysterious remains -->
 		<item id="26166" chance="100000"/><!-- odd organ -->
 		<item id="2158" chance="6000"/><!-- blue gem -->

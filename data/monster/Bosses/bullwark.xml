@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Bullwark" nameDescription="Bullwark" race="blood" experience="22000" speed="300" >
+<monster name="Bullwark" nameDescription="Bullwark" race="blood" experience="22000" speed="300">
 	<health now="72000" max="72000"/>
 	<look type="607" corpse="23367"/>
 	<targetchange interval="2000" chance="3"/>
 	<flags>
-		<flag preyable="0"/>
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0"/>
 		<flag attackable="1"/>
 		<flag hostile="1"/>

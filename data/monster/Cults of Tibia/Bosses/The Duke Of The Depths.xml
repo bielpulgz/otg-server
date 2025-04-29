@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="The Duke Of The Depths" nameDescription="an the duke of the depths" race="blood" experience="40000" speed="270" >
+<monster name="The Duke Of The Depths" nameDescription="an the duke of the depths" race="blood" experience="40000" speed="270">
 	<health now="50000" max="50000" />
 	<look type="1066" corpse="23375" />
 	<targetchange interval="2000" chance="4" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />

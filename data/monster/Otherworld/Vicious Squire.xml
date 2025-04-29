@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Vicious Squire" nameDescription="a vicious squire" race="blood" experience="900" speed="100" manacost="390" raceid="1145">
+<monster name="Vicious Squire" nameDescription="a vicious squire" race="blood" experience="900" speed="130" manacost="390">
 	<health now="1000" max="1000"/>
 	<look type="131" head="97" body="26" legs="71" feet="114" addons="1" corpse="24673"/>
 	<targetchange interval="4000" chance="20"/>
@@ -15,9 +15,6 @@
 		<flag targetdistance="0"/>
 		<flag staticattack="90"/>
 		<flag runonhealth="0"/>
-		<flag canwalkonenergy="1"/>
-	    <flag canwalkonfire="0"/>
-	    <flag canwalkonpoison="1"/>
 	</flags>
 	<attacks>
 		<attack name="melee" interval="2000" min="10" max="-175"/>
@@ -34,7 +31,6 @@
 		<element physicalPercent="-10"/>
 	</elements>
 	<immunities>
-
 		<immunity invisible="1"/>
 	</immunities>
 	<voices interval="2000" chance="13">
@@ -55,13 +51,11 @@
 		<item id="2120" chance="1000"/>					<!-- Rope -->
 		<item id="2661" chance="1000"/>					<!-- Scarf -->
 		<item id="1949" chance="830"/>					<!-- Scroll -->
-
 		<item id="2145" chance="830"/>					<!-- Small Diamond -->
 		<item id="2391" chance="130"/>					<!-- War Hammer -->
 		<item id="2381" chance="830"/>					<!-- Halberd -->
 		<item id="2515" chance="330"/>					<!-- Guardian Shield -->
 		<item id="2477" chance="230"/>					<!-- Knight Legs -->
 		<item id="2475" chance="200"/>					<!-- Warrior Helmet -->
-
 	</loot>
 </monster>

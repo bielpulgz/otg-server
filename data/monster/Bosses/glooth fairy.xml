@@ -4,7 +4,7 @@
 	<look type="600" corpse="23363" />
 	<targetchange interval="4000" chance="80" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />
@@ -56,7 +56,6 @@
 	</defenses>
 	<immunities>
     <immunity invisible="1" />
-
     <immunity paralyze="1" />
   </immunities>
 	<elements>
@@ -86,6 +85,5 @@
 		<item id="23663" chance="480"/><!-- backpack  -->
 		<item id="5880" chance="980"/><!-- iron ore  -->
 		<item id="23515" chance="280"/><!--  bowl of glooth soup  -->
-
 	</loot>
 </monster>

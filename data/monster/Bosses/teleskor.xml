@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Teleskor" nameDescription="Teleskor" race="undead" experience="70" speed="150" >
+<monster name="Teleskor" nameDescription="Teleskor" race="undead" experience="70" speed="150">
 	<health now="80" max="80" />
 	<look type="298" corpse="5972" />
 	<targetchange interval="4000" chance="5" />
 	<flags>
-		<flag preyable="0" />
+		<!-- <flag preyable="0"/> -->
 		<flag summonable="0" />
 		<flag attackable="1" />
 		<flag hostile="1" />

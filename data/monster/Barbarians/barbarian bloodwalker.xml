@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Barbarian Bloodwalker" nameDescription="a barbarian bloodwalker" race="blood" experience="195" speed="118" manacost="590" raceid="323">
+<monster name="Barbarian Bloodwalker" nameDescription="a barbarian bloodwalker" race="blood" experience="195" speed="118" manacost="590">
 	<health now="305" max="305" />
 	<look type="255" head="114" body="132" legs="132" feet="132" corpse="20335" />
 	<targetchange interval="4000" chance="10" />
@@ -49,7 +49,7 @@
 		<item name="halberd" chance="6740" />
 		<item name="chain helmet" chance="10520" />
 		<item name="chain armor" chance="10420" />
-		<item id="2671" chance="4900" /> <!-- ham -->
+		<item name="ham" chance="4900" />
 		<item name="beastslayer axe" chance="380" />
 		<item name="red piece of cloth" chance="540" />
 		<item name="shard" chance="300" />

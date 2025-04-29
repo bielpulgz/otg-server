@@ -1,7 +1,7 @@
 function onTargetCreature(creature, target)
 	local player = creature:getPlayer()
-	local min = 150
-	local max = 350
+	local min = 100
+	local max = 300
 	local master = target:getMaster()
 
 	if target:isPlayer() then

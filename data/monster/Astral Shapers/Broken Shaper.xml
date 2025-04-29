@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<monster name="Broken Shaper" nameDescription="a broken shaper" race="blood" experience="1600" speed="155" manacost="290" raceid="1321">
+<monster name="Broken Shaper" nameDescription="a broken shaper" race="blood" experience="1600" speed="155" manacost="290">
 	<health now="2200" max="2200"/>
 	<look type="932" head="132" body="95" legs="0" feet="121" corpse="27736"/>
 	<targetchange interval="5000" chance="0"/>
@@ -46,7 +46,7 @@
 		<voice sentence="Raar!!"/>
 	</voices>
 	<loot>
-		<item id="2148" countmax="165" chance="100320"/><!-- gold coin -->
+		<item id="2148" countmax="165" chance="10000"/><!-- gold coin -->
 		<item id="2152" countmax="2" chance="70320"/><!-- platinun coin -->
 		<item id="27051" countmax="2" chance="20000"/><!-- cave turnip -->
 		<item id="27052" chance="17000"/><!-- Ancient Belt Buckle -->

@@ -15,13 +15,5 @@ local area = createCombatArea({
  combat:setArea(area)
 
  function onUseWeapon(player, variant)
-	if player then
-		if not player:isWarAllowed(CONST_WAR_ARROW) then
-			player:sendCancelMessage("This action is not allowed here.")
-			player:getPosition():sendMagicEffect(CONST_ME_POFF)
-			return false
-		end
-	end
-
  	return combat:execute(player, variant)
  end

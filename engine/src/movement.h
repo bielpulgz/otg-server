@@ -1,6 +1,8 @@
 /**
+ * @file movement.h
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -17,8 +19,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#ifndef FS_MOVEMENT_H_5E0D2626D4634ACA83AC6509518E5F49
-#define FS_MOVEMENT_H_5E0D2626D4634ACA83AC6509518E5F49
+#ifndef OT_SRC_MOVEMENT_H_
+#define OT_SRC_MOVEMENT_H_
 
 #include "baseevents.h"
 #include "item.h"
@@ -61,8 +63,8 @@ class MoveEvents final : public BaseEvents
 		MoveEvents& operator=(const MoveEvents&) = delete;
 
 		uint32_t onCreatureMove(Creature* creature, const Tile* tile, MoveEvent_t eventType);
-		ReturnValue onPlayerEquip(Player* player, Item* item, slots_t slot, bool isCheck);
-		ReturnValue onPlayerDeEquip(Player* player, Item* item, slots_t slot);
+		uint32_t onPlayerEquip(Player* player, Item* item, slots_t slot, bool isCheck);
+		uint32_t onPlayerDeEquip(Player* player, Item* item, slots_t slot);
 		uint32_t onItemMove(Item* item, Tile* tile, bool isAdd);
 
 		MoveEvent* getEvent(Item* item, MoveEvent_t eventType);
@@ -101,7 +103,7 @@ class MoveEvents final : public BaseEvents
 
 using StepFunction = std::function<uint32_t(Creature* creature, Item* item, const Position& pos)>;
 using MoveFunction = std::function<uint32_t(Item* item, Item* tileItem, const Position& pos)>;
-using EquipFunction = std::function<ReturnValue(MoveEvent* moveEvent, Player* player, Item* item, slots_t slot, bool boolean)>;
+using EquipFunction = std::function<uint32_t(MoveEvent* moveEvent, Player* player, Item* item, slots_t slot, bool boolean)>;
 
 class MoveEvent final : public Event
 {
@@ -116,7 +118,7 @@ class MoveEvent final : public Event
 
 		uint32_t fireStepEvent(Creature* creature, Item* item, const Position& pos);
 		uint32_t fireAddRemItem(Item* item, Item* tileItem, const Position& pos);
-		ReturnValue fireEquip(Player* player, Item* item, slots_t slot, bool isCheck);
+		uint32_t fireEquip(Player* player, Item* item, slots_t slot, bool isCheck);
 
 		uint32_t getSlot() const {
 			return slot;
@@ -226,8 +228,8 @@ class MoveEvent final : public Event
 		static uint32_t AddItemField(Item* item, Item* tileItem, const Position& pos);
 		static uint32_t RemoveItemField(Item* item, Item* tileItem, const Position& pos);
 
-		static ReturnValue EquipItem(MoveEvent* moveEvent, Player* player, Item* item, slots_t slot, bool boolean);
-		static ReturnValue DeEquipItem(MoveEvent* moveEvent, Player* player, Item* item, slots_t slot, bool boolean);
+		static uint32_t EquipItem(MoveEvent* moveEvent, Player* player, Item* item, slots_t slot, bool boolean);
+		static uint32_t DeEquipItem(MoveEvent* moveEvent, Player* player, Item* item, slots_t slot, bool boolean);
 
 		MoveEvent_t eventType = MOVE_EVENT_NONE;
 		StepFunction stepFunction;

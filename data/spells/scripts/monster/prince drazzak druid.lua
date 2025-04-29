@@ -70,10 +70,10 @@ end
 
 function onCastSpell(creature, var)
 local value = Game.getStorageValue(storage)
-	if(os.stime()-value >= 4) then
+	if(os.time()-value >= 4) then
 		creature:say("All DRUIDS must DIE!", TALKTYPE_ORANGE_1)
 		addEvent(delayedCastSpell, 4000, creature:getId(), var)
-		Game.setStorageValue(storage, os.stime())
+		Game.setStorageValue(storage, os.time())
 	end
     return true
 end

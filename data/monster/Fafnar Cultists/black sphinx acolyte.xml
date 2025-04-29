@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Black Sphinx Acolyte" nameDescription="a black sphinx acolyte" race="blood" experience="9000" speed="155" raceid="1800" >
+<monster name="Black Sphinx Acolyte" nameDescription="a black sphinx acolyte" race="blood" experience="9000" speed="155">
 	<health now="8100" max="8100"/>
-	<look type="1200" head="114" body="95" legs="94" feet="95" addons="0" corpse="36137"/>
+	<look type="1200" head="114" body="95" legs="94" feet="95" addons="0" corpse="36258"/>
 	<targetchange interval="4000" chance="10"/>
 	<flags>
 		<flag summonable="0"/>
@@ -53,7 +53,7 @@
 		<item name="Violet Gem" chance="2600"/>
 	    <item name="Opal" countmax="2" chance="2200"/>
 	    <item name="Wand of Voodoo" chance="2200"/>
-		<item name="Empty Honey Glass" chance="3400"/>
+		<item id="36166" chance="3400"/>
 		<item name="Small Enchanted Emerald" countmax="3" chance="1500"/>
 	</loot>
 </monster>

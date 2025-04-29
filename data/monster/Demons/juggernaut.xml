@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Juggernaut" nameDescription="a juggernaut" race="blood" experience="14000" speed="170" raceid="296">
+<monster name="Juggernaut" nameDescription="a juggernaut" race="blood" experience="14000" speed="170">
 	<health now="20000" max="20000"/>
 	<look type="244" corpse="6336"/>
 	<targetchange interval="4000" chance="10"/>
@@ -67,8 +67,8 @@
 		<item name="golden legs" chance="500"/>
 		<item name="knight armor" chance="4990"/>
 		<item name="mastermind shield" chance="800"/>
-		<item name="closed trap" chance="280"/>
-		<item id="2671" countmax="8" chance="60000"/> <!-- ham -->
+		<item id="2578" chance="280"/>
+		<item name="ham" countmax="8" chance="60000"/>
 		<item name="soul orb" chance="33333"/>
 		<item name="demonic essence" chance="45333"/>
 		<item name="concentrated demonic blood" countmax="4" chance="25000"/>

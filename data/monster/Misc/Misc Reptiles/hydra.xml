@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<monster name="Hydra" nameDescription="a hydra" race="blood" experience="2100" speed="100" raceid="121">
+<monster name="Hydra" nameDescription="a hydra" race="blood" experience="2100" speed="250">
 	<health now="2350" max="2350" />
 	<look type="121" corpse="6048" />
 	<targetchange interval="4000" chance="10" />
@@ -18,7 +18,7 @@
 	</flags>
 	<attacks>
 		<attack name="melee" interval="2000" min="0" max="-270" />
-		<attack name="speed" interval="3000" chance="10" range="7" radius="4" target="1" speedchange="-700" duration="15000">
+		<attack name="speed" interval="2000" chance="25" range="7" radius="4" target="1" speedchange="-700" duration="15000">
 			<attribute key="shootEffect" value="poison" />
 			<attribute key="areaEffect" value="greenbubble" />
 		</attack>
@@ -67,7 +67,7 @@
 		<item name="knight armor" chance="1000" />
 		<item name="royal helmet" chance="210" />
 		<item name="medusa shield" chance="270" />
-		<item id="2671" countmax="4" chance="60000" /> <!-- ham -->
+		<item name="ham" countmax="4" chance="60000" />
 		<item name="hydra egg" chance="930" />
 		<item name="strong mana potion" chance="380" />
 		<item name="cucumber" chance="4780" />

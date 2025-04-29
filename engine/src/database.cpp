@@ -1,6 +1,8 @@
 /**
+ * @file database.cpp
+ * 
  * The Forgotten Server - a free and open-source MMORPG server emulator
- * Copyright (C) 2019 Mark Samman <mark.samman@gmail.com>
+ * Copyright (C) 2020 Mark Samman <mark.samman@gmail.com>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,10 +47,6 @@ bool Database::connect()
 	// automatic reconnect
 	bool reconnect = true;
 	mysql_options(handle, MYSQL_OPT_RECONNECT, &reconnect);
-
-	// Remove ssl verification
-	bool ssl_enabled = false;
-	mysql_options(handle, MYSQL_OPT_SSL_VERIFY_SERVER_CERT, &ssl_enabled);
 
 	// connects to database
 	if (!mysql_real_connect(handle, g_config.getString(ConfigManager::MYSQL_HOST).c_str(), g_config.getString(ConfigManager::MYSQL_USER).c_str(), g_config.getString(ConfigManager::MYSQL_PASS).c_str(), g_config.getString(ConfigManager::MYSQL_DB).c_str(), g_config.getNumber(ConfigManager::SQL_PORT), g_config.getString(ConfigManager::MYSQL_SOCK).c_str(), 0)) {
@@ -249,7 +247,7 @@ bool DBResult::next()
 	return row != nullptr;
 }
 
-DBInsert::DBInsert(std::string query) : query(std::move(query))
+DBInsert::DBInsert(std::string insertQuery) : query(std::move(insertQuery))
 {
 	this->length = this->query.length();
 }
