@@ -56,6 +56,9 @@ struct TextMessage
 	TextMessage(MessageClasses initType, std::string initText) : type(initType), text(std::move(initText)) {}
 };
 
+static constexpr size_t OTCV8_LENGTH = 5;
+static constexpr char OTCV8_NAME[] = "OTCV8";
+
 class ProtocolGame final : public Protocol
 {
 	public:
@@ -413,7 +416,10 @@ class ProtocolGame final : public Protocol
 		bool debugAssertSent = false;
 		bool acceptPackets = false;
 
-		uint16_t otclientV8 = 0;
+		bool isOTCv8 = false;
+		bool isMehah = false;
+		bool isOTC = false;
+
 
 		bool loggedIn = false;
 		bool shouldAddExivaRestrictions = false;

@@ -69,9 +69,9 @@ void ProtocolGame::login(const std::string& name, uint32_t accountId, OperatingS
 {
 
 	// OTCv8 features and extended opcodes
-	if (otclientV8 || operatingSystem >= CLIENTOS_OTCLIENT_LINUX) {
-		if(otclientV8)
-			sendFeatures();
+	if (isOTCv8 || operatingSystem >= CLIENTOS_OTCLIENT_LINUX) {
+		if(isOTCv8)
+		sendFeatures();
 		NetworkMessage opcodeMessage;
 		opcodeMessage.addByte(0x32);
 		opcodeMessage.addByte(0x00);
@@ -260,110 +260,116 @@ void ProtocolGame::logout(bool displayEffect, bool forced)
 
 void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 {
-	if (g_game.getGameState() == GAME_STATE_SHUTDOWN) {
-		disconnect();
-		return;
-	}
-
-	OperatingSystem_t operatingSystem = static_cast<OperatingSystem_t>(msg.get<uint16_t>());
-	version = msg.get<uint16_t>();
-	if (version >= 1111) {
-		enableCompact();
-	}
-
-	clientVersion = msg.get<uint32_t>();
-
-	msg.skipBytes(3); // U32 client version, U8 client type, U16 dat revision
-
-	if (clientVersion >= 1149 && clientVersion < 1200) {
-		// on 1149.6xxx, this was removed later.
-		// extra byte for "optimise connection stability"
-		if (msg.getLength() - msg.getBufferPosition() > 128) {
-			shouldAddExivaRestrictions = true;
-			msg.skipBytes(1);
-		}
-	}
-
-	if (!Protocol::RSA_decrypt(msg)) {
-		std::cout << "[ProtocolGame::onRecvFirstMessage] RSA Decrypt Failed" << std::endl;
-		disconnect();
-		return;
-	}
-
-	xtea::key key;
-	key[0] = msg.get<uint32_t>();
-	key[1] = msg.get<uint32_t>();
-	key[2] = msg.get<uint32_t>();
-	key[3] = msg.get<uint32_t>();
-	enableXTEAEncryption();
-	setXTEAKey(std::move(key));
-
-	msg.skipBytes(1); // gamemaster flag
-
-	std::string sessionKey = msg.getString();
-	size_t pos = sessionKey.find('\n');
-	if (pos == std::string::npos) {
-		disconnectClient("You must enter your account name.");
-		return;
-	}
-
-	std::string accountName = sessionKey.substr(0, pos);
-	if (accountName.empty()) {
-		disconnectClient("You must enter your account name.");
-		return;
-	}
-
-	std::string password = sessionKey.substr(pos + 1);
-	std::string characterName = msg.getString();
-
-	uint32_t timeStamp = msg.get<uint32_t>();
-	uint8_t randNumber = msg.getByte();
-	if (challengeTimestamp != timeStamp || challengeRandom != randNumber) {
-		disconnect();
-		return;
-	}
-
-	// OTCv8 version detection
-	uint16_t otcV8StringLength = msg.get<uint16_t>();
-	if(otcV8StringLength == 5 && msg.getString(5) == "OTCv8") {
-		otclientV8 = msg.get<uint16_t>(); // 253, 260, 261, ...
-	}
-
-	if (version < g_config.getNumber(ConfigManager::VERSION_MIN) || version > g_config.getNumber(ConfigManager::VERSION_MAX)) {
-		std::ostringstream ss;
-		ss << "Only clients with protocol " << g_config.getString(ConfigManager::VERSION_STR) << " allowed!";
-		disconnectClient(ss.str());
-		return;
-	}
-
-	if (g_game.getGameState() == GAME_STATE_STARTUP) {
-		disconnectClient("Gameworld is starting up. Please wait.");
-		return;
-	}
-
-	if (g_game.getGameState() == GAME_STATE_MAINTAIN) {
-		disconnectClient("Gameworld is under maintenance. Please re-connect in a while.");
-		return;
-	}
-
-	BanInfo banInfo;
-	if (IOBan::isIpBanned(getIP(), banInfo)) {
-		if (banInfo.reason.empty()) {
-			banInfo.reason = "(none)";
-		}
-
-		std::ostringstream ss;
-		ss << "Your IP has been banned until " << formatDateShort(banInfo.expiresAt) << " by " << banInfo.bannedBy << ".\n\nReason specified:\n" << banInfo.reason;
-		disconnectClient(ss.str());
-		return;
-	}
-
-	uint32_t accountId = IOLoginData::gameworldAuthentication(accountName, password, characterName);
-	if (accountId == 0) {
-		disconnectClient("Account name or password is not correct.");
-		return;
-	}
-	g_dispatcher.addTask(createTask(std::bind(&ProtocolGame::login, getThis(), characterName, accountId, operatingSystem)));
+    if (g_game.getGameState() == GAME_STATE_SHUTDOWN) {
+        disconnect();
+        return;
+    }
+    OperatingSystem_t operatingSystem = static_cast<OperatingSystem_t>(msg.get<uint16_t>());
+    version = msg.get<uint16_t>();
+    if (version >= 1111) {
+        enableCompact();
+    }
+    clientVersion = msg.get<uint32_t>();
+    msg.skipBytes(3); // U32 client version, U8 client type, U16 dat revision
+    if (clientVersion >= 1149 && clientVersion < 1200) {
+        if (msg.getLength() - msg.getBufferPosition() > 128) {
+            shouldAddExivaRestrictions = true;
+            msg.skipBytes(1);
+        }
+    }
+    if (!Protocol::RSA_decrypt(msg)) {
+        disconnect();
+        return;
+    }
+    xtea::key key;
+    key[0] = msg.get<uint32_t>();
+    key[1] = msg.get<uint32_t>();
+    key[2] = msg.get<uint32_t>();
+    key[3] = msg.get<uint32_t>();
+    enableXTEAEncryption();
+    setXTEAKey(std::move(key));
+    msg.skipBytes(1); // gamemaster flag
+    std::string sessionKey = msg.getString();
+    size_t pos = sessionKey.find('\n');
+    if (pos == std::string::npos) {
+        disconnectClient("You must enter your account name.");
+        return;
+    }
+    std::string accountName = sessionKey.substr(0, pos);
+    if (accountName.empty()) {
+        disconnectClient("You must enter your account name.");
+        return;
+    }
+    std::string password = sessionKey.substr(pos + 1);
+    std::string characterName = msg.getString();
+    uint32_t timeStamp = msg.get<uint32_t>();
+    uint8_t randNumber = msg.getByte();
+    if (challengeTimestamp != timeStamp || challengeRandom != randNumber) {
+        disconnect();
+        return;
+    }
+    
+    // OTCv8 version detection
+    isOTCv8 = false;
+    isMehah = false;
+    uint16_t otcV8StringLength = msg.get<uint16_t>();
+    if (otcV8StringLength == 5 && msg.getString(5) == "OTCv8") {
+        uint16_t otcVersion = msg.get<uint16_t>();
+        isOTCv8 = true;
+        isOTCv8 = otcVersion;
+    }
+    
+    // Mehah detection
+    if (operatingSystem == CLIENTOS_OTCLIENT_WINDOWS) {
+        isMehah = true;
+    }
+    
+    // Set general OTC flag
+    isOTC = isOTCv8 || isMehah;
+    
+    if (isOTC) {
+        NetworkMessage opcodeMessage;
+        opcodeMessage.addByte(0x32);
+        opcodeMessage.addByte(0x00);
+        opcodeMessage.add<uint16_t>(0x00);
+        writeToOutputBuffer(opcodeMessage);
+    }
+    
+    if (version < g_config.getNumber(ConfigManager::VERSION_MIN) || version > g_config.getNumber(ConfigManager::VERSION_MAX)) {
+        std::ostringstream ss;
+        ss << "Only clients with protocol " << g_config.getString(ConfigManager::VERSION_STR) << " allowed!";
+        disconnectClient(ss.str());
+        return;
+    }
+    
+    if (g_game.getGameState() == GAME_STATE_STARTUP) {
+        disconnectClient("Gameworld is starting up. Please wait.");
+        return;
+    }
+    
+    if (g_game.getGameState() == GAME_STATE_MAINTAIN) {
+        disconnectClient("Gameworld is under maintenance. Please re-connect in a while.");
+        return;
+    }
+    
+    BanInfo banInfo;
+    if (IOBan::isIpBanned(getIP(), banInfo)) {
+        if (banInfo.reason.empty()) {
+            banInfo.reason = "(none)";
+        }
+        std::ostringstream ss;
+        ss << "Your IP has been banned until " << formatDateShort(banInfo.expiresAt) << " by " << banInfo.bannedBy << ".\n\nReason specified:\n" << banInfo.reason;
+        disconnectClient(ss.str());
+        return;
+    }
+    
+    uint32_t accountId = IOLoginData::gameworldAuthentication(accountName, password, characterName);
+    if (accountId == 0) {
+        disconnectClient("Account name or password is not correct.");
+        return;
+    }
+    
+    g_dispatcher.addTask(createTask(std::bind(&ProtocolGame::login, getThis(), characterName, accountId, operatingSystem)));
 }
 
 void ProtocolGame::onConnect()
@@ -794,51 +800,71 @@ void ProtocolGame::parseAutoWalk(NetworkMessage& msg)
 
 void ProtocolGame::parseSetOutfit(NetworkMessage& msg)
 {
-	uint16_t startBufferPosition = msg.getBufferPosition();
-	Module* outfitModule = g_modules->getEventByRecvbyte(0xD3, false);
-	if(outfitModule) {
-		outfitModule->executeOnRecvbyte(player, msg);
-	}
-	if(msg.getBufferPosition() == startBufferPosition) {
-		uint8_t outfitType = 0;
-		if (version >= 1220) {//Maybe some versions before? but I don't have executable to check
-			outfitType = msg.getByte();
-		}
-
-		Outfit_t newOutfit;
-		newOutfit.lookType = msg.get<uint16_t>();
-		newOutfit.lookHead = msg.getByte();
-		newOutfit.lookBody = msg.getByte();
-		newOutfit.lookLegs = msg.getByte();
-		newOutfit.lookFeet = msg.getByte();
-		newOutfit.lookAddons = msg.getByte();
-		if (outfitType == 0) {
-			newOutfit.lookMount = msg.get<uint16_t>();
-			newOutfit.lookWings = otclientV8 ? msg.get<uint16_t>() : 0;
-			newOutfit.lookAura = otclientV8 ? msg.get<uint16_t>() : 0;
-			std::string shaderName = otclientV8 ? msg.getString() : "";
-			Shader* shader = g_game.shaders.getShaderByName(shaderName);
-			newOutfit.lookShader = shader ? shader->id : 0;
-		} else if (outfitType == 1) {
-			//This value probably has something to do with try outfit variable inside outfit window dialog
-			//if try outfit is set to 2 it expects uint32_t value after mounted and disable mounts from outfit window dialog
-			newOutfit.lookMount = 0;
-			msg.get<uint32_t>();
-		}
-		addGameTask(&Game::playerChangeOutfit, player->getID(), newOutfit);
-	}
+    uint16_t startBufferPosition = msg.getBufferPosition();
+    Module* outfitModule = g_modules->getEventByRecvbyte(0xD3, false);
+    if (outfitModule) {
+        outfitModule->executeOnRecvbyte(player, msg);
+    }
+    if (msg.getBufferPosition() == startBufferPosition) {
+        uint8_t outfitType = 0;
+        if (version >= 1220) {
+            outfitType = msg.getByte();
+        }
+        Outfit_t newOutfit;
+        newOutfit.lookType = msg.get<uint16_t>();
+        
+        if (newOutfit.lookType > 10000) {
+            newOutfit.lookType = player->getDefaultOutfit().lookType;
+        }
+        
+        newOutfit.lookHead = msg.getByte();
+        newOutfit.lookBody = msg.getByte();
+        newOutfit.lookLegs = msg.getByte();
+        newOutfit.lookFeet = msg.getByte();
+        newOutfit.lookAddons = msg.getByte();
+        
+        if (outfitType == 0) {
+            if (player->isOTC()) {
+                newOutfit.lookMount = msg.get<uint16_t>();
+            } else {
+                newOutfit.lookMount = 0;
+            }
+            
+            newOutfit.lookWings = 0;
+            newOutfit.lookAura = 0;
+            newOutfit.lookShader = 0;
+            
+            if (player->isOTCv8() && !player->isMehah()) {
+                newOutfit.lookWings = msg.get<uint16_t>();
+                newOutfit.lookAura = msg.get<uint16_t>();
+                std::string shaderName = msg.getString();
+                Shader* shader = g_game.shaders.getShaderByName(shaderName);
+                newOutfit.lookShader = shader ? shader->id : 0;
+            } 
+            else if (player->isMehah()) {
+                msg.get<uint16_t>(); // wings
+                msg.get<uint16_t>(); // aura
+                msg.getString(); // shaderName
+            }
+        } else if (outfitType == 1) {
+            newOutfit.lookMount = 0;
+            msg.get<uint32_t>();
+        }
+        
+        addGameTask(&Game::playerChangeOutfit, player->getID(), newOutfit);
+    }
 }
 
 void ProtocolGame::parseToggleMount(NetworkMessage& msg)
 {
-	int mount = msg.get<int8_t>();
-	int wings = -1, aura = -1, shader = -1;
-	if (otclientV8 >= 254) {
-		wings = msg.get<int8_t>();
-		aura = msg.get<int8_t>();
-		shader = msg.get<int8_t>();
-	}
-	addGameTask(&Game::playerToggleOutfitExtension, player->getID(), mount, wings, aura, shader);
+    int mount = msg.get<int8_t>();
+    int wings = -1, aura = -1, shader = -1;
+    if (isOTCv8) {
+        wings = msg.get<int8_t>();
+        aura = msg.get<int8_t>();
+        shader = msg.get<int8_t>();
+    }
+    addGameTask(&Game::playerToggleOutfitExtension, player->getID(), mount, wings, aura, shader);
 }
 
 void ProtocolGame::parseApplyImbuemente(NetworkMessage& msg)
@@ -3714,128 +3740,141 @@ void ProtocolGame::sendHouseWindow(uint32_t windowTextId, const std::string& tex
 
 void ProtocolGame::sendOutfitWindow()
 {
-	NetworkMessage msg;
-	msg.addByte(0xC8);
-
-	Outfit_t currentOutfit = player->getDefaultOutfit();
-	Mount* currentMount = g_game.mounts.getMountByID(player->getCurrentMount());
-	if (currentMount) {
-		currentOutfit.lookMount = currentMount->clientId;
-	}
-
-	AddOutfit(msg, currentOutfit);
-
-	std::vector<ProtocolOutfit> protocolOutfits;
-	if (player->isAccessPlayer()) {
-		static const std::string gamemasterOutfitName = "Game Master";
-		protocolOutfits.emplace_back(gamemasterOutfitName, 75, 0);
-
-		static const std::string gmCustomerSupport = "Customer Support";
-		protocolOutfits.emplace_back(gmCustomerSupport, 266, 0);
-
-		static const std::string communityManager = "Community Manager";
-		protocolOutfits.emplace_back(communityManager, 302, 0);
-	}
-
-	const auto& outfits = Outfits::getInstance().getOutfits(player->getSex());
-	protocolOutfits.reserve(outfits.size());
-	for (const Outfit& outfit : outfits) {
-		uint8_t addons;
-		if (!player->getOutfitAddons(outfit, addons)) {
-			continue;
-		}
-
-		protocolOutfits.emplace_back(outfit.name, outfit.lookType, addons);
-		if (protocolOutfits.size() == 150 && version < 1185) { // Game client doesn't allow more than 100 outfits
-			break;
-		}
-	}
-
-	if (version >= 1185) {
-		msg.add<uint16_t>(protocolOutfits.size());
-	} else {
-		msg.addByte(protocolOutfits.size());
-	}
-
-	for (const ProtocolOutfit& outfit : protocolOutfits) {
-		msg.add<uint16_t>(outfit.lookType);
-		msg.addString(outfit.name);
-		msg.addByte(outfit.addons);
-
-		if (version >= 1185) {
-			msg.addByte(0x00);
-		}
-	}
-
-	std::vector<const Mount*> mounts;
-	for (const Mount& mount : g_game.mounts.getMounts()) {
-		if (player->hasMount(&mount)) {
-			mounts.push_back(&mount);
-		}
-	}
-
-	if (version >= 1185) {
-		msg.add<uint16_t>(mounts.size());
-	} else {
-		msg.addByte(mounts.size());
-	}
-
-	for (const Mount* mount : mounts) {
-		msg.add<uint16_t>(mount->clientId);
-		msg.addString(mount->name);
-
-		if (version >= 1185) {
-			msg.addByte(0x00);
-		}
-	}
-
-	if (version >= 1185) {
-		msg.addByte(0x00);
-		msg.addByte(0x00);
-	}
-
-	if (otclientV8) {
-		std::vector<const Wing*> wings;
-		for (const Wing& wing: g_game.wings.getWings()) {
-			if (player->hasWing(&wing)) {
-				wings.push_back(&wing);
-			}
-		}
-
-		msg.addByte(wings.size());
-		for (const Wing* wing : wings) {
-			msg.add<uint16_t>(wing->clientId);
-			msg.addString(wing->name);
-		}
-
-		std::vector<const Aura*> auras;
-		for (const Aura& aura : g_game.auras.getAuras()) {
-			if (player->hasAura(&aura)) {
-				auras.push_back(&aura);
-			}
-		}
-
-		msg.addByte(auras.size());
-		for (const Aura* aura : auras) {
-			msg.add<uint16_t>(aura->clientId);
-			msg.addString(aura->name);
-		}
-
-		std::vector<const Shader*> shaders;
-		for (const Shader& shader : g_game.shaders.getShaders()) {
-			if (player->hasShader(&shader)) {
-				shaders.push_back(&shader);
-			}
-		}
-
-		msg.addByte(shaders.size());
-		for (const Shader* shader : shaders) {
-			msg.add<uint16_t>(shader->id);
-			msg.addString(shader->name);
-		}
-	}
-
-	writeToOutputBuffer(msg);
+    NetworkMessage msg;
+    msg.addByte(0xC8);
+    Outfit_t currentOutfit = player->getDefaultOutfit();
+    Mount* currentMount = g_game.mounts.getMountByID(player->getCurrentMount());
+    if (currentMount) {
+        currentOutfit.lookMount = currentMount->clientId;
+    }
+    
+    if (player->isOTCv8() && !player->isMehah()) {
+        Wing* currentWing = g_game.wings.getWingByID(player->getCurrentWing());
+        if (currentWing) {
+            currentOutfit.lookWings = currentWing->clientId;
+        }
+        
+        Aura* currentAura = g_game.auras.getAuraByID(player->getCurrentAura());
+        if (currentAura) {
+            currentOutfit.lookAura = currentAura->clientId;
+        }
+        
+        Shader* shader = g_game.shaders.getShaderByID(currentOutfit.lookShader);
+        if (shader) {
+            currentOutfit.lookShader = shader->id;
+        }
+    }
+    
+    AddOutfit(msg, currentOutfit);
+    std::vector<ProtocolOutfit> protocolOutfits;
+    if (player->isAccessPlayer()) {
+        static const std::string gamemasterOutfitName = "Game Master";
+        protocolOutfits.emplace_back(gamemasterOutfitName, 75, 0);
+        static const std::string gmCustomerSupport = "Customer Support";
+        protocolOutfits.emplace_back(gmCustomerSupport, 266, 0);
+        static const std::string communityManager = "Community Manager";
+        protocolOutfits.emplace_back(communityManager, 302, 0);
+    }
+    
+    size_t maxProtocolOutfits = 150;
+    if (player->isOTC()) { 
+        maxProtocolOutfits = std::numeric_limits<uint8_t>::max();
+    }
+    
+    const auto& outfits = Outfits::getInstance().getOutfits(player->getSex());
+    protocolOutfits.reserve(outfits.size());
+    for (const Outfit& outfit : outfits) {
+        uint8_t addons;
+        if (!player->getOutfitAddons(outfit, addons)) {
+            continue;
+        }
+        protocolOutfits.emplace_back(outfit.name, outfit.lookType, addons);
+        if (protocolOutfits.size() == maxProtocolOutfits) {
+            break;
+        }
+    }
+    
+    if (version >= 1185) {
+        msg.add<uint16_t>(protocolOutfits.size());
+    } else {
+        msg.addByte(protocolOutfits.size());
+    }
+    for (const ProtocolOutfit& outfit : protocolOutfits) {
+        msg.add<uint16_t>(outfit.lookType);
+        msg.addString(outfit.name);
+        msg.addByte(outfit.addons);
+        if (version >= 1185) {
+            msg.addByte(0x00);
+        }
+    }
+    
+    std::vector<const Mount*> mounts;
+    if (player->isOTC()) {
+        for (const Mount& mount : g_game.mounts.getMounts()) {
+            if (player->hasMount(&mount)) {
+                mounts.push_back(&mount);
+            }
+        }
+    }
+    
+    if (version >= 1185) {
+        msg.add<uint16_t>(mounts.size());
+    } else {
+        msg.addByte(mounts.size());
+    }
+    
+    for (const Mount* mount : mounts) {
+        msg.add<uint16_t>(mount->clientId);
+        msg.addString(mount->name);
+        if (version >= 1185) {
+            msg.addByte(0x00);
+        }
+    }
+    
+    if (version >= 1185) {
+        msg.addByte(0x00);
+        msg.addByte(0x00);
+    }
+    
+    if (player->isOTCv8() && !player->isMehah()) {
+        std::vector<const Wing*> wings;
+        for (const Wing& wing: g_game.wings.getWings()) {
+            if (player->hasWing(&wing)) {
+                wings.push_back(&wing);
+            }
+        }
+        msg.addByte(wings.size());
+        for (const Wing* wing : wings) {
+            msg.add<uint16_t>(wing->clientId);
+            msg.addString(wing->name);
+        }
+        
+        std::vector<const Aura*> auras;
+        for (const Aura& aura : g_game.auras.getAuras()) {
+            if (player->hasAura(&aura)) {
+                auras.push_back(&aura);
+            }
+        }
+        msg.addByte(auras.size());
+        for (const Aura* aura : auras) {
+            msg.add<uint16_t>(aura->clientId);
+            msg.addString(aura->name);
+        }
+        
+        std::vector<const Shader*> shaders;
+        for (const Shader& shader : g_game.shaders.getShaders()) {
+            if (player->hasShader(&shader)) {
+                shaders.push_back(&shader);
+            }
+        }
+        msg.addByte(shaders.size());
+        for (const Shader* shader : shaders) {
+            msg.add<uint16_t>(shader->id);
+            msg.addString(shader->name);
+        }
+    }
+    
+    writeToOutputBuffer(msg);
 }
 
 void ProtocolGame::sendUpdatedVIPStatus(uint32_t guid, VipStatus_t newStatus)
@@ -4312,27 +4351,37 @@ void ProtocolGame::AddPlayerSkills(NetworkMessage& msg)
 
 void ProtocolGame::AddOutfit(NetworkMessage& msg, const Outfit_t& outfit, bool addMount/* = true*/)
 {
-	msg.add<uint16_t>(outfit.lookType);
-
-	if (outfit.lookType != 0) {
-		msg.addByte(outfit.lookHead);
-		msg.addByte(outfit.lookBody);
-		msg.addByte(outfit.lookLegs);
-		msg.addByte(outfit.lookFeet);
-		msg.addByte(outfit.lookAddons);
-	} else {
-		msg.addItemId(outfit.lookTypeEx);
-	}
-
-	if (addMount) {
-		msg.add<uint16_t>(outfit.lookMount);
-		if (otclientV8) {
-			msg.add<uint16_t>(outfit.lookWings);
-			msg.add<uint16_t>(outfit.lookAura);
-			Shader* shader = g_game.shaders.getShaderByID(outfit.lookShader);
-			msg.addString(shader ? shader->name : "");
-		}
-	}
+    uint16_t lookType = outfit.lookType;
+    if (!player->isOTC() && lookType >= 367) {
+        lookType = 128;
+    }
+    
+    msg.add<uint16_t>(lookType);
+    if (lookType != 0) {
+        msg.addByte(outfit.lookHead);
+        msg.addByte(outfit.lookBody);
+        msg.addByte(outfit.lookLegs);
+        msg.addByte(outfit.lookFeet);
+        msg.addByte(outfit.lookAddons);
+    } else {
+        msg.addItemId(outfit.lookTypeEx);
+    }
+    
+    if (addMount) {
+        if (player->isOTC()) {
+            msg.add<uint16_t>(outfit.lookMount);
+        } else {
+            msg.add<uint16_t>(0);
+        }
+        
+        if (player->isOTCv8() && !player->isMehah()) {
+            msg.add<uint16_t>(outfit.lookWings);
+            msg.add<uint16_t>(outfit.lookAura);
+            
+            Shader* shader = g_game.shaders.getShaderByID(outfit.lookShader);
+            msg.addString(shader ? shader->name : "");
+        }
+    }
 }
 
 void ProtocolGame::addImbuementInfo(NetworkMessage& msg, uint32_t imbuid)
@@ -4713,26 +4762,30 @@ void ProtocolGame::parseExtendedOpcode(NetworkMessage& msg)
 // OTCv8
 void ProtocolGame::sendFeatures()
 {
-	if(!otclientV8) 
-		return;
-
-	std::map<GameFeature, bool> features;
-	// place for non-standard OTCv8 features
-	features[GameExtendedOpcode] = true;
-	features[GameWingsAndAura] = true;
-	features[GameOutfitShaders] = true;
-
-	if(features.empty())
-		return;
-
-	NetworkMessage msg;
-	msg.addByte(0x43);
-	msg.add<uint16_t>(features.size());
-	for(auto& feature : features) {
-		msg.addByte((uint8_t)feature.first);
-		msg.addByte(feature.second ? 1 : 0);
-	}
-	writeToOutputBuffer(msg);
+    if (!isOTCv8 || isMehah) {
+        return;
+    }
+    
+    std::map<GameFeature, bool> features;
+	 // place for non-standard OTCv8 features
+    features[GameExtendedOpcode] = true;
+    features[GameWingsAndAura] = true;
+    features[GameOutfitShaders] = true;
+    
+    if (features.empty()) {
+        return;
+    }
+        
+    NetworkMessage msg;
+    msg.addByte(0x43);
+    msg.add<uint16_t>(features.size());
+    
+    for (auto& feature : features) {
+        msg.addByte((uint8_t)feature.first);
+        msg.addByte(feature.second ? 1 : 0);
+    }
+    
+    writeToOutputBuffer(msg);
 }
 
 void ProtocolGame::sendItemsPrice()

@@ -1573,6 +1573,10 @@ class Player final : public Creature, public Cylinder
 		uint16_t getFreeBackpackSlots() const;
 		StreakBonus_t getStreakDaysBonus()const;
 
+		bool isOTCv8() const { return client ? client->isOTCv8 : false; }
+		bool isMehah() const { return client ? client->isMehah : false; }
+		bool isOTC() const { return client ? (client->isOTCv8 || client->isMehah) : false; }
+
 	protected:
 		std::forward_list<Condition*> getMuteConditions() const;
 
