@@ -5,6 +5,11 @@ Reserved storage ranges:
 - 10000000 to 20000000 reserved for outfits and mounts on source
 ]]--
 PlayerStorageKeys = {
+    -- empty_vial.lua [talkaction]
+	emptyVials = {
+		emptyVial = 99221,
+		exhaust = 99222,
+	},
     annihilatorReward = 30015,
     promotion = 30018,
     delayLargeSeaShell = 30019,

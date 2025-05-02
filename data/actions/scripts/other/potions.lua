@@ -1,5 +1,9 @@
+-- Global table to track player potion usage delays
+local playerDelayPotion = {}
+
+-- Define conditions for potions
 local berserk = Condition(CONDITION_ATTRIBUTES)
-berserk:setParameter(CONDITION_PARAM_TICKS, 10 * 60 * 1000)
+berserk:setParameter(CONDITION_PARAM_TICKS, 10 * 60 * 1000) -- 10 minutes
 berserk:setParameter(CONDITION_PARAM_SKILL_MELEE, 5)
 berserk:setParameter(CONDITION_PARAM_SKILL_SHIELD, -10)
 berserk:setParameter(CONDITION_PARAM_BUFF_SPELL, true)
@@ -15,6 +19,7 @@ bullseye:setParameter(CONDITION_PARAM_SKILL_DISTANCE, 5)
 bullseye:setParameter(CONDITION_PARAM_SKILL_SHIELD, -10)
 bullseye:setParameter(CONDITION_PARAM_BUFF_SPELL, true)
 
+-- Define antidote combat
 local antidote = Combat()
 antidote:setParameter(COMBAT_PARAM_TYPE, COMBAT_HEALING)
 antidote:setParameter(COMBAT_PARAM_EFFECT, CONST_ME_MAGIC_BLUE)
@@ -22,145 +27,156 @@ antidote:setParameter(COMBAT_PARAM_DISPEL, CONDITION_POISON)
 antidote:setParameter(COMBAT_PARAM_AGGRESSIVE, false)
 antidote:setParameter(COMBAT_PARAM_TARGETCASTERORTOPMOST, true)
 
+-- Define exhaustion condition
 local exhaust = Condition(CONDITION_EXHAUST_HEAL)
 exhaust:setParameter(CONDITION_PARAM_TICKS, (configManager.getNumber(configKeys.EX_ACTIONS_DELAY_INTERVAL) - 1000))
--- 1000 - 100 due to exact condition timing. -100 doesn't hurt us, and players don't have reminding ~50ms exhaustion.
 
+-- Potion configurations
 local potions = {
-	[6558] = {transform = {id = {7588, 7589}}, effect = CONST_ME_DRAWBLOOD},
-	[7439] = {condition = berserk, vocations = {4, 8}, effect = CONST_ME_MAGIC_RED,
-			description = "Only knights may drink this potion.", text = "You feel stronger."},
-
-	[7440] = {condition = mastermind, vocations = {1, 2, 5, 6}, effect = CONST_ME_MAGIC_BLUE,
-			description = "Only sorcerers and druids may drink this potion.", text = "You feel smarter."},
-
-	[7443] = {condition = bullseye, vocations = {3, 7}, effect = CONST_ME_MAGIC_GREEN,
-			description = "Only paladins may drink this potion.", text = "You feel more accurate."},
-
-	[7588] = {health = {250, 350}, vocations = {3, 4, 7, 8}, level = 50, flask = 7634,
-			description = "Only knights and paladins of level 50 or above may drink this fluid."},
-
-	[7589] = {mana = {115, 185}, vocations = {1, 2, 3, 5, 6, 7}, level = 50, flask = 7634,
-			description = "Only sorcerers, druids and paladins of level 50 or above may drink this fluid."},
-
-	[7590] = {mana = {150, 250}, vocations = {1, 2, 5, 6}, level = 80, flask = 7635,
-			description = "Only druids and sorcerers of level 80 or above may drink this fluid."},
-
-	[7591] = {health = {425, 575}, vocations = {4, 8}, level = 80, flask = 7635,
-			description = "Only knights of level 80 or above may drink this fluid."},
-
-	[7618] = {health = {125, 175}, flask = 7636},
-	[7620] = {mana = {75, 125}, flask = 7636},
-	[8472] = {health = {250, 350}, mana = {100, 200}, vocations = {3, 7}, level = 80, flask = 7635,
-			description = "Only paladins of level 80 or above may drink this fluid."},
-
-	[8473] = {health = {650, 850}, vocations = {4, 8}, level = 130, flask = 7635,
-			description = "Only knights of level 130 or above may drink this fluid."},
-
-	[8474] = {combat = antidote, flask = 7636},
-	[8704] = {health = {60, 90}, flask = 7636},
-	[26029] = {mana = {425, 575}, vocations = {1, 2, 5, 6}, level = 130, flask = 7635,
-			description = "Only druids and sorcerers of level 130 or above may drink this fluid."},
-
-	[26030] = {health = {420, 580}, mana = {250, 350}, vocations = {3, 7}, level = 130, flask = 7635,
-			description = "Only paladins of level 130 or above may drink this fluid."},
-
-	[26031] = {health = {875, 1125}, vocations = {4, 8}, level = 200, flask = 7635,
-			description = "Only knights of level 200 or above may drink this fluid."}
+    [6558] = {transform = {id = {7588, 7589}}, effect = CONST_ME_DRAWBLOOD},
+    [7439] = {condition = berserk, vocations = {4, 8}, effect = CONST_ME_MAGIC_RED,
+              description = "Only knights may drink this potion.", text = "You feel stronger."},
+    [7440] = {condition = mastermind, vocations = {1, 2, 5, 6}, effect = CONST_ME_MAGIC_BLUE,
+              description = "Only sorcerers and druids may drink this potion.", text = "You feel smarter."},
+    [7443] = {condition = bullseye, vocations = {3, 7}, effect = CONST_ME_MAGIC_GREEN,
+              description = "Only paladins may drink this potion.", text = "You feel more accurate."},
+    [7588] = {health = {250, 350}, vocations = {3, 4, 7, 8}, level = 50, flask = 7634,
+              description = "Only knights and paladins of level 50 or above may drink this fluid."},
+    [7589] = {mana = {115, 185}, vocations = {1, 2, 3, 5, 6, 7}, level = 50, flask = 7634,
+              description = "Only sorcerers, druids and paladins of level 50 or above may drink this fluid."},
+    [7590] = {mana = {150, 250}, vocations = {1, 2, 5, 6}, level = 80, flask = 7635,
+              description = "Only druids and sorcerers of level 80 or above may drink this fluid."},
+    [7591] = {health = {425, 575}, vocations = {4, 8}, level = 80, flask = 7635,
+              description = "Only knights of level 80 or above may drink this fluid."},
+    [7618] = {health = {125, 175}, flask = 7636},
+    [7620] = {mana = {75, 125}, flask = 7636},
+    [8472] = {health = {250, 350}, mana = {100, 200}, vocations = {3, 7}, level = 80, flask = 7635,
+              description = "Only paladins of level 80 or above may drink this fluid."},
+    [8473] = {health = {650, 850}, vocations = {4, 8}, level = 130, flask = 7635,
+              description = "Only knights of level 130 or above may drink this fluid."},
+    [8474] = {combat = antidote, flask = 7636},
+    [8704] = {health = {60, 90}, flask = 7636},
+    [26029] = {mana = {425, 575}, vocations = {1, 2, 5, 6}, level = 130, flask = 7635,
+               description = "Only druids and sorcerers of level 130 or above may drink this fluid."},
+    [26030] = {health = {420, 580}, mana = {250, 350}, vocations = {3, 7}, level = 130, flask = 7635,
+               description = "Only paladins of level 130 or above may drink this fluid."},
+    [26031] = {health = {875, 1125}, vocations = {4, 8}, level = 200, flask = 7635,
+               description = "Only knights of level 200 or above may drink this fluid."}
 }
 
+-- Main function for potion usage
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
-	if type(target) == "userdata" and not target:isPlayer() then
-		return false
-	end
+    -- Validate target
+    if type(target) == "userdata" and not target:isPlayer() then
+        return false
+    end
 
-	if not playerDelayPotion[player:getId()] then
-		playerDelayPotion[player:getId()] = 0
-	end
+    -- Initialize player delay if not set
+    local playerId = player:getId()
+    if not playerDelayPotion[playerId] then
+        playerDelayPotion[playerId] = 0
+    end
 
-	if playerDelayPotion[player:getId()] > os.mtime() then
-		player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_YOUAREEXHAUSTED))
-		return true
-	end
+    -- Check for potion usage delay
+    if playerDelayPotion[playerId] > os.mtime() then
+        player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_YOUAREEXHAUSTED))
+        return true
+    end
 
-	if item:getId() > 26000 and not player:isWarAllowed(CONST_WAR_POTIONS) then
-		player:sendCancelMessage("This action is not allowed here.")
-		player:getPosition():sendMagicEffect(CONST_ME_POFF)
-		return false
-	end
+    -- Check war zone restrictions for high-tier potions
+    if item:getId() > 26000 and not player:isWarAllowed(CONST_WAR_POTIONS) then
+        player:sendCancelMessage("This action is not allowed here.")
+        player:getPosition():sendMagicEffect(CONST_ME_POFF)
+        return true
+    end
 
-	local potion = potions[item:getId()]
-	if potion.level and player:getLevel() < potion.level or potion.vocations and not table.contains(potion.vocations, player:getVocation():getBase():getId()) and not (player:getGroup():getId() >= 2) then
-		player:say(potion.description, TALKTYPE_MONSTER_SAY)
-		return true
-	end
+    -- Get potion data
+    local potion = potions[item:getId()]
+    if not potion then
+        player:sendCancelMessage("This potion is not configured correctly.")
+        return true
+    end
 
-	if player:getCondition(CONDITION_EXHAUST_HEAL) then
-		player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_YOUAREEXHAUSTED))
-		return true
-	end
+    -- Check level and vocation requirements
+    if potion.level and player:getLevel() < potion.level or
+       potion.vocations and not table.contains(potion.vocations, player:getVocation():getBase():getId()) and
+       not (player:getGroup():getId() >= 2) then
+        player:say(potion.description, TALKTYPE_MONSTER_SAY)
+        return true
+    end
 
-	if target and (potion.health or potion.mana or potion.combat) then
-		if potion.health then
-			doTargetCombatHealth(0, target, COMBAT_HEALING, potion.health[1], potion.health[2], CONST_ME_MAGIC_BLUE)
-		end
+    -- Check exhaustion condition
+    if player:getCondition(CONDITION_EXHAUST_HEAL) then
+        player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_YOUAREEXHAUSTED))
+        return true
+    end
 
-		if potion.mana then
-			doTargetCombatMana(0, target, potion.mana[1], potion.mana[2], CONST_ME_MAGIC_BLUE)
-		end
+    -- Apply potion effects (health, mana, or combat)
+    if target and (potion.health or potion.mana or potion.combat) then
+        if potion.health then
+            doTargetCombatHealth(0, target, COMBAT_HEALING, potion.health[1], potion.health[2], CONST_ME_MAGIC_BLUE)
+        end
 
-		if potion.combat then
-			potion.combat:execute(target, Variant(target:getId()))
-		end
+        if potion.mana then
+            doTargetCombatMana(0, target, potion.mana[1], potion.mana[2], CONST_ME_MAGIC_BLUE)
+        end
 
-		player:addAchievementProgress('Potion Addict', 100000)
-		target:say("Aaaah...", TALKTYPE_MONSTER_SAY)
-		if player:getStorageValue(Storage.emptyVials.emptyVial) == 1 then
-			-- continue
-		else
-			player:addItem(potion.flask, 1)
-		end
-		player:addCondition(exhaust)
-		player:setStorageValue(38412, player:getStorageValue(38412)+1)
-	end
+        if potion.combat then
+            potion.combat:execute(target, Variant(target:getId()))
+        end
 
-	playerDelayPotion[player:getId()] = os.mtime() + 500
+        player:addAchievementProgress('Potion Addict', 100000)
+        target:say("Aaaah...", TALKTYPE_MONSTER_SAY)
 
-	if potion.condition then
-		player:addCondition(potion.condition)
-		player:say(potion.text, TALKTYPE_MONSTER_SAY)
-		player:getPosition():sendMagicEffect(potion.effect)
-	end
+        -- Add flask if storage condition is not met
+        if player:getStorageValue(PlayerStorageKeys.emptyVials.emptyVial) ~= 1 then
+            player:addItem(potion.flask, 1)
+        end
 
-	if potion.transform then
-		player:sendWaste(item:getId())
-		item:transform(potion.transform.id[math.random(#potion.transform.id)])
-		item:getPosition():sendMagicEffect(potion.effect)
-		return true
-	end
+        player:addCondition(exhaust)
+        player:setStorageValue(38412, player:getStorageValue(38412) + 1)
+    end
 
-	if not configManager.getBoolean(configKeys.REMOVE_POTION_CHARGES) then
-		return true
-	end
+    -- Set potion usage delay
+    playerDelayPotion[playerId] = os.mtime() + 500
 
-	player:sendWaste(item:getId())
-	item:remove(1)
-	return true
+    -- Apply condition effects (e.g., berserk, mastermind, bullseye)
+    if potion.condition then
+        player:addCondition(potion.condition)
+        player:say(potion.text, TALKTYPE_MONSTER_SAY)
+        player:getPosition():sendMagicEffect(potion.effect)
+    end
+
+    -- Handle transformation potions
+    if potion.transform then
+        player:sendWaste(item:getId())
+        item:transform(potion.transform.id[math.random(#potion.transform.id)])
+        item:getPosition():sendMagicEffect(potion.effect)
+        return true
+    end
+
+    -- Remove potion if configured to do so
+    if not configManager.getBoolean(configKeys.REMOVE_POTION_CHARGES) then
+        return true
+    end
+
+    player:sendWaste(item:getId())
+    item:remove(1)
+    return true
 end
 
-function Player:canUsePotion(potionId, ignoreLevel --[[=false]])
-	if not ignoreLevel then
-		ignoreLevel = false
-	end
+-- Function to check if a player can use a potion
+function Player:canUsePotion(potionId, ignoreLevel)
+    ignoreLevel = ignoreLevel or false
 
-	if self:getGroup():getAccess() then
-		return true
-	end
-	local potion = potions[potionId]
-	if potion then
-		return (potion.level and self:getLevel() >= potion.level or ignoreLevel)
-				and (potion.vocations and table.contains(potion.vocations, self:getVocation():getBase():getId()) or not potion.vocations)
-	end
-	return false
+    if self:getGroup():getAccess() then
+        return true
+    end
+
+    local potion = potions[potionId]
+    if potion then
+        return (potion.level and self:getLevel() >= potion.level or ignoreLevel) and
+               (potion.vocations and table.contains(potion.vocations, self:getVocation():getBase():getId()) or not potion.vocations)
+    end
+    return false
 end
-
