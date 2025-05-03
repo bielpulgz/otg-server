@@ -106,7 +106,7 @@ void NetworkMessage::addPosition(const Position& pos)
 	addByte(pos.z);
 }
 
-void NetworkMessage::addItemId(uint16_t itemId)
+void NetworkMessage::addItemId(uint16_t itemId, const bool isOTC, const bool isMehah, const bool isOTCv8)
 {
 	add<uint16_t>(Item::items[itemId].clientId);
 }

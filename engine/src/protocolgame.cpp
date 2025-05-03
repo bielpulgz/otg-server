@@ -1420,10 +1420,10 @@ void ProtocolGame::sendItemInspection(uint16_t itemId, uint8_t itemCount, const 
 
 	if (item) {
 		msg.addString(item->getName());
-		AddItem(msg, item);
+		AddItem(msg, item, isOTC, isMehah, isOTCv8);
 	} else {
 		msg.addString(it.name);
-		AddItem(msg, it.id, itemCount);
+		AddItem(msg, it.id, itemCount, isOTC, isMehah, isOTCv8);
 	}
 	msg.addByte(0); // imbuements
 
@@ -2299,12 +2299,12 @@ void ProtocolGame::sendContainer(uint8_t cid, const Container* container, bool h
 	msg.addByte(cid);
 
 	if (container->getID() == ITEM_BROWSEFIELD) {
-		AddItem(msg, 1987, 1);
-		msg.addString("Browse Field");
-	} else {
-		AddItem(msg, container);
-		msg.addString(container->getName());
-	}
+        AddItem(msg, 1987, 1, isOTC, isMehah, isOTCv8);
+        msg.addString("Browse Field");
+    } else {
+        AddItem(msg, container, isOTC, isMehah, isOTCv8);
+        msg.addString(container->getName());
+    }
 
 	msg.addByte(container->capacity());
 
@@ -2338,7 +2338,7 @@ void ProtocolGame::sendContainer(uint8_t cid, const Container* container, bool h
 		uint32_t i = 0;
 		const ItemDeque& itemList = container->getItemList();
 		for (ItemDeque::const_iterator it = itemList.begin() + firstIndex, end = itemList.end(); i < maxItemsToSend && it != end; ++it, ++i) {
-			AddItem(msg, *it);
+			AddItem(msg, *it, isOTC, isMehah, isOTCv8);
 		}
 	}
 	writeToOutputBuffer(msg);
@@ -2377,7 +2377,7 @@ void ProtocolGame::sendShop(Npc* npc, const ShopInfoList& itemList)
 	msg.addByte(0x7A);
 	msg.addString(npc->getName());
 	if (version >= 1203) {
-		msg.addItemId(2148);
+		msg.addItemId(2148, isOTC, isMehah, isOTCv8);
 	}
 
 	if (version >= 1240) {
@@ -2509,8 +2509,8 @@ void ProtocolGame::sendSaleItemList(const std::vector<ShopInfo>& shop)
 
 	uint8_t i = 0;
 	for (std::map<uint16_t, uint32_t>::const_iterator it = saleMap.begin(); i < itemsToSend; ++it, ++i) {
-		msg.addItemId(it->first);
-		msg.addByte(std::min<uint32_t>(it->second, std::numeric_limits<uint8_t>::max()));
+		msg.addItemId(it->first, isOTC, isMehah, isOTCv8);
+		msg.addByte(static_cast<uint8_t>(std::min<uint32_t>(it->second, std::numeric_limits<uint8_t>::max())));
 	}
 
 	writeToOutputBuffer(msg);
@@ -2633,7 +2633,7 @@ void ProtocolGame::sendMarketBrowseItem(uint16_t itemId, const MarketOfferList& 
 	NetworkMessage msg;
 
 	msg.addByte(0xF9);
-	msg.addItemId(itemId);
+	msg.addItemId(itemId, isOTC, isMehah, isOTCv8);
 
 	msg.add<uint32_t>(buyOffers.size());
 	for (const MarketOffer& offer : buyOffers) {
@@ -2661,7 +2661,7 @@ void ProtocolGame::sendMarketAcceptOffer(const MarketOfferEx& offer)
 {
 	NetworkMessage msg;
 	msg.addByte(0xF9);
-	msg.addItemId(offer.itemId);
+	msg.addItemId(offer.itemId, isOTC, isMehah, isOTCv8);
 
 	if (offer.type == MARKETACTION_BUY) {
 		msg.add<uint32_t>(0x01);
@@ -2694,7 +2694,7 @@ void ProtocolGame::sendMarketBrowseOwnOffers(const MarketOfferList& buyOffers, c
 	for (const MarketOffer& offer : buyOffers) {
 		msg.add<uint32_t>(offer.timestamp);
 		msg.add<uint16_t>(offer.counter);
-		msg.addItemId(offer.itemId);
+		msg.addItemId(offer.itemId, isOTC, isMehah, isOTCv8);
 		msg.add<uint16_t>(offer.amount);
 		msg.add<uint32_t>(offer.price);
 	}
@@ -2703,7 +2703,7 @@ void ProtocolGame::sendMarketBrowseOwnOffers(const MarketOfferList& buyOffers, c
 	for (const MarketOffer& offer : sellOffers) {
 		msg.add<uint32_t>(offer.timestamp);
 		msg.add<uint16_t>(offer.counter);
-		msg.addItemId(offer.itemId);
+		msg.addItemId(offer.itemId, isOTC, isMehah, isOTCv8);
 		msg.add<uint16_t>(offer.amount);
 		msg.add<uint32_t>(offer.price);
 	}
@@ -2721,7 +2721,7 @@ void ProtocolGame::sendMarketCancelOffer(const MarketOfferEx& offer)
 		msg.add<uint32_t>(0x01);
 		msg.add<uint32_t>(offer.timestamp);
 		msg.add<uint16_t>(offer.counter);
-		msg.addItemId(offer.itemId);
+		msg.addItemId(offer.itemId, isOTC, isMehah, isOTCv8);
 		msg.add<uint16_t>(offer.amount);
 		msg.add<uint32_t>(offer.price);
 		msg.add<uint32_t>(0x00);
@@ -2730,7 +2730,7 @@ void ProtocolGame::sendMarketCancelOffer(const MarketOfferEx& offer)
 		msg.add<uint32_t>(0x01);
 		msg.add<uint32_t>(offer.timestamp);
 		msg.add<uint16_t>(offer.counter);
-		msg.addItemId(offer.itemId);
+		msg.addItemId(offer.itemId, isOTC, isMehah, isOTCv8);
 		msg.add<uint16_t>(offer.amount);
 		msg.add<uint32_t>(offer.price);
 	}
@@ -2753,7 +2753,7 @@ void ProtocolGame::sendMarketBrowseOwnHistory(const HistoryMarketOfferList& buyO
 	for (auto it = buyOffers.begin(); i < buyOffersToSend; ++it, ++i) {
 		msg.add<uint32_t>(it->timestamp);
 		msg.add<uint16_t>(counterMap[it->timestamp]++);
-		msg.addItemId(it->itemId);
+		msg.addItemId(it->itemId, isOTC, isMehah, isOTCv8);
 		msg.add<uint16_t>(it->amount);
 		msg.add<uint32_t>(it->price);
 		msg.addByte(it->state);
@@ -2766,7 +2766,7 @@ void ProtocolGame::sendMarketBrowseOwnHistory(const HistoryMarketOfferList& buyO
 	for (auto it = sellOffers.begin(); i < sellOffersToSend; ++it, ++i) {
 		msg.add<uint32_t>(it->timestamp);
 		msg.add<uint16_t>(counterMap[it->timestamp]++);
-		msg.addItemId(it->itemId);
+		msg.addItemId(it->itemId, isOTC, isMehah, isOTCv8);
 		msg.add<uint16_t>(it->amount);
 		msg.add<uint32_t>(it->price);
 		msg.addByte(it->state);
@@ -2779,7 +2779,7 @@ void ProtocolGame::sendMarketDetail(uint16_t itemId)
 {
 	NetworkMessage msg;
 	msg.addByte(0xF8);
-	msg.addItemId(itemId);
+	msg.addItemId(itemId, isOTC, isMehah, isOTCv8);
 
 	const ItemType& it = Item::items[itemId];
 	if (it.armor != 0) {
@@ -3084,11 +3084,11 @@ void ProtocolGame::sendTradeItemRequest(const std::string& traderName, const Ite
 
 		msg.addByte(itemList.size());
 		for (const Item* listItem : itemList) {
-			AddItem(msg, listItem);
+			AddItem(msg, listItem, isOTC, isMehah, isOTCv8);
 		}
 	} else {
 		msg.addByte(0x01);
-		AddItem(msg, item);
+		AddItem(msg, item, isOTC, isMehah, isOTCv8);
 	}
 	writeToOutputBuffer(msg);
 }
@@ -3614,16 +3614,16 @@ void ProtocolGame::sendMoveCreature(const Creature* creature, const Position& ne
 
 void ProtocolGame::sendInventoryItem(slots_t slot, const Item* item)
 {
-	NetworkMessage msg;
-	if (item) {
-		msg.addByte(0x78);
-		msg.addByte(slot);
-		AddItem(msg, item);
-	} else {
-		msg.addByte(0x79);
-		msg.addByte(slot);
-	}
-	writeToOutputBuffer(msg);
+    NetworkMessage msg;
+    if (item) {
+        msg.addByte(0x78);
+        msg.addByte(slot);
+        AddItem(msg, item, isOTC, isMehah, isOTCv8);
+    } else {
+        msg.addByte(0x79);
+        msg.addByte(slot);
+    }
+    writeToOutputBuffer(msg);
 }
 
 void ProtocolGame::sendInventoryClientIds()
@@ -3654,7 +3654,7 @@ void ProtocolGame::sendAddContainerItem(uint8_t cid, uint16_t slot, const Item* 
 	msg.addByte(0x70);
 	msg.addByte(cid);
 	msg.add<uint16_t>(slot);
-	AddItem(msg, item);
+	AddItem(msg, item, isOTC, isMehah, isOTCv8);
 	writeToOutputBuffer(msg);
 }
 
@@ -3664,7 +3664,7 @@ void ProtocolGame::sendUpdateContainerItem(uint8_t cid, uint16_t slot, const Ite
 	msg.addByte(0x71);
 	msg.addByte(cid);
 	msg.add<uint16_t>(slot);
-	AddItem(msg, item);
+	AddItem(msg, item, isOTC, isMehah, isOTCv8);
 	writeToOutputBuffer(msg);
 }
 
@@ -4364,7 +4364,7 @@ void ProtocolGame::AddOutfit(NetworkMessage& msg, const Outfit_t& outfit, bool a
         msg.addByte(outfit.lookFeet);
         msg.addByte(outfit.lookAddons);
     } else {
-        msg.addItemId(outfit.lookTypeEx);
+        msg.addItemId(outfit.lookTypeEx, isOTC, isMehah, isOTCv8);
     }
     
     if (addMount) {
@@ -4405,7 +4405,7 @@ void ProtocolGame::addImbuementInfo(NetworkMessage& msg, uint32_t imbuid)
 
 	for (const auto& itm : items) {
 		const ItemType& it = Item::items[itm.first];
-		msg.addItemId(itm.first);
+		msg.addItemId(itm.first, isOTC, isMehah, isOTCv8);
 		msg.addString(it.name);
 		msg.add<uint16_t>(itm.second);
 	}
@@ -4438,7 +4438,7 @@ void ProtocolGame::sendImbuementWindow(Item* item)
 
 	NetworkMessage msg;
 	msg.addByte(0xEB);
-	msg.addItemId(item->getID());
+	msg.addItemId(item->getID(), isOTC, isMehah, isOTCv8);
 	msg.addByte(slot);
 
 	for (uint8_t i = 0; i < slot; i++) {
@@ -4470,7 +4470,7 @@ void ProtocolGame::sendImbuementWindow(Item* item)
 
 	msg.add<uint32_t>(needItems.size());
 	for (const auto& itm : needItems) {
-		msg.addItemId(itm.first);
+		msg.addItemId(item->getID(), isOTC, isMehah, isOTCv8);
 		msg.add<uint16_t>(itm.second);
 	}
 
@@ -4481,7 +4481,7 @@ void ProtocolGame::sendImbuementWindow(Item* item)
 	writeToOutputBuffer(msg);
 }
 
-void ProtocolGame::AddItem(NetworkMessage& msg, uint16_t id, uint8_t count)
+void ProtocolGame::AddItem(NetworkMessage& msg, uint16_t id, uint8_t count, bool isOTC, bool isMehah, bool isOTCv8)
 {
 	const ItemType& it = Item::items[id];
 
@@ -4504,10 +4504,12 @@ void ProtocolGame::AddItem(NetworkMessage& msg, uint16_t id, uint8_t count)
 		msg.addByte(0xFE); // random phase (0xFF for async)
 	}
 
-	
+	if (isOTCv8) {
+        msg.addString("");
+    }
 }
 
-void ProtocolGame::AddItem(NetworkMessage& msg, const Item* item)
+void ProtocolGame::AddItem(NetworkMessage& msg, const Item* item, bool isOTC, bool isMehah, bool isOTCv8)
 {
 	const ItemType& it = Item::items[item->getID()];
 
@@ -4535,7 +4537,10 @@ void ProtocolGame::AddItem(NetworkMessage& msg, const Item* item)
 	if (it.isAnimation) {
 		msg.addByte(0xFE); // random phase (0xFF for async)
 	}
-	
+
+	if (isOTCv8) {
+        msg.addString(item->getDescription(0));
+    }
 }
 
 void ProtocolGame::AddWorldLight(NetworkMessage& msg, LightInfo lightInfo)
@@ -4771,6 +4776,7 @@ void ProtocolGame::sendFeatures()
     features[GameExtendedOpcode] = true;
     features[GameWingsAndAura] = true;
     features[GameOutfitShaders] = true;
+	features[GameItemTooltip] = true; // fully available from version 2.6
     
     if (features.empty()) {
         return;
@@ -4790,17 +4796,17 @@ void ProtocolGame::sendFeatures()
 
 void ProtocolGame::sendItemsPrice()
 {
-	NetworkMessage msg;
-	msg.addByte(0xCD);
+    NetworkMessage msg;
+    msg.addByte(0xCD);
 
-	msg.add<uint16_t>(g_game.getItemsPriceCount());
-	if (g_game.getItemsPriceCount() > 0) {
-		std::map<uint16_t, uint32_t> items = g_game.getItemsPrice();
-		for (const auto& it : items) {
-			msg.addItemId(it.first);
-			msg.add<uint32_t>(it.second);
-		}
-	}
+    msg.add<uint16_t>(g_game.getItemsPriceCount());
+    if (g_game.getItemsPriceCount() > 0) {
+        std::map<uint16_t, uint32_t> items = g_game.getItemsPrice();
+        for (const auto& it : items) {
+            msg.addItemId(it.first, isOTC, isMehah, isOTCv8);
+            msg.add<uint32_t>(it.second);
+        }
+    }
 
-	writeToOutputBuffer(msg);
+    writeToOutputBuffer(msg);
 }

@@ -75,8 +75,8 @@ class ProtocolGame final : public Protocol
 		void login(const std::string& name, uint32_t accnumber, OperatingSystem_t operatingSystem);
 		void logout(bool displayEffect, bool forced);
 
-		void AddItem(NetworkMessage& msg, const Item* item);
-		void AddItem(NetworkMessage& msg, uint16_t id, uint8_t count);
+		void AddItem(NetworkMessage& msg, const Item* item, bool isOTC = false, bool isMehah = false, bool isOTCv8 = false);
+		void AddItem(NetworkMessage& msg, uint16_t id, uint8_t count, bool isOTC = false, bool isMehah = false, bool isOTCv8 = false);
 
 		uint16_t getVersion() const {
 			return version;
