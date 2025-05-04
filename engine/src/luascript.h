@@ -1066,6 +1066,8 @@ class LuaScriptInterface
 		static int luaPlayerChangePreyState(lua_State* L);
 		static int luaPlayerGetBonusRerollCount(lua_State* L);
 		static int luaPlayerSetBonusRerollCount(lua_State* L);
+		static int luaPlayerGetPreyBonusLoot(lua_State* L);
+		static int luaPlayerGeneratePreyData(lua_State* L);
 
 		static int luaPlayerIsOffline(lua_State* L);
 
