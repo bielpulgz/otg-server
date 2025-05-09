@@ -512,7 +512,6 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		case 0xD2: addGameTask(&Game::playerRequestOutfit, player->getID()); break;
 		//g_dispatcher.addTask(createTask(std::bind(&Modules::executeOnRecvbyte, g_modules, player, msg, recvbyte)));
 		case 0xD3: g_dispatcher.addTask(createTask(std::bind(&ProtocolGame::parseSetOutfit, this, msg))); break;
-		case 0xD4: parseToggleMount(msg); break;
 		case 0xD5: parseApplyImbuemente(msg); break;
 		case 0xD6: parseClearingImbuement(msg); break;
 		case 0xD7: parseCloseImbuingWindow(msg); break;
@@ -546,7 +545,9 @@ void ProtocolGame::parsePacket(NetworkMessage& msg)
 		//case 0xDF, 0xE0, 0xE1, 0xFB, 0xFC, 0xFD, 0xFE Premium Shop.
 
 		default:
-			// std::cout << "Player: " << player->getName() << " sent an unknown packet header: 0x" << std::hex << static_cast<uint16_t>(recvbyte) << std::dec << "!" << std::endl;
+		g_dispatcher.addTask(createTask([=, playerID = player->getID(), msg = std::make_shared<NetworkMessage>(msg)]() {
+			g_game.parsePlayerNetworkMessage(playerID, recvbyte, msg.get());
+		}));
 			break;
 	}
 }
@@ -853,18 +854,6 @@ void ProtocolGame::parseSetOutfit(NetworkMessage& msg)
         
         addGameTask(&Game::playerChangeOutfit, player->getID(), newOutfit);
     }
-}
-
-void ProtocolGame::parseToggleMount(NetworkMessage& msg)
-{
-    int mount = msg.get<int8_t>();
-    int wings = -1, aura = -1, shader = -1;
-    if (isOTCv8) {
-        wings = msg.get<int8_t>();
-        aura = msg.get<int8_t>();
-        shader = msg.get<int8_t>();
-    }
-    addGameTask(&Game::playerToggleOutfitExtension, player->getID(), mount, wings, aura, shader);
 }
 
 void ProtocolGame::parseApplyImbuemente(NetworkMessage& msg)

@@ -142,8 +142,6 @@ class ProtocolGame final : public Protocol
 		void parsePassPartyLeadership(NetworkMessage& msg);
 		void parseEnableSharedPartyExperience(NetworkMessage& msg);
 
-		void parseToggleMount(NetworkMessage& msg);
-
 		// Imbuements
 		void parseApplyImbuemente(NetworkMessage& msg);
 		void parseClearingImbuement(NetworkMessage& msg);

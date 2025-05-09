@@ -838,6 +838,33 @@ LuaVariant LuaScriptInterface::getVariant(lua_State* L, int32_t arg)
 	return var;
 }
 
+BestiaryInfo LuaScriptInterface::getBestiaryInfo(lua_State* L, int32_t arg)
+{
+    std::string className = getFieldString(L, arg, "class");
+    uint32_t raceId = getField<uint32_t>(L, arg, "raceId");
+    uint32_t prowess = getField<uint32_t>(L, arg, "prowess");
+    uint32_t expertise = getField<uint32_t>(L, arg, "expertise");
+    uint32_t mastery = getField<uint32_t>(L, arg, "mastery");
+    uint32_t charmPoints = getField<uint32_t>(L, arg, "charmPoints");
+    uint32_t difficulty = getField<uint32_t>(L, arg, "difficulty");
+    uint32_t occurrence = getField<uint32_t>(L, arg, "occurrence");
+    std::string locations = getFieldString(L, arg, "locations");
+    lua_pop(L, 9);
+    
+    BestiaryInfo info;
+    info.className = className;
+    info.raceId = raceId;
+    info.prowess = prowess;
+    info.expertise = expertise;
+    info.mastery = mastery;
+    info.charmPoints = charmPoints;
+    info.difficulty = difficulty;
+    info.occurrence = occurrence;
+    info.locations = locations;
+    
+    return info;
+}
+
 Thing* LuaScriptInterface::getThing(lua_State* L, int32_t arg)
 {
 	Thing* thing;
@@ -2599,6 +2626,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "addMount", LuaScriptInterface::luaPlayerAddMount);
 	registerMethod("Player", "removeMount", LuaScriptInterface::luaPlayerRemoveMount);
 	registerMethod("Player", "hasMount", LuaScriptInterface::luaPlayerHasMount);
+	registerMethod("Player", "toggleMount", LuaScriptInterface::luaPlayerToggleMount);
 
 	registerMethod("Player", "getPremiumDays", LuaScriptInterface::luaPlayerGetPremiumDays);
 	registerMethod("Player", "addPremiumDays", LuaScriptInterface::luaPlayerAddPremiumDays);
@@ -10233,6 +10261,20 @@ int LuaScriptInterface::luaPlayerRemoveMount(lua_State* L) {
 		mountId = mount->id;
 	}
 	pushBoolean(L, player->untameMount(mountId));
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerToggleMount(lua_State* L)
+{
+	// player:toggleMount(mount)
+	Player* player = getUserdata<Player>(L, 1);
+	if (!player) {
+		lua_pushnil(L);
+		return 1;
+	}
+
+	bool mount = getBoolean(L, 2);
+	pushBoolean(L, player->toggleMount(mount));
 	return 1;
 }
 

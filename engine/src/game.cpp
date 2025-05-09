@@ -6827,6 +6827,16 @@ void Game::playerPreyAction(uint32_t playerId, uint8_t preySlotId, PreyAction_t 
 	}
 }
 
+void Game::parsePlayerNetworkMessage(uint32_t playerId, uint8_t recvByte, NetworkMessage* msg)
+ {
+ 	Player* player = getPlayerByID(playerId);
+ 	if (!player) {
+ 		return;
+ 	}
+ 
+ 	g_events->eventPlayerOnNetworkMessage(player, recvByte, msg);
+ }
+
 std::forward_list<Item*> Game::getMarketItemList(uint16_t wareId, uint16_t sufficientCount, DepotLocker* depotLocker)
 {
 	std::forward_list<Item*> itemList;

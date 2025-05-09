@@ -44,6 +44,7 @@
 #include <boost/lexical_cast.hpp>
 
 class Thing;
+struct BestiaryInfo;
 class Creature;
 class Player;
 class Item;
@@ -338,6 +339,7 @@ class LuaScriptInterface
 		static Position getPosition(lua_State* L, int32_t arg);
 		static Outfit_t getOutfit(lua_State* L, int32_t arg);
 		static LuaVariant getVariant(lua_State* L, int32_t arg);
+		static BestiaryInfo getBestiaryInfo(lua_State* L, int32_t arg);
 
 		static Thing* getThing(lua_State* L, int32_t arg);
 		static Creature* getCreature(lua_State* L, int32_t arg);
@@ -388,6 +390,7 @@ class LuaScriptInterface
 		static void pushPosition(lua_State* L, const Position& position, int32_t stackpos = 0);
 		static void pushOutfit(lua_State* L, const Outfit_t& outfit);
 		static void pushLoot(lua_State* L, const std::vector<LootBlock>& lootList);
+		static void pushBestiaryInfo(lua_State* L, const BestiaryInfo& info);
 
 		//
 		static void setField(lua_State* L, const char* index, lua_Number value)
@@ -538,6 +541,8 @@ class LuaScriptInterface
 		static int luaGameGetMonsterCount(lua_State* L);
 		static int luaGameGetPlayerCount(lua_State* L);
 		static int luaGameGetNpcCount(lua_State* L);
+
+		static int luaGameGetBestiary(lua_State* L);
 
 		static int luaGameGetTowns(lua_State* L);
 		static int luaGameGetHouses(lua_State* L);
@@ -986,6 +991,7 @@ class LuaScriptInterface
 		static int luaPlayerAddMount(lua_State* L);
 		static int luaPlayerRemoveMount(lua_State* L);
 		static int luaPlayerHasMount(lua_State* L);
+		static int luaPlayerToggleMount(lua_State* L);
 
 		static int luaPlayerGetPremiumDays(lua_State* L);
 		static int luaPlayerAddPremiumDays(lua_State* L);
@@ -1392,6 +1398,8 @@ class LuaScriptInterface
 		static int luaMonsterTypeChangeTargetChance(lua_State* L);
 		static int luaMonsterTypeChangeTargetSpeed(lua_State* L);
 
+		static int luaMonsterTypeBestiaryInfo(lua_State* L);
+
 		// Loot
 		static int luaCreateLoot(lua_State* L);
 		static int luaDeleteLoot(lua_State* L);
@@ -1446,6 +1454,7 @@ class LuaScriptInterface
 
 		static int luaPartyIsSharedExperienceActive(lua_State* L);
 		static int luaPartyIsSharedExperienceEnabled(lua_State* L);
+		static int luaPartyIsMemberSharingExp(lua_State* L);
 		static int luaPartyShareExperience(lua_State* L);
 		static int luaPartySetSharedExperience(lua_State* L);
 

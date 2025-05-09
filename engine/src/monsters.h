@@ -23,9 +23,13 @@
 #define OT_SRC_MONSTERS_H_
 
 #include "creature.h"
+#include <set>
 
 
 const uint32_t MAX_LOOTCHANCE = 100000;
+
+static constexpr int32_t BESTIARY_MAX_DIFFICULTY = 5;
+static constexpr int32_t BESTIARY_MAX_OCCURRENCE = 4;
 
 struct LootBlock {
 	uint16_t id;
@@ -116,6 +120,19 @@ struct voiceBlock_t {
 	bool yellText;
 };
 
+struct BestiaryInfo
+ {
+ 	std::string className = "";
+ 	uint32_t raceId = 0;
+ 	uint32_t prowess = 0;
+ 	uint32_t expertise = 0;
+ 	uint32_t mastery = 0;
+ 	uint32_t charmPoints = 0;
+ 	uint32_t difficulty = 0;
+ 	uint32_t occurrence = 0;
+ 	std::string locations = "";
+ };
+
 class MonsterType
 {
 	struct MonsterInfo {
@@ -195,6 +212,7 @@ class MonsterType
 		std::string nameDescription;
 
 		MonsterInfo info;
+		BestiaryInfo bestiaryInfo;
 
 		bool canSpawn(const Position& pos);
 
@@ -261,7 +279,11 @@ class Monsters
 		MonsterType* getMonsterType(const std::string& name);
 		void addMonsterType(const std::string& name, MonsterType* mType);
 		bool deserializeSpell(MonsterSpell* spell, spellBlock_t& sb, const std::string& description = "");
-		
+
+		MonsterType* getMonsterType(uint32_t raceId);
+		bool addBestiaryMonsterType(const MonsterType* monsterType);
+		bool isValidBestiaryInfo(const BestiaryInfo& bestiaryInfo) const;
+			
 		std::unique_ptr<LuaScriptInterface> scriptInterface;
 		bool loadCallback(LuaScriptInterface* scriptInterface, MonsterType* mType);
 
@@ -276,7 +298,9 @@ class Monsters
 		bool loadLootItem(const pugi::xml_node& node, LootBlock&);
 
 		std::map<std::string, MonsterType> monsters;
+		std::map<std::string, std::set<std::string>> bestiary;
 		std::map<std::string, std::string> unloadedMonsters;
+		std::unordered_map<uint32_t, std::string> bestiaryMonsters;
 
 		bool loaded = false;
 };
