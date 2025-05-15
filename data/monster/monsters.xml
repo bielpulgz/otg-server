@@ -421,7 +421,7 @@
 
 	<!--Fey-->
 	<monster name="Arctic Faun" file="Fey/Arctic Faun.xml"/>
-	<monster name="Dryad" file="Fey/Dryad.xml"/>
+	<monster name="Dryad" file="Fey/dryad.xml"/>
 	<monster name="Faun" file="Fey/faun.xml"/>
 	<monster name="Dark Faun" file="Fey/dark_faun.xml"/>
 	<monster name="Enfeebled Silencer" file="Fey/enfeebled_silencer.xml"/>
