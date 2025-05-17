@@ -22,15 +22,16 @@ event.onMoveItem = function(self, item, count, fromPosition, toPosition, fromCyl
     end
 
     local function getContainerParent(item)
-        local parent = item:getParent()
-        if parent and parent:isItem() then
-            local peekNextParent = parent:getParent()
-            if peekNextParent and peekNextParent.itemid == 1 then
-                return parent
-            end
+    local parent = item:getParent()
+    
+    if parent and parent:isContainer() then
+        local peekNextParent = parent:getParent()
+        if peekNextParent and peekNextParent:isPlayer() then
+            return parent
         end
-        return false
     end
+    return false
+	end
 
     local containerTo = self:getContainerById(toPosition.y - 64)
     if containerTo then
