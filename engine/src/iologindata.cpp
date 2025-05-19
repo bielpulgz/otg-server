@@ -88,38 +88,48 @@ std::string decodeSecret(const std::string& secret)
 
 bool IOLoginData::loginserverAuthentication(const std::string& name, const std::string& password, Account& account)
 {
-	Database& db = Database::getInstance();
+    Database& db = Database::getInstance();
 
-	std::ostringstream query;
-	query << "SELECT `id`, `name`, `password`, `secret`, `type`, `premdays`, `lastday` FROM `accounts` WHERE `name` = " << db.escapeString(name);
-	DBResult_ptr result = db.storeQuery(query.str());
-	if (!result) {
-		return false;
-	}
+    std::ostringstream query;
+    query << "SELECT `id`, `name`, `password`, `secret`, `type`, `premdays`, `lastday` FROM `accounts` WHERE `name` = " << db.escapeString(name);
+    DBResult_ptr result = db.storeQuery(query.str());
+    if (!result) {
+        return false;
+    }
 
-	if (transformToSHA1(password) != result->getString("password")) {
-		return false;
-	}
+    if (transformToSHA1(password) != result->getString("password")) {
+        return false;
+    }
 
-	account.id = result->getNumber<uint32_t>("id");
-	account.name = result->getString("name");
-	account.key = decodeSecret(result->getString("secret"));
-	account.accountType = static_cast<AccountType_t>(result->getNumber<int32_t>("type"));
-	account.premiumDays = result->getNumber<uint16_t>("premdays");
-	account.lastDay = result->getNumber<time_t>("lastday");
+    account.id = result->getNumber<uint32_t>("id");
+    account.name = result->getString("name");
+    account.key = decodeSecret(result->getString("secret"));
+    account.accountType = static_cast<AccountType_t>(result->getNumber<int32_t>("type"));
+    account.premiumDays = result->getNumber<uint16_t>("premdays");
+    account.lastDay = result->getNumber<time_t>("lastday");
 
-	query.str(std::string());
-	query << "SELECT `name`, `deletion` FROM `players` WHERE `account_id` = " << account.id;
-	result = db.storeQuery(query.str());
-	if (result) {
-		do {
-			if (result->getNumber<uint64_t>("deletion") == 0) {
-				account.characters.push_back(result->getString("name"));
-			}
-		} while (result->next());
-		std::sort(account.characters.begin(), account.characters.end());
-	}
-	return true;
+    query.str(std::string());
+    query << "SELECT `name`, `deletion`, `level`, `vocation`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `lookaddons` FROM `players` WHERE `account_id` = " << account.id << " AND `deletion` = 0 ORDER BY `name` ASC";
+    result = db.storeQuery(query.str());
+    if (result) {
+        do {
+            Character character;
+
+            character.name = result->getString("name");
+            character.level = result->getNumber<uint32_t>("level");
+            character.vocation = result->getNumber<uint16_t>("vocation");
+
+            character.outfit.lookType = result->getNumber<uint16_t>("looktype");
+            character.outfit.lookHead = result->getNumber<uint16_t>("lookhead");
+            character.outfit.lookBody = result->getNumber<uint16_t>("lookbody");
+            character.outfit.lookLegs = result->getNumber<uint16_t>("looklegs");
+            character.outfit.lookFeet = result->getNumber<uint16_t>("lookfeet");
+            character.outfit.lookAddons = result->getNumber<uint16_t>("lookaddons");
+
+            account.characters.push_back(character);
+        } while (result->next());
+    }
+    return true;
 }
 
 uint32_t IOLoginData::gameworldAuthentication(const std::string& accountName, const std::string& password, std::string& characterName)

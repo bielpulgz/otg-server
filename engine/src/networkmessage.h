@@ -23,6 +23,7 @@
 #define OT_SRC_NETWORKMESSAGE_H_
 
 #include "const.h"
+#include "enums.h"
 
 class Item;
 class Creature;
@@ -115,6 +116,7 @@ class NetworkMessage
 		// write functions for complex types
 		void addPosition(const Position& pos);
 		void addItemId(uint16_t itemId, const bool isOTC, const bool isMehah, const bool isOTCv8);
+		void addOutfit(const Outfit_t& outfit);
 
 		MsgSize_t getLength() const {
 			return info.length;

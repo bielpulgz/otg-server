@@ -23,13 +23,20 @@
 #define OT_SRC_ACCOUNT_H_
 
 #include "enums.h"
+struct Character
+{
+    std::string name;
+    std::uint32_t level;
+    std::uint16_t vocation;
+    Outfit_t outfit;
+};
 
 /**
  * @brief Account information, like characters, account name, premium
  * coin, etc
  */
 struct Account {
-	std::vector<std::string> characters;
+	std::vector<Character> characters;
 	std::string name;
 	std::string key;
 	time_t lastDay = 0;

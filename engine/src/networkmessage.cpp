@@ -109,4 +109,20 @@ void NetworkMessage::addPosition(const Position& pos)
 void NetworkMessage::addItemId(uint16_t itemId, const bool isOTC, const bool isMehah, const bool isOTCv8)
 {
 	add<uint16_t>(Item::items[itemId].clientId);
+
+}
+
+void NetworkMessage::addOutfit(const Outfit_t& outfit)
+{
+    add<uint16_t>(outfit.lookType);
+    if (outfit.lookType != 0) {
+        addByte(outfit.lookHead);
+        addByte(outfit.lookBody);
+        addByte(outfit.lookLegs);
+        addByte(outfit.lookFeet);
+        addByte(outfit.lookAddons);
+    } else {
+        addItemId(outfit.lookTypeEx, false, false, false);
+    }
+    add<uint16_t>(outfit.lookMount);
 }
