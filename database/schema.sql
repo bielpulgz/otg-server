@@ -2520,13 +2520,13 @@ CREATE TABLE `snowballwar` (
 --
 
 CREATE TABLE `store_history` (
-  `accountid` int(11) NOT NULL,
-  `mode` tinyint(1) NOT NULL DEFAULT 0,
-  `amount` int(11) NOT NULL,
-  `coinMode` tinyint(2) NOT NULL DEFAULT 0,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `account_id` int(11) NOT NULL,
+  `mode` tinyint(4) NOT NULL,
   `description` varchar(255) DEFAULT NULL,
-  `cust` int(11) NOT NULL,
-  `time` bigint(20) DEFAULT NULL
+  `coin_amount` int(11) NOT NULL,
+  `time` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
@@ -3774,7 +3774,8 @@ ALTER TABLE `snowballwar`
 -- Índices de tabela `store_history`
 --
 ALTER TABLE `store_history`
-  ADD KEY `store_history_ibfk_1` (`accountid`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `store_history_ibfk_1` (`account_id`);
 
 --
 -- Índices de tabela `store_history_old`
@@ -3973,6 +3974,12 @@ ALTER TABLE `sellchar`
 -- AUTO_INCREMENT de tabela `snowballwar`
 --
 ALTER TABLE `snowballwar`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de tabela `store_history`
+--
+ALTER TABLE `store_history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -4278,7 +4285,7 @@ ALTER TABLE `sell_players_history`
 -- Restrições para tabelas `store_history`
 --
 ALTER TABLE `store_history`
-  ADD CONSTRAINT `store_history_ibfk_1` FOREIGN KEY (`accountid`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
+  ADD CONSTRAINT `store_history_ibfk_1` FOREIGN KEY (`account_id`) REFERENCES `accounts` (`id`) ON DELETE CASCADE;
 
 --
 -- Restrições para tabelas `store_history_old`

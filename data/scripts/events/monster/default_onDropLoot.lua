@@ -11,23 +11,26 @@ event.onDropLoot = function(self, corpse)
     end
     
     local player = Player(corpse:getCorpseOwner())
-    local percent = 1.5
+    local percent = 1.0
     
     local bonusPrey = 0
     local hasCharm = false
     
-    -- Guild Level System
+    -- Prey and bonus system
     if player then
+        -- Prey bonus loot
         local random = (player:getPreyBonusLoot(mType) >= math.random(100))
         if player:getPreyBonusLoot(mType) > 0 and random then
             bonusPrey = player:getPreyBonusLoot(mType)
-            percent = (bonusPrey / 100) + percent
+            percent = percent + (bonusPrey / 100)
         end
         
+        -- Client version bonus
         if player:getClient().version >= 1200 then
             percent = percent + 0.05
         end
         
+        -- Guild Level System
         local g = player:getGuild()
         if g then
             local rewards = getReward(player:getId()) or {}
@@ -39,36 +42,51 @@ event.onDropLoot = function(self, corpse)
             end
         end
         
-        -- charm
+        -- charm - TEMPORARILY DISABLED (raceId() method not available)
+        -- TODO: Re-enable when raceId() method is implemented
+        --[[
         local currentCharm = player:getMonsterCharm(mType:raceId())
         if currentCharm == 14 then
             percent = percent * 1.10
             hasCharm = true
         end
+        --]]
         
-        if player:getVipDays() > os.stime() then
+        -- Premium bonus
+        if player:isPremium() then
             percent = percent * 1.05
         end
     end
     
+    -- Loot creation (based on original working code)
     if not player or player:getStamina() > 840 then
         local monsterLoot = mType:getLoot()
         for i = 1, #monsterLoot do
-            corpse:createLootItem(monsterLoot[i], percent, self:isRaid())
-        end
-        
-        if player then
-            local party = player:getParty()
-            local lootMessage = corpse:getLoot(mType:getNameDescription(), player:getClient().version, bonusPrey, hasCharm)
-            
-            if party then
-                party:broadcastPartyLoot(corpse, mType:getNameDescription(), bonusPrey, hasCharm)
-                party:broadcastPartyLootTracker(self, corpse)
-            else
-                player:sendTextMessage(MESSAGE_LOOT, lootMessage)
-                player:sendKillTracker(self, corpse)
-                player:sendChannelMessage("", lootMessage, TALKTYPE_CHANNEL_O, 10)
+            local item = corpse:createLootItem(monsterLoot[i])
+            if not item then
+                print('[Warning] DropLoot:', 'Could not add loot item to corpse.')
             end
+        end
+
+        if player then
+            if player:getClient().os == CLIENTOS_NEW_WINDOWS then
+                local text = ("Loot of %s: %s."):format(mType:getNameDescription(), corpse:getContentDescriptionColor())
+                local party = player:getParty()
+                if party then
+                    party:broadcastPartyLoot(text)
+                else
+                    player:sendTextMessage(MESSAGE_LOOT, text)
+                end
+            else
+                local text = ("Loot of %s: %s."):format(mType:getNameDescription(), corpse:getContentDescription())
+                local party = player:getParty()
+                if party then
+                    party:broadcastPartyLoot(text)
+                else
+                    player:sendTextMessage(MESSAGE_LOOT, text)
+                end
+            end
+            player:updateKillTracker(self, corpse)
         end
     else
         local text = ("Loot of %s: nothing (due to low stamina)"):format(mType:getNameDescription())
@@ -77,7 +95,6 @@ event.onDropLoot = function(self, corpse)
             party:broadcastPartyLoot(text)
         else
             player:sendTextMessage(MESSAGE_LOOT, text)
-            player:sendChannelMessage("", text, TALKTYPE_CHANNEL_O, 10)
         end
     end
 end

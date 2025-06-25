@@ -9,6 +9,10 @@ end
 
 
 local function addBestiaryPoints(monster)
+	-- TEMPORARILY DISABLED - raceId() method not available
+	-- TODO: Re-enable when raceId() method is implemented
+	
+	--[[
 	local raceid = monster:getType():raceId()
 	if monster:getMaster() then
 		return false
@@ -80,7 +84,9 @@ local function addBestiaryPoints(monster)
 
 		end
 	end
-
+	--]]
+	
+	return true
 end
 
 function bestKill.onKill(creature, target)
