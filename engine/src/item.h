@@ -110,7 +110,10 @@ enum AttrTypes_t {
 	ATTR_UNMOVEABLEDITEM = 37,
 	ATTR_WRAPCONTAINER = 38,
 
-	ATTR_CUSTOM_ATTRIBUTES = 39
+	ATTR_CUSTOM_ATTRIBUTES = 39,
+
+	ATTR_CLASSIFICATION = 40,
+	ATTR_TIER = 41,
 };
 
 enum Attr_ReadValue {
@@ -220,6 +223,20 @@ class ItemAttributes
 		}
 		ItemDecayState_t getDecaying() const {
 			return static_cast<ItemDecayState_t>(getIntAttr(ITEM_ATTRIBUTE_DECAYSTATE));
+		}
+
+		void setClassification(uint32_t n) {
+			setIntAttr(ITEM_ATTRIBUTE_CLASSIFICATION, n);
+		}
+		uint32_t getClassification() const {
+			return getIntAttr(ITEM_ATTRIBUTE_CLASSIFICATION);
+		}
+
+		void setTier(uint32_t n) {
+			setIntAttr(ITEM_ATTRIBUTE_TIER, n);
+		}
+		uint32_t getTier() const {
+			return getIntAttr(ITEM_ATTRIBUTE_TIER);
 		}
 
 		struct CustomAttribute
@@ -507,7 +524,7 @@ class ItemAttributes
 
 	public:
 		static bool isIntAttrType(itemAttrTypes type) {
-			return (type & 0x27FFE13) != 0;
+			return (type & 0x14FFFFE13ULL) != 0;
 		}
 		static bool isStrAttrType(itemAttrTypes type) {
 			return (type & 0x8001EC) != 0;
@@ -827,6 +844,8 @@ class Item : virtual public Thing
 			return static_cast<ItemDecayState_t>(getIntAttr(ITEM_ATTRIBUTE_DECAYSTATE));
 		}
 
+
+
 		static std::vector<std::pair<std::string, std::string>> getDescriptions(const ItemType& it, const Item* item = nullptr);
 		static std::string getDescription(const ItemType& it, int32_t lookDistance, const Item* item = nullptr, int32_t subType = -1, bool addArticle = true);
 		static std::string getNameDescription(const ItemType& it, const Item* item = nullptr, int32_t subType = -1, bool addArticle = true);
@@ -923,6 +942,26 @@ class Item : virtual public Thing
 			}
 			return items[id].hitChance;
 		}
+
+		void setClassification(uint32_t n) {
+			setIntAttr(ITEM_ATTRIBUTE_CLASSIFICATION, n);
+		}
+		uint32_t getClassification() const {
+			if (hasAttribute(ITEM_ATTRIBUTE_CLASSIFICATION)) {
+				return getIntAttr(ITEM_ATTRIBUTE_CLASSIFICATION);
+			}
+			return items[id].classification;
+		}
+		void setTier(uint32_t n) {
+			setIntAttr(ITEM_ATTRIBUTE_TIER, n);
+		}
+		uint32_t getTier() const {
+			if (hasAttribute(ITEM_ATTRIBUTE_TIER)) {
+				return getIntAttr(ITEM_ATTRIBUTE_TIER);
+			}
+			return items[id].tier;
+		}
+
 
 		uint32_t getWorth() const;
 		LightInfo getLightInfo() const;

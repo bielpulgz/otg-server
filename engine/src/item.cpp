@@ -555,6 +555,26 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 			break;
 		}
 
+		case ATTR_CLASSIFICATION: {
+			uint32_t classification;
+			if (!propStream.read<uint32_t>(classification)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_CLASSIFICATION, classification);
+			break;
+		}
+
+		case ATTR_TIER: {
+			uint32_t tier;
+			if (!propStream.read<uint32_t>(tier)) {
+				return ATTR_READ_ERROR;
+			}
+
+			setIntAttr(ITEM_ATTRIBUTE_TIER, tier);
+			break;
+		}
+
 		case ATTR_DEFENSE: {
 			int32_t defense;
 			if (!propStream.read<int32_t>(defense)) {
@@ -835,6 +855,16 @@ void Item::serializeAttr(PropWriteStream& propWriteStream) const
 		propWriteStream.write<int32_t>(getIntAttr(ITEM_ATTRIBUTE_ATTACK));
 	}
 
+	if (hasAttribute(ITEM_ATTRIBUTE_CLASSIFICATION)) {
+		propWriteStream.write<uint8_t>(ATTR_CLASSIFICATION);
+		propWriteStream.write<uint32_t>(getIntAttr(ITEM_ATTRIBUTE_CLASSIFICATION));
+	}
+
+	if (hasAttribute(ITEM_ATTRIBUTE_TIER)) {
+		propWriteStream.write<uint8_t>(ATTR_TIER);
+		propWriteStream.write<uint32_t>(getIntAttr(ITEM_ATTRIBUTE_TIER));
+	}
+
 	if (hasAttribute(ITEM_ATTRIBUTE_DEFENSE)) {
 		propWriteStream.write<uint8_t>(ATTR_DEFENSE);
 		propWriteStream.write<int32_t>(getIntAttr(ITEM_ATTRIBUTE_DEFENSE));
@@ -982,6 +1012,16 @@ std::vector<std::pair<std::string, std::string>> Item::getDescriptions(const Ite
 		if (armor != 0) {
 			descriptions.emplace_back("Armor", std::to_string(armor));
 		}
+
+		// Show Classification and Tier on item 
+			uint32_t classification = item ? item->getClassification() : it.classification;
+			uint32_t tier = item ? item->getTier() : it.tier;
+
+			if (classification) {
+				ss.str("");
+				ss << "Classification: " << classification << ", Tier: " << tier;
+				descriptions.emplace_back("Item Info", ss.str());
+			}
 
 		if (it.abilities) {
 			for (uint8_t i = SKILL_FIRST; i <= SKILL_LAST; i++) {
@@ -1228,6 +1268,16 @@ std::vector<std::pair<std::string, std::string>> Item::getDescriptions(const Ite
 		int32_t armor = it.armor;
 		if (armor != 0) {
 			descriptions.emplace_back("Armor", std::to_string(armor));
+		}
+
+		// Show Classification and Tier on item
+		uint32_t classification = item ? item->getClassification() : it.classification;
+		uint32_t tier = item ? item->getTier() : it.tier;
+
+		if (classification) {
+			ss.str("");
+			ss << "Classification: " << classification << ", Tier: " << tier;
+			descriptions.emplace_back("Item Info", ss.str());
 		}
 
 		if (it.abilities) {

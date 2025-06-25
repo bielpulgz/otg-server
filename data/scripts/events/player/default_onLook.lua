@@ -48,6 +48,18 @@ event.onLook = function(self, thing, position, distance, description)
                 description = string.gsub(description, "It weighs", imbuingSlots .. "\nIt weighs")
             end
 
+            -- Classification and Tier
+            local itemClassification = thing:getType():getClassification()
+            local itemTier = thing:getType():getTier()
+            if itemClassification > 0 then
+                local classificationText = "Classification: " .. itemClassification .. " | Tier: " .. itemTier
+                if description:find("Imbuements:") then
+                    description = description:gsub("(Imbuements:[^\n]*)", "%1\n" .. classificationText)
+                else
+                    description = description .. "\n" .. classificationText
+                end
+            end
+
             local transformEquipId = itemType:getTransformEquipId()
             local transformDeEquipId = itemType:getTransformDeEquipId()
             if transformEquipId ~= 0 then
