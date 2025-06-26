@@ -1701,6 +1701,7 @@ class Player final : public Creature, public Cylinder
 		RewardChest* rewardChest = nullptr;
 
 		uint32_t inventoryWeight = 0;
+		uint32_t attackSpeed = 0;
 		uint32_t capacity = 40000;
 		uint32_t bonusCapacity = 0;
 		uint32_t damageImmunities = 0;
@@ -1781,7 +1782,14 @@ class Player final : public Creature, public Cylinder
 
 		bool isPromoted() const;
 
+		void setAttackSpeed(uint32_t speed) {
+			attackSpeed = speed;
+		}
+
 		uint32_t getAttackSpeed() const {
+			if (attackSpeed > 0) {
+				return attackSpeed;
+			}
 			return vocation->getAttackSpeed();
 		}
 

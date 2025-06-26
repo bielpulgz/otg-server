@@ -2649,6 +2649,8 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("Player", "hasChaseMode", LuaScriptInterface::luaPlayerHasChaseMode);
 	registerMethod("Player", "hasSecureMode", LuaScriptInterface::luaPlayerHasSecureMode);
 	registerMethod("Player", "getFightMode", LuaScriptInterface::luaPlayerGetFightMode);
+	registerMethod("Player", "getAttackSpeed", LuaScriptInterface::luaPlayerGetAttackSpeed);
+	registerMethod("Player", "setAttackSpeed", LuaScriptInterface::luaPlayerSetAttackSpeed);
 
 	registerMethod("Player", "addItemToAutoLoot", LuaScriptInterface::luaPlayerAddItemToAutoLoot);
     registerMethod("Player", "removeItemFromAutoLoot", LuaScriptInterface::luaPlayerRemoveItemFromAutoLoot);
@@ -10918,6 +10920,32 @@ int LuaScriptInterface::luaPlayerGetFightMode(lua_State* L)
 	Player* player = getUserdata<Player>(L, 1);
 	if (player) {
 		lua_pushnumber(L, player->fightMode);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerSetAttackSpeed(lua_State* L)
+{
+	// player:setAttackSpeed(speed)
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		uint32_t speed = getNumber<uint32_t>(L, 2);
+		player->setAttackSpeed(speed);
+		pushBoolean(L, true);
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaPlayerGetAttackSpeed(lua_State* L)
+{
+	// player:getAttackSpeed()
+	Player* player = getUserdata<Player>(L, 1);
+	if (player) {
+		lua_pushnumber(L, player->getAttackSpeed());
 	} else {
 		lua_pushnil(L);
 	}
