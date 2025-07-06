@@ -48,7 +48,16 @@ SCARLETT_MAY_TRANSFORM = 0
 SCARLETT_MAY_DIE = 0
 
 if not playerDelayPotion then
-    playerDelayPotion = {}
+	playerDelayPotion = {}
+end
+
+-- Separate delay tables for HP and MP potions
+if not playerDelayPotionHealth then
+	playerDelayPotionHealth = {}
+end
+
+if not playerDelayPotionMana then
+	playerDelayPotionMana = {}
 end
 
 customDoorsRange = {

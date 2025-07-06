@@ -461,7 +461,8 @@ bool Actions::useItem(Player* player, const Position& pos, uint8_t index, Item* 
 			return false;
 		}
 
-		player->setNextPotionAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::ACTIONS_DELAY_INTERVAL));
+		// Removed potion exhaust to allow simultaneous HP/MP potion usage
+		// player->setNextPotionAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::ACTIONS_DELAY_INTERVAL));
 	} else {
 		player->setNextAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::ACTIONS_DELAY_INTERVAL));
 	}
@@ -488,7 +489,8 @@ bool Actions::useItemEx(Player* player, const Position& fromPos, const Position&
 			player->sendCancelMessage(RETURNVALUE_YOUAREEXHAUSTED);
 			return false;
 		}
-		player->setNextPotionAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::EX_ACTIONS_DELAY_INTERVAL));
+		// Removed potion exhaust to allow simultaneous HP/MP potion usage
+		// player->setNextPotionAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::EX_ACTIONS_DELAY_INTERVAL));
 	} else {
 		player->setNextAction(OTSYS_TIME() + g_config.getNumber(ConfigManager::EX_ACTIONS_DELAY_INTERVAL));
 	}

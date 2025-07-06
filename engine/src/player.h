@@ -1533,6 +1533,24 @@ class Player final : public Creature, public Cylinder
 		bool canDoPotionAction() const {
 			return nextPotionAction <= OTSYS_TIME();
 		}
+		
+		void setNextPotionHealthAction(int64_t time) {
+			if (time > nextPotionHealthAction) {
+				nextPotionHealthAction = time;
+			}
+		}
+		bool canDoPotionHealthAction() const {
+			return nextPotionHealthAction <= OTSYS_TIME();
+		}
+		
+		void setNextPotionManaAction(int64_t time) {
+			if (time > nextPotionManaAction) {
+				nextPotionManaAction = time;
+			}
+		}
+		bool canDoPotionManaAction() const {
+			return nextPotionManaAction <= OTSYS_TIME();
+		}
 
 		void cancelPush();
 
@@ -1846,6 +1864,8 @@ class Player final : public Creature, public Cylinder
 		int64_t lastPong;
 		int64_t nextAction = 0;
 		int64_t nextPotionAction = 0;
+		int64_t nextPotionHealthAction = 0;
+		int64_t nextPotionManaAction = 0;
 		int64_t bonusRerollCount = 0;
 		int64_t lastQuickLootNotification = 0;
 		uint32_t myPet = 0;

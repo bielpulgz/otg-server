@@ -22,9 +22,12 @@ antidote:setParameter(COMBAT_PARAM_DISPEL, CONDITION_POISON)
 antidote:setParameter(COMBAT_PARAM_AGGRESSIVE, false)
 antidote:setParameter(COMBAT_PARAM_TARGETCASTERORTOPMOST, true)
 
-local exhaust = Condition(CONDITION_EXHAUST_HEAL)
-exhaust:setParameter(CONDITION_PARAM_TICKS, (configManager.getNumber(configKeys.EX_ACTIONS_DELAY_INTERVAL) - 1000))
--- 1000 - 100 due to exact condition timing. -100 doesn't hurt us, and players don't have reminding ~50ms exhaustion.
+-- Separate exhaust conditions for HP and MP potions
+local exhaustHeal = Condition(CONDITION_EXHAUST_HEAL)
+exhaustHeal:setParameter(CONDITION_PARAM_TICKS, (configManager.getNumber(configKeys.EX_ACTIONS_DELAY_INTERVAL) - 1000))
+
+local exhaustMana = Condition(CONDITION_EXHAUST_COMBAT)
+exhaustMana:setParameter(CONDITION_PARAM_TICKS, (configManager.getNumber(configKeys.EX_ACTIONS_DELAY_INTERVAL) - 1000))
 
 local potions = {
 	[6558] = {transform = {id = {7588, 7589}}, effect = CONST_ME_DRAWBLOOD},
@@ -38,35 +41,35 @@ local potions = {
 			description = "Only paladins may drink this potion.", text = "You feel more accurate."},
 
 	[7588] = {health = {250, 350}, vocations = {3, 4, 7, 8}, level = 50, flask = 7634,
-			description = "Only knights and paladins of level 50 or above may drink this fluid."},
+			description = "Only knights and paladins of level 50 or above may drink this fluid.", type = "health"},
 
 	[7589] = {mana = {115, 185}, vocations = {1, 2, 3, 5, 6, 7}, level = 50, flask = 7634,
-			description = "Only sorcerers, druids and paladins of level 50 or above may drink this fluid."},
+			description = "Only sorcerers, druids and paladins of level 50 or above may drink this fluid.", type = "mana"},
 
 	[7590] = {mana = {150, 250}, vocations = {1, 2, 5, 6}, level = 80, flask = 7635,
-			description = "Only druids and sorcerers of level 80 or above may drink this fluid."},
+			description = "Only druids and sorcerers of level 80 or above may drink this fluid.", type = "mana"},
 
 	[7591] = {health = {425, 575}, vocations = {4, 8}, level = 80, flask = 7635,
-			description = "Only knights of level 80 or above may drink this fluid."},
+			description = "Only knights of level 80 or above may drink this fluid.", type = "health"},
 
-	[7618] = {health = {125, 175}, flask = 7636},
-	[7620] = {mana = {75, 125}, flask = 7636},
+	[7618] = {health = {125, 175}, flask = 7636, type = "health"},
+	[7620] = {mana = {75, 125}, flask = 7636, type = "mana"},
 	[8472] = {health = {250, 350}, mana = {100, 200}, vocations = {3, 7}, level = 80, flask = 7635,
-			description = "Only paladins of level 80 or above may drink this fluid."},
+			description = "Only paladins of level 80 or above may drink this fluid.", type = "both"},
 
 	[8473] = {health = {650, 850}, vocations = {4, 8}, level = 130, flask = 7635,
-			description = "Only knights of level 130 or above may drink this fluid."},
+			description = "Only knights of level 130 or above may drink this fluid.", type = "health"},
 
-	[8474] = {combat = antidote, flask = 7636},
-	[8704] = {health = {60, 90}, flask = 7636},
+	[8474] = {combat = antidote, flask = 7636, type = "special"},
+	[8704] = {health = {60, 90}, flask = 7636, type = "health"},
 	[26029] = {mana = {425, 575}, vocations = {1, 2, 5, 6}, level = 130, flask = 7635,
-			description = "Only druids and sorcerers of level 130 or above may drink this fluid."},
+			description = "Only druids and sorcerers of level 130 or above may drink this fluid.", type = "mana"},
 
 	[26030] = {health = {420, 580}, mana = {250, 350}, vocations = {3, 7}, level = 130, flask = 7635,
-			description = "Only paladins of level 130 or above may drink this fluid."},
+			description = "Only paladins of level 130 or above may drink this fluid.", type = "both"},
 
 	[26031] = {health = {875, 1125}, vocations = {4, 8}, level = 200, flask = 7635,
-			description = "Only knights of level 200 or above may drink this fluid."}
+			description = "Only knights of level 200 or above may drink this fluid.", type = "health"}
 }
 
 function onUse(player, item, fromPosition, target, toPosition, isHotkey)
@@ -74,13 +77,21 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		return false
 	end
 
-	if not playerDelayPotion[player:getId()] then
-		playerDelayPotion[player:getId()] = 0
+	-- Initialize separate delay tables for HP and MP potions
+	if not playerDelayPotionHealth then
+		playerDelayPotionHealth = {}
+	end
+	if not playerDelayPotionMana then
+		playerDelayPotionMana = {}
 	end
 
-	if playerDelayPotion[player:getId()] > os.mtime() then
-		player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_YOUAREEXHAUSTED))
-		return true
+	local playerId = player:getId()
+	
+	if not playerDelayPotionHealth[playerId] then
+		playerDelayPotionHealth[playerId] = 0
+	end
+	if not playerDelayPotionMana[playerId] then
+		playerDelayPotionMana[playerId] = 0
 	end
 
 	if item:getId() > 26000 and not player:isWarAllowed(CONST_WAR_POTIONS) then
@@ -95,9 +106,29 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		return true
 	end
 
-	if player:getCondition(CONDITION_EXHAUST_HEAL) then
-		player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_YOUAREEXHAUSTED))
-		return true
+	-- Check separate exhaust conditions based on potion type
+	local potionType = potion.type or "health"
+	
+	if potionType == "health" or potionType == "both" then
+		if playerDelayPotionHealth[playerId] > os.mtime() then
+			player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_YOUAREEXHAUSTED))
+			return true
+		end
+		if player:getCondition(CONDITION_EXHAUST_HEAL) then
+			player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_YOUAREEXHAUSTED))
+			return true
+		end
+	end
+	
+	if potionType == "mana" or potionType == "both" then
+		if playerDelayPotionMana[playerId] > os.mtime() then
+			player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_YOUAREEXHAUSTED))
+			return true
+		end
+		if player:getCondition(CONDITION_EXHAUST_COMBAT) then
+			player:sendTextMessage(MESSAGE_STATUS_SMALL, Game.getReturnMessage(RETURNVALUE_YOUAREEXHAUSTED))
+			return true
+		end
 	end
 
 	if target and (potion.health or potion.mana or potion.combat) then
@@ -120,11 +151,23 @@ function onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		else
 			player:addItem(potion.flask, 1)
 		end
-		player:addCondition(exhaust)
+		
+		-- Apply separate exhaust conditions
+		if potionType == "health" or potionType == "both" then
+			player:addCondition(exhaustHeal)
+			playerDelayPotionHealth[playerId] = os.mtime() + 300 -- 300ms delay for health potions
+		end
+		if potionType == "mana" or potionType == "both" then
+			player:addCondition(exhaustMana)
+			playerDelayPotionMana[playerId] = os.mtime() + 300 -- 300ms delay for mana potions
+		end
+		if potionType == "special" then
+			player:addCondition(exhaustHeal)
+			playerDelayPotionHealth[playerId] = os.mtime() + 300
+		end
+		
 		player:setStorageValue(38412, player:getStorageValue(38412)+1)
 	end
-
-	playerDelayPotion[player:getId()] = os.mtime() + 500
 
 	if potion.condition then
 		player:addCondition(potion.condition)
