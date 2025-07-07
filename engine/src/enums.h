@@ -800,16 +800,30 @@ struct MarketStatistics {
 	uint32_t lowestPrice;
 };
 
+struct ModalOption {
+	std::string text;
+	uint8_t id;
+	uint8_t iconType; // 0=none, 1=item, 2=outfit, 3=image
+	uint16_t iconData; // itemId, lookType, ou imageId
+	ModalOption(const std::string& text, uint8_t id, uint8_t iconType = 0, uint16_t iconData = 0)
+		: text(text), id(id), iconType(iconType), iconData(iconData) {}
+};
+
 struct ModalWindow
 {
-	std::list<std::pair<std::string, uint8_t>> buttons, choices;
+	std::list<ModalOption> buttons, choices;
 	std::string title, message;
 	uint32_t id;
 	uint8_t defaultEnterButton, defaultEscapeButton;
 	bool priority;
+	uint8_t titleIconType;
+	uint16_t titleIconData;
+	uint8_t headerImageType;
+	uint16_t headerImageData;
 
-	ModalWindow(uint32_t id, std::string title, std::string message)
-		: title(std::move(title)), message(std::move(message)), id(id), defaultEnterButton(0xFF), defaultEscapeButton(0xFF), priority(false) {}
+	ModalWindow(uint32_t id, std::string title, std::string message, uint8_t titleIconType = 0, uint16_t titleIconData = 0, uint8_t headerImageType = 0, uint16_t headerImageData = 0)
+		: title(std::move(title)), message(std::move(message)), id(id), defaultEnterButton(0xFF), defaultEscapeButton(0xFF), priority(false), 
+		  titleIconType(titleIconType), titleIconData(titleIconData), headerImageType(headerImageType), headerImageData(headerImageData) {}
 };
 
 enum CombatOrigin

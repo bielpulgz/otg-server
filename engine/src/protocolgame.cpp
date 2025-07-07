@@ -3379,17 +3379,54 @@ void ProtocolGame::sendModalWindow(const ModalWindow& modalWindow)
 	msg.add<uint32_t>(modalWindow.id);
 	msg.addString(modalWindow.title);
 	msg.addString(modalWindow.message);
+	
+	// Title icon
+	msg.addByte(modalWindow.titleIconType);
+	uint16_t titleIconData = modalWindow.titleIconData;
+	if (modalWindow.titleIconType == 1 && titleIconData > 0) {
+		const ItemType& itemType = Item::items[titleIconData];
+		if (itemType.id != 0) {
+			titleIconData = itemType.clientId;
+		}
+	}
+	msg.add<uint16_t>(titleIconData);
+	
+	// Header image
+	msg.addByte(modalWindow.headerImageType);
+	msg.add<uint16_t>(modalWindow.headerImageData);
 
 	msg.addByte(modalWindow.buttons.size());
 	for (const auto& it : modalWindow.buttons) {
-		msg.addString(it.first);
-		msg.addByte(it.second);
+		msg.addString(it.text);
+		msg.addByte(it.id);
+		msg.addByte(it.iconType);
+		
+		// Convert serverID to clientID for item icons
+		uint16_t iconData = it.iconData;
+		if (it.iconType == 1 && iconData > 0) {
+			const ItemType& itemType = Item::items[iconData];
+			if (itemType.id != 0) {
+				iconData = itemType.clientId;
+			}
+		}
+		msg.add<uint16_t>(iconData);
 	}
 
 	msg.addByte(modalWindow.choices.size());
 	for (const auto& it : modalWindow.choices) {
-		msg.addString(it.first);
-		msg.addByte(it.second);
+		msg.addString(it.text);
+		msg.addByte(it.id);
+		msg.addByte(it.iconType);
+		
+		// Convert serverID to clientID for item icons
+		uint16_t iconData = it.iconData;
+		if (it.iconType == 1 && iconData > 0) {
+			const ItemType& itemType = Item::items[iconData];
+			if (itemType.id != 0) {
+				iconData = itemType.clientId;
+			}
+		}
+		msg.add<uint16_t>(iconData);
 	}
 
 	msg.addByte(modalWindow.defaultEscapeButton);

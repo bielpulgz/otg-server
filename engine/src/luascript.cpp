@@ -6574,12 +6574,16 @@ int LuaScriptInterface::luaNetworkMessageSendToPlayer(lua_State* L)
 // ModalWindow
 int LuaScriptInterface::luaModalWindowCreate(lua_State* L)
 {
-	// ModalWindow(id, title, message)
+	// ModalWindow(id, title, message[, titleIconType, titleIconData, headerImageType, headerImageData])
 	const std::string& message = getString(L, 4);
 	const std::string& title = getString(L, 3);
 	uint32_t id = getNumber<uint32_t>(L, 2);
+	uint8_t titleIconType = lua_gettop(L) >= 5 ? getNumber<uint8_t>(L, 5) : 0;
+	uint16_t titleIconData = lua_gettop(L) >= 6 ? getNumber<uint16_t>(L, 6) : 0;
+	uint8_t headerImageType = lua_gettop(L) >= 7 ? getNumber<uint8_t>(L, 7) : 0;
+	uint16_t headerImageData = lua_gettop(L) >= 8 ? getNumber<uint16_t>(L, 8) : 0;
 
-	pushUserdata<ModalWindow>(L, new ModalWindow(id, title, message));
+	pushUserdata<ModalWindow>(L, new ModalWindow(id, title, message, titleIconType, titleIconData, headerImageType, headerImageData));
 	setMetatable(L, -1, "ModalWindow");
 	return 1;
 }
@@ -6684,12 +6688,14 @@ int LuaScriptInterface::luaModalWindowGetChoiceCount(lua_State* L)
 
 int LuaScriptInterface::luaModalWindowAddButton(lua_State* L)
 {
-	// modalWindow:addButton(id, text)
+	// modalWindow:addButton(id, text[, iconType, iconData])
 	const std::string& text = getString(L, 3);
 	uint8_t id = getNumber<uint8_t>(L, 2);
+	uint8_t iconType = lua_gettop(L) >= 4 ? getNumber<uint8_t>(L, 4) : 0;
+	uint16_t iconData = lua_gettop(L) >= 5 ? getNumber<uint16_t>(L, 5) : 0;
 	ModalWindow* window = getUserdata<ModalWindow>(L, 1);
 	if (window) {
-		window->buttons.emplace_back(text, id);
+		window->buttons.emplace_back(text, id, iconType, iconData);
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);
@@ -6699,12 +6705,14 @@ int LuaScriptInterface::luaModalWindowAddButton(lua_State* L)
 
 int LuaScriptInterface::luaModalWindowAddChoice(lua_State* L)
 {
-	// modalWindow:addChoice(id, text)
+	// modalWindow:addChoice(id, text[, iconType, iconData])
 	const std::string& text = getString(L, 3);
 	uint8_t id = getNumber<uint8_t>(L, 2);
+	uint8_t iconType = lua_gettop(L) >= 4 ? getNumber<uint8_t>(L, 4) : 0;
+	uint16_t iconData = lua_gettop(L) >= 5 ? getNumber<uint16_t>(L, 5) : 0;
 	ModalWindow* window = getUserdata<ModalWindow>(L, 1);
 	if (window) {
-		window->choices.emplace_back(text, id);
+		window->choices.emplace_back(text, id, iconType, iconData);
 		pushBoolean(L, true);
 	} else {
 		lua_pushnil(L);
