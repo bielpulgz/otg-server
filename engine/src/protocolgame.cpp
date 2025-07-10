@@ -838,7 +838,23 @@ void ProtocolGame::parseSetOutfit(NetworkMessage& msg)
                 newOutfit.lookWings = msg.get<uint16_t>();
                 newOutfit.lookAura = msg.get<uint16_t>();
                 std::string shaderName = msg.getString();
-                Shader* shader = g_game.shaders.getShaderByName(shaderName);
+                Shader* shader = nullptr;
+                
+                bool isNumeric = true;
+                for (char c : shaderName) {
+                    if (!std::isdigit(c)) {
+                        isNumeric = false;
+                        break;
+                    }
+                }
+                
+                if (isNumeric) {
+                    uint8_t shaderId = static_cast<uint8_t>(std::stoi(shaderName));
+                    shader = g_game.shaders.getShaderByID(shaderId);
+                } else {
+                    shader = g_game.shaders.getShaderByName(shaderName);
+                }
+                
                 newOutfit.lookShader = shader ? shader->id : 0;
             } 
             else if (player->isMehah()) {

@@ -967,7 +967,24 @@ MonsterType* Monsters::loadMonster(const std::string& file, const std::string& m
 		}
 
 		if ((attr = node.attribute("shader"))) {
-			Shader* shader = g_game.shaders.getShaderByName(attr.as_string());
+			std::string shaderValue = attr.as_string();
+			Shader* shader = nullptr;
+			
+			bool isNumeric = true;
+			for (char c : shaderValue) {
+				if (!std::isdigit(c)) {
+					isNumeric = false;
+					break;
+				}
+			}
+			
+			if (isNumeric) {
+				uint8_t shaderId = static_cast<uint8_t>(std::stoi(shaderValue));
+				shader = g_game.shaders.getShaderByID(shaderId);
+			} else {
+				shader = g_game.shaders.getShaderByName(shaderValue);
+			}
+			
 			mType->info.outfit.lookShader = shader ? shader->id : 0;
 		}
 
