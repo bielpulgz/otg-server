@@ -199,6 +199,13 @@ void mainLoader(int argc, char* argv[], ServiceManager* services)
 		return;
 	}
 
+	// NEW: load shaders before any creature definitions to ensure they are available for NPCs and monsters spawned during startup
+	std::cout << ">> Loading shaders" << std::endl;
+	if (!g_game.shaders.loadFromXml()) {
+		startupErrorMessage("Unable to load shaders!");
+		return;
+	}
+
 	// load item data
 	std::cout << ">> Loading items" << std::endl;
 	if (Item::items.loadFromOtb("data/items/items.otb") != ERROR_NONE) {
